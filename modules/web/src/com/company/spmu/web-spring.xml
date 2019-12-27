@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:gui="http://schemas.haulmont.com/cuba/spring/cuba-gui.xsd"
+       xmlns:repositories="http://www.cuba-platform.org/schema/data/jpa">
+
+    <!-- Annotation-based beans -->
+    <context:component-scan base-package="com.company.spmu"/>
+    <repositories:repositories base-package="com.company.spmu.repositories"/>
+    <gui:screens base-packages="com.company.spmu.web"/>
+    <bean id="spmu_proxyCreator" class="com.haulmont.cuba.web.sys.remoting.WebRemoteProxyBeanCreator">
+        <property name="serverSelector" ref="cuba_ServerSelector"/>
+        <property name="remoteServices">
+            <map>
+                <entry key="spmu_AppStageService" value="com.company.spmu.service.AppStageService"/>
+                <entry key="spmu_AppIncomeService" value="com.company.spmu.service.AppIncomeService"/>
+                <entry key="spmu_AppExpenseService" value="com.company.spmu.service.AppExpenseService"/>
+                <entry key="spmu_ReportHtmlService" value="com.company.spmu.service.ReportHtmlService"/>
+                <entry key="spmu_IntegrationService" value="com.company.spmu.service.integration.IntegrationService"/>
+                <entry key="spmu_AffiliateParserService"
+                       value="com.company.spmu.service.integration.parser.AffiliateParserService"/>
+                <entry key="spmu_RegistryParserService"
+                       value="com.company.spmu.service.integration.parser.RegistryParserService"/>
+                <entry key="spmu_ApplicationEventService"
+                       value="com.company.spmu.service.integration.parser.ApplicationEventParserService"/>
+                <entry key="spmu_ApplicationEventExportService"
+                       value="com.company.spmu.service.integration.export.ApplicationEventExportService"/>
+                <entry key="spmu_AppEventService" value="com.company.spmu.service.AppEventService"/>
+                <entry key="spmu_EntitySnapshotConvertService"
+                       value="com.company.spmu.service.versioning.EntitySnapshotConvertService"/>
+                <entry key="spmu_ApplicationHistoryService"
+                       value="com.company.spmu.service.versioning.ApplicationHistoryService"/>
+                <entry key="spmu_DivisionParserService"
+                       value="com.company.spmu.service.integration.parser.DivisionParserService"/>
+                <entry key="spmu_RegistryGetterService"
+                       value="com.company.spmu.service.integration.getter.RegistryGetterService"/>
+                <entry key="spmu_AffiliateGetterService"
+                       value="com.company.spmu.service.integration.getter.AffiliateGetterService"/>
+            </map>
+        </property>
+    </bean>
+
+</beans>

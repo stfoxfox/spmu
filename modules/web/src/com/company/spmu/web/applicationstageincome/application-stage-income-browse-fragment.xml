@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<fragment xmlns="http://schemas.haulmont.com/cuba/screen/fragment.xsd"
+          xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+>
+    <data readOnly="true">
+        <collection id="applicationStageIncomesDc"
+                    class="com.company.spmu.entity.ApplicationStageIncome"
+                    view="applicationStageIncome-view">
+            <loader id="applicationStageIncomesDl">
+                <query>
+                    <![CDATA[SELECT e FROM spmu_ApplicationStageIncome e
+                    LEFT JOIN spmu_ApplicationStageContract c ON c.stage=e
+                    LEFT JOIN e.applicationStageValue v
+                    LEFT JOIN v.analytica a
+                    LEFT JOIN v.planAccount p
+                    ORDER BY e.order
+                    ]]>
+                    <condition>
+                        <and>
+                            <c:jpql>
+                                <c:where>e.application.id=:parentApp</c:where>
+                            </c:jpql>
+                            <or>
+                                <c:jpql>
+                                    <c:where>e.planArticle.name like :s1</c:where>
+                                </c:jpql>
+                                <c:jpql>
+                                    <c:where>p.name like :s2</c:where>
+                                </c:jpql>
+                                <c:jpql>
+                                    <c:where>a.name LIKE :s3</c:where>
+                                </c:jpql>
+                                <c:jpql>
+                                    <c:where>e.name LIKE :s4</c:where>
+                                </c:jpql>
+                                <c:jpql>
+                                    <c:where>e.description LIKE :s5</c:where>
+                                </c:jpql>
+                                <c:jpql>
+                                    <c:where>e.order=:s6</c:where>
+                                </c:jpql>
+                            </or>
+                        </and>
+                    </condition>
+                </query>
+            </loader>
+        </collection>
+        <instance id="applicationIncomeDc"
+                  class="com.company.spmu.entity.ApplicationIncome"
+                  view="applicationIncome-view-create"
+                  provided="true">
+            <loader id="applicationIncomeDl" provided="true"/>
+        </instance>
+    </data>
+    <layout expand="applicationStageIncomesTable"
+            spacing="true" width="100%" height="100%">
+        <hbox width="100%" expand="csslay2">
+            <cssLayout id="csslay2" align="TOP_LEFT">
+                <buttonsPanel id="buttonsPanel" align="TOP_LEFT"
+                              alwaysVisible="true">
+                    <!--
+                    <button id="printBtn" caption="&#1055;&#1077;&#1095;&#1072;&#1090;&#1100;" icon="PRINT"
+                            stylename="buttontransparent" box.expandRatio="0" action="applicationStageIncomesTable.print" />
+                    -->
+                    <popupButton id="exportButton" caption="Экспорт" stylename="buttontransparent" icon="SHARE_SQUARE_O">
+                        <actions>
+                            <action id="applicationStageIncomesTable.excel" caption="в Excel"/>
+                            <action id="exportToPdf" caption="в PDF"/>
+                        </actions>
+                    </popupButton>
+                    <!--
+                    <button id="dogartBtn" caption="&#1055;&#1086;&#1082;&#1072;&#1079;&#1072;&#1090;&#1100; &#1076;&#1086;&#1075;&#1086;&#1074;&#1086;&#1088;&#1099; &#1087;&#1086; &#1089;&#1090;&#1072;&#1090;&#1100;&#1103;&#1084; &#1042;&#1055;&#1054;"
+                            icon="PLANE" stylename="buttontransparent" box.expandRatio="0" />
+                    -->
+                </buttonsPanel>
+            </cssLayout>
+            <cssLayout align="TOP_RIGHT">
+                <button id="refreshBtn" action="applicationStageIncomesTable.refresh" caption=""
+                        stylename="buttontransparent"/>
+                <textField id="searchField"/>
+                <button id="searchBtn" action="applicationStageIncomesTable.search"
+                        caption="Поиск" stylename="buttontransparent"/>
+                <button id="settingsBtn" icon="COG" stylename="buttontransparent"/>
+            </cssLayout>
+        </hbox>
+        <groupTable id="applicationStageIncomesTable"
+                    width="100%"
+                    dataContainer="applicationStageIncomesDc"
+                    multiselect="true">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+                <action id="refresh" type="refresh"/>
+                <action id="excel" type="excel"/>
+                <action id="copy" caption="Copy" icon="COPY" trackSelection="true"/>
+                <action id="moveup" trackSelection="true"/>
+                <action id="movedown" trackSelection="true"/>
+                <action id="print"/>
+                <action id="search"/>
+            </actions>
+            <columns>
+                <column id="order" caption="№"/>
+                <column id="planArticle" caption="Статья ВПО" width="100"/>
+                <column id="applicationStageValue.planAccount.name" caption="КУУ" width="150"/>
+                <column id="applicationStageValue.analytica.name" caption="КВУ" width="150"/>
+                <column id="name" caption="Наименование группы доходов/наименование предприятия" width="200"/>
+                <column id="description" caption="Детализация предмета дохода/этап мероприятия" width="200"/>
+                <column id="applicationStageContract.contract.name" caption="Договор №"/>
+                <column id="applicationStageValue.value" caption="Общая стоимость"/>
+                <column id="prevYear" caption="Запланированно в предшествующие периоды" width="100"/>
+                <column id="year1"/>
+                <column id="year2"/>
+                <column id="year3"/>
+                <column id="year4"/>
+            </columns>
+            <rowsCount/>
+        </groupTable>
+        <hbox width="100%" expand="butpanel3">
+            <buttonsPanel id="butpanel2">
+                <button id="createBtn"  stylename="buttonwhite"
+                        caption="&#1044;&#1086;&#1073;&#1072;&#1074;&#1080;&#1090;&#1100;" action="applicationStageIncomesTable.create"/>
+                <button id="copyBtn" stylename="buttonwhite"
+                        caption="&#1057;&#1082;&#1086;&#1087;&#1080;&#1088;&#1086;&#1074;&#1072;&#1090;&#1100;"
+                        action="applicationStageIncomesTable.copy"/>
+                <button id="removeBtn" action="applicationStageIncomesTable.remove" stylename="buttonwhite"
+                        caption="&#1059;&#1076;&#1072;&#1083;&#1080;&#1090;&#1100;"/>
+                <button id="upBtn" caption="&#1055;&#1077;&#1088;&#1077;&#1084;&#1077;&#1089;&#1090;&#1080;&#1090;&#1100; &#1074;&#1074;&#1077;&#1088;&#1093;"
+                        stylename="buttonwhite" action="applicationStageIncomesTable.moveup" />
+                <button id="downBtn" caption="&#1055;&#1077;&#1088;&#1077;&#1084;&#1077;&#1089;&#1090;&#1080;&#1090;&#1100; &#1074;&#1085;&#1080;&#1079;"
+                        stylename="buttonwhite" action="applicationStageIncomesTable.movedown" />
+            </buttonsPanel>
+            <buttonsPanel id="butpanel3" align="TOP_RIGHT">
+                <button id="closeBtn" stylename="buttontransparent"
+                        caption="&#1047;&#1072;&#1082;&#1088;&#1099;&#1090;&#1100;"/>
+            </buttonsPanel>
+        </hbox>
+    </layout>
+</fragment>

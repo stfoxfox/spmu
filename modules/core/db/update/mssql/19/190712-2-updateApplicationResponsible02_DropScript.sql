@@ -1,0 +1,1 @@
+alter table SPMU_APPLICATION_RESPONSIBLE drop column DTYPE__U91868 ;

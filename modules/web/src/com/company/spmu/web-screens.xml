@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<screen-config xmlns="http://schemas.haulmont.com/cuba/screens.xsd">
+
+    <screen id="sec$User.browse"
+            template="com/company/spmu/web/spmuuser/spmu-user-browse.xml"/>
+    <screen id="sec$User.lookup"
+            template="com/company/spmu/web/spmuuser/spmu-user-browse.xml"/>
+    <screen id="sec$User.edit"
+            template="com/company/spmu/web/spmuuser/spmu-user-edit.xml"/>
+    <screen id="loginWindow" template="com/company/spmu/web/screens/ext-loginWindow.xml"/>
+
+
+</screen-config>

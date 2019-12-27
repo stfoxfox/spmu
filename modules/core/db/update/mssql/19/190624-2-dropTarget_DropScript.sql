@@ -1,0 +1,1 @@
+drop table SPMU_TARGET__U16919 ;

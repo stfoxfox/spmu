@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://editorCaption"
+        focusComponent="form"
+        messagesPack="com.company.spmu.web.screens.equipmentobject">
+    <data>
+        <instance id="equipmentObjectDc"
+                  class="com.company.spmu.entity.EquipmentObject"
+                  view="equipmentObject-view">
+            <loader/>
+        </instance>
+        <collection id="parentsDc" class="com.company.spmu.entity.EquipmentObject" view="_minimal">
+            <loader id="parentsLc">
+                <query>
+                    <![CDATA[select e from spmu_EquipmentObject e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="affilatesDc" class="com.company.spmu.entity.Affilate" view="_minimal">
+            <loader id="affilatesLc">
+                <query>
+                    <![CDATA[select e from spmu_Affilate e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="divisionsDc" class="com.company.spmu.entity.Division" view="_minimal">
+            <loader id="divisionsLc">
+                <query>
+                    <![CDATA[select e from spmu_Division e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="locationsDc" class="com.company.spmu.entity.Location" view="_minimal">
+            <loader id="locationsLc">
+                <query>
+                    <![CDATA[select e from spmu_Location e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="scrollBox" spacing="true">
+        <scrollBox id="scrollBox" spacing="true">
+            <form id="form" dataContainer="equipmentObjectDc">
+                <column width="250px">
+                    <lookupPickerField id="parentField" optionsContainer="parentsDc" property="parent">
+                        <actions>
+                            <action id="lookup" type="picker_lookup"/>
+                        </actions>
+                    </lookupPickerField>
+                    <textField id="nameField" property="name"/>
+                    <textField id="codeField" property="code"/>
+                    <checkBox id="isEquipmentField" property="isEquipment"/>
+                    <textField id="geoCoordinateField" property="geoCoordinate"/>
+                    <lookupPickerField id="affilateField" optionsContainer="affilatesDc" property="affilate">
+                        <actions>
+                            <action id="lookup" type="picker_lookup"/>
+                        </actions>
+                    </lookupPickerField>
+                    <lookupPickerField id="divisionField" optionsContainer="divisionsDc" property="division">
+                        <actions>
+                            <action id="lookup" type="picker_lookup"/>
+                        </actions>
+                    </lookupPickerField>
+                    <lookupPickerField id="locationField" optionsContainer="locationsDc" property="location">
+                        <actions>
+                            <action id="lookup" type="picker_lookup"/>
+                        </actions>
+                    </lookupPickerField>
+                    <checkBox id="isSubobjectField" property="isSubobject"/>
+                    <textField id="inventoryNumberField" property="inventoryNumber"/>
+                    <textField id="factoryNumberField" property="factoryNumber"/>
+                    <textField id="releasedYearField" property="releasedYear"/>
+                </column>
+            </form>
+        </scrollBox>
+        <hbox id="editActions" spacing="true">
+            <button action="windowCommitAndClose"/>
+            <button action="windowClose"/>
+        </hbox>
+    </layout>
+</window>

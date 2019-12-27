@@ -1,0 +1,1 @@
+alter table SPMU_APPLICATION_STAGE drop column STAGE_VALUE_ID__U05732 ;

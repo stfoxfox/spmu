@@ -1,0 +1,1 @@
+sp_rename 'SPMU_CURRENCY', 'SPMU_CURRENCY__U87818' ;

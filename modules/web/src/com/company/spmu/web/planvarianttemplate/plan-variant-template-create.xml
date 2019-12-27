@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://editorCaption"
+        messagesPack="com.company.spmu.web.planvarianttemplate">
+    <data>
+        <instance id="planVariantTemplateDc"
+                  class="com.company.spmu.entity.PlanVariantTemplate"
+                  view="_local">
+            <loader/>
+        </instance>
+    </data>
+    <dialogMode
+                width="400"/>
+    <layout spacing="true">
+        <hbox>
+            <checkBox id="newCh" caption="Создать новый"/>
+            <checkBox id="templateCh" caption="Создать по образцу"/>
+        </hbox>
+        <hbox width="100%" expand="nameField">
+            <textField id="nameField" caption="Название"/>
+        </hbox>
+        <hbox width="100%">
+            <lookupField caption="Шаблон" enable="false" id="templateField"/>
+        </hbox>
+        <hbox spacing="true">
+            <button caption="ОК" id="okBtn"/>
+            <button caption="Отмена" id="cancelBtn"/>
+        </hbox>
+    </layout>
+</window>

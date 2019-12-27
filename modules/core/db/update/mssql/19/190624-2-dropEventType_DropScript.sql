@@ -1,0 +1,1 @@
+drop table SPMU_EVENT_TYPE__U65959 ;

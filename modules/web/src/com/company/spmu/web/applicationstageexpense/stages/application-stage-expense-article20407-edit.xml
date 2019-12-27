@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:ext="http://schemas.haulmont.com/cuba/window-ext.xsd"
+        extends="com/company/spmu/web/applicationstageexpense/application-stage-expense-edit.xml"
+        messagesPack="com.company.spmu.web.applicationstageexpense.stages">
+    <data>
+        <collection id="divisionsDc" class="com.company.spmu.entity.Division" view="_minimal">
+            <loader id="divisionsDl">
+                <query><![CDATA[select e from spmu_Division e ]]></query>
+            </loader>
+        </collection>
+        <collection id="contractStagesDc" class="com.company.spmu.entity.ContractStage" view="_local">
+            <loader>
+                <query><![CDATA[select e from spmu_ContractStage e ]]></query>
+            </loader>
+        </collection>
+    </data>
+    <layout>
+        <scrollBox id="scrollBox">
+            <form id="form">
+                <hbox id="fullBox2" width="100%">
+                    <textField caption="Наименование мероприятия" width="100%" dataContainer="applicationStageExpenseDc" property="name"/>
+                </hbox>
+                <hbox id="fullBox1" width="100%">
+                    <textField caption="Место проведения" width="100%"/>
+                </hbox>
+            </form>
+        </scrollBox>
+    </layout>
+</window>

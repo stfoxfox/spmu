@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://browseCaption"
+        focusComponent="statusLinksTable"
+        messagesPack="com.company.spmu.web.screens.statuslink">
+    <data readOnly="true">
+        <collection id="statusLinksDc"
+                    class="com.company.spmu.entity.StatusLink"
+                    view="_local">
+            <loader id="statusLinksDl">
+                <query>
+                    <![CDATA[select e from spmu_StatusLink e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="statusLinksTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="statusLinksTable"
+                dataLoader="statusLinksDl">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="statusLinksTable"
+                    width="100%"
+                    dataContainer="statusLinksDc">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+                <action id="refresh" type="refresh"/>
+            </actions>
+            <columns>
+                <column id="status"/>
+                <column id="code"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="statusLinksTable.create"/>
+                <button id="editBtn" action="statusLinksTable.edit"/>
+                <button id="removeBtn" action="statusLinksTable.remove"/>
+                <button id="refreshBtn" action="statusLinksTable.refresh"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

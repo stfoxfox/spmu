@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://editorCaption"
+        focusComponent="form"
+        messagesPack="com.company.spmu.web.eventtype">
+    <data>
+        <instance id="eventTypeDc"
+                  class="com.company.spmu.entity.EventType"
+                  view="_local">
+            <loader/>
+        </instance>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="editActions" spacing="true" stylename="layoutblue">
+        <form id="form" dataContainer="eventTypeDc">
+            <column width="250px">
+                <textField id="codeField" property="code"
+                           caption="&#1050;&#1086;&#1076; &#1090;&#1080;&#1087;&#1072; &#1089;&#1086;&#1073;&#1099;&#1090;&#1080;&#1103;"/>
+                <textField id="nameField" property="name"
+                           caption="&#1048;&#1084;&#1103; &#1090;&#1080;&#1087;&#1072; &#1089;&#1086;&#1073;&#1099;&#1090;&#1080;&#1103;"/>
+                <textField id="templateField" property="template"
+                           caption="&#1064;&#1072;&#1073;&#1083;&#1086;&#1085; &#1090;&#1080;&#1087;&#1072; &#1089;&#1086;&#1073;&#1099;&#1090;&#1080;&#1103;"/>
+            </column>
+        </form>
+        <hbox id="editActions" spacing="true">
+            <button action="windowCommitAndClose"/>
+            <button action="windowClose"/>
+        </hbox>
+    </layout>
+</window>

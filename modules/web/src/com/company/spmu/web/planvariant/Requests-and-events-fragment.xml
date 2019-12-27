@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<fragment xmlns="http://schemas.haulmont.com/cuba/screen/fragment.xsd"
+          xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd">
+    <data>
+        <collection id="planVariantTemplateApplicationsDc" class="com.company.spmu.entity.PlanVariantTemplateApplication"
+                    view="planVariantTemplateApplication-browse">
+            <loader id="planVariantTemplateApplicationsDl">
+                <query>
+                    <![CDATA[
+                    SELECT e
+                    FROM spmu_PlanVariantTemplateApplication e
+                    LEFT JOIN e.application a
+                    LEFT JOIN a.affiliate af
+                    ]]>
+                    <condition>
+                        <and>
+                            <c:jpql>
+                                <c:where>e.inPlan=1</c:where>
+                            </c:jpql>
+                            <or>
+                                <c:jpql>
+                                    <c:where>a.name like :s1</c:where>
+                                </c:jpql>
+                                <c:jpql>
+                                    <c:where>af.name like :s2</c:where>
+                                </c:jpql>
+                            </or>
+                        </and>
+                    </condition>
+                </query>
+            </loader>
+        </collection>
+        <collection id="planVariantTemplateApplications2Dc" class="com.company.spmu.entity.PlanVariantTemplateApplication"
+                    view="planVariantTemplateApplication-browse">
+            <loader id="planVariantTemplateApplications2Dl">
+                <query>
+                    <![CDATA[
+                    SELECT e
+                    FROM spmu_PlanVariantTemplateApplication e
+                    LEFT JOIN e.application a
+                    LEFT JOIN a.affiliate af
+                    ]]>
+                    <condition>
+                        <and>
+                            <c:jpql>
+                                <c:where>e.inPlan=0</c:where>
+                            </c:jpql>
+                            <or>
+                                <c:jpql>
+                                    <c:where>a.name like :s1</c:where>
+                                </c:jpql>
+                                <c:jpql>
+                                    <c:where>af.name like :s2</c:where>
+                                </c:jpql>
+                            </or>
+                        </and>
+                    </condition>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <layout width="100%" height="100%" expand="requestsTabs">
+        <tabSheet id="requestsTabs">
+            <tab id="includedTab" caption="Включены в план" expand="includedTable" spacing="true">
+                <buttonsPanel id="requestsButtons">
+                    <button caption="Создать проект заявки" id="createIncludedBtn" action="includedTable.create"/>
+                    <button caption="На актуалиацию исполнителю" id="toActIncludedBtn"/>
+                    <button caption="Удалить" id="deleteIncludedBtn"/>
+                    <button id="filterIncludedBtn" stylename="buttontransparent" icon="FILTER" action="settingsIncludedBtn.filterIncludedAction" caption=""/>
+                    <popupView id="columnsIncludedPopup" hideOnMouseOut="false">
+                        <checkBoxGroup id="columnsIncludedList"/>
+                    </popupView>
+                    <textField align="MIDDLE_RIGHT" id="searchIncludedField"/>
+                    <button id="searchIncludedBtn" stylename="buttontransparent" caption="Поиск" align="MIDDLE_RIGHT" action="includedTable.search"/>
+                    <popupButton stylename="buttontransparent popup-without-arrow" caption="" icon="COG"  align="MIDDLE_RIGHT" id="settingsIncludedBtn">
+                        <actions>
+                            <action id="filterIncludedAction" caption="Настроить фильтр"/>
+                            <action id="columnsIncludedAction" caption="Настроить колонки таблицы" />
+                        </actions>
+                    </popupButton>
+                </buttonsPanel>
+                <filter id="includedFilter"
+                        applyTo="includedTable"
+                        dataLoader="planVariantTemplateApplicationsDl" manualApplyRequired="false" stylename="extfilter" visible="false">
+                    <properties include=".*"/>
+                </filter>
+                <dataGrid dataContainer="planVariantTemplateApplicationsDc" id="includedTable" width="100%" selectionMode="MULTI_CHECK">
+                    <actions>
+                        <action id="exclude"/>
+                        <action id="create" type="create"/>
+                        <action id="search"/>
+                        <action id="edit" type="edit"/>
+                    </actions>
+                    <columns>
+                        <column caption="Вид строки плана" id="typeColumn"/>
+                        <column caption="Наименование" id="nameColumn" property="application.name"/>
+                        <column caption="Источник финансирования" id="finColumn"/>
+                        <column caption="Подразделение" id="divisionColumn" property="application.affiliate"/>
+                        <column caption="Обьект инвестиций" id="invColumn"/>
+                        <column caption="Начало" id="startColumn" property="application.dateStart"/>
+                        <column caption="Окончание" id="endColumn" property="application.dateEnd"/>
+                        <column caption="Стоимость, т.р." id="priceColumn" property="application.value"/>
+                    </columns>
+                </dataGrid>
+                <buttonsPanel>
+                    <button caption="Исключить из варианта плана" action="includedTable.exclude"/>
+                    <button caption="Изменить источник финансирования"/>
+                    <button caption="Связать по времени" enable="false"/>
+                </buttonsPanel>
+            </tab>
+            <tab id="excludedTab" caption="Исключены из плана" expand="excludedTable" spacing="true">
+                <buttonsPanel id="requests2Buttons">
+                    <button id="filterExcludedBtn" stylename="buttontransparent" icon="FILTER" action="settingsExcludedBtn.filterExcludedAction" caption=""/>
+                    <popupView id="columnsExcludedPopup" hideOnMouseOut="false">
+                        <checkBoxGroup id="columnsExcludedList"/>
+                    </popupView>
+                    <textField align="MIDDLE_RIGHT" id="searchExcludedField"/>
+                    <button id="searchExcludedBtn" stylename="buttontransparent" caption="Поиск" align="MIDDLE_RIGHT" action="excludedTable.search"/>
+                    <popupButton stylename="buttontransparent popup-without-arrow" caption="" icon="COG"  align="MIDDLE_RIGHT" id="settingsExcludedBtn">
+                        <actions>
+                            <action id="filterExcludedAction" caption="Настроить фильтр"/>
+                            <action id="columnsExcludedAction" caption="Настроить колонки таблицы" />
+                        </actions>
+                    </popupButton>
+                </buttonsPanel>
+                <filter id="excludedFilter"
+                        applyTo="excludedTable"
+                        dataLoader="planVariantTemplateApplications2Dl" manualApplyRequired="false" stylename="extfilter" visible="false">
+                    <properties include=".*"/>
+                </filter>
+                <dataGrid dataContainer="planVariantTemplateApplications2Dc" id="excludedTable" width="100%" selectionMode="MULTI_CHECK">
+                    <actions>
+                        <action id="include"/>
+                        <action id="search"/>
+                        <action id="edit" type="edit"/>
+                    </actions>
+                    <columns>
+                        <column caption="Вид строки плана" id="typeColumn"/>
+                        <column caption="Наименование" id="nameColumn" property="application.name"/>
+                        <column caption="Источник финансирования" id="finColumn"/>
+                        <column caption="Подразделение" id="divisionColumn" property="application.affiliate"/>
+                        <column caption="Обьект инвестиций" id="invColumn"/>
+                        <column caption="Начало" id="startColumn" property="application.dateStart"/>
+                        <column caption="Окончание" id="endColumn" property="application.dateEnd"/>
+                        <column caption="Стоимость, т.р." id="priceColumn" property="application.value"/>
+                    </columns>
+                </dataGrid>
+                <buttonsPanel>
+                    <button caption="Включить в варианта плана" action="excludedTable.include"/>
+                    <button caption="Изменить источник финансирования "/>
+                    <button caption="Связать по времени" enable="false"/>
+                </buttonsPanel>
+            </tab>
+        </tabSheet>
+    </layout>
+</fragment>

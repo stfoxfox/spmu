@@ -1,0 +1,1 @@
+drop table SPMU_APPLICATION__U64793 ;

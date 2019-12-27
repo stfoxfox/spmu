@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://browseCaption"
+        focusComponent="planVariantTemplateElementsTable"
+        messagesPack="com.company.spmu.web.planvarianttemplateelement">
+    <data readOnly="true">
+        <collection id="planVariantTemplateElementsDc"
+                    class="com.company.spmu.entity.PlanVariantTemplateElement"
+                    view="_local">
+            <loader id="planVariantTemplateElementsDl">
+                <query>
+                    <![CDATA[select e from spmu_PlanVariantTemplateElement e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="planVariantTemplateElementsTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="planVariantTemplateElementsTable"
+                dataLoader="planVariantTemplateElementsDl">
+            <properties include=".*"/>
+        </filter>
+        <dataGrid id="planVariantTemplateElementsTable"
+                  width="100%"
+                  dataContainer="planVariantTemplateElementsDc">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+            </actions>
+            <columns>
+                <column property="pageElement"/>
+                <column property="jsonValue"/>
+            </columns>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="planVariantTemplateElementsTable.create"/>
+                <button id="editBtn" action="planVariantTemplateElementsTable.edit"/>
+                <button id="removeBtn" action="planVariantTemplateElementsTable.remove"/>
+            </buttonsPanel>
+        </dataGrid>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

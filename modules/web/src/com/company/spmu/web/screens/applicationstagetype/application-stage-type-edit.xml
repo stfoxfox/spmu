@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://editorCaption"
+        focusComponent="form"
+        messagesPack="com.company.spmu.web.screens.applicationstagetype">
+    <data>
+        <instance id="applicationStageTypeDc"
+                  class="com.company.spmu.entity.ApplicationStageType"
+                  view="applicationStageType-view">
+            <loader/>
+        </instance>
+        <collection id="creatorsDc" class="com.company.spmu.entity.SpmuUser" view="_minimal">
+            <loader id="creatorsLc">
+                <query>
+                    <![CDATA[select e from spmu_SpmuUser e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="editActions" spacing="true">
+        <form id="form" dataContainer="applicationStageTypeDc">
+            <column width="250px">
+                <dateField id="createdField" property="created"/>
+                <dateField id="expiredField" property="expired"/>
+                <lookupPickerField id="creatorField" optionsContainer="creatorsDc" property="creator">
+                    <actions>
+                        <action id="lookup" type="picker_lookup"/>
+                    </actions>
+                </lookupPickerField>
+                <textField id="nameField" property="name"/>
+                <textField id="fractionField" property="fraction"/>
+                <textField id="durationField" property="duration"/>
+                <lookupField id="calendarField" property="calendar"/>
+            </column>
+        </form>
+        <hbox id="editActions" spacing="true">
+            <button action="windowCommitAndClose"/>
+            <button action="windowClose"/>
+        </hbox>
+    </layout>
+</window>

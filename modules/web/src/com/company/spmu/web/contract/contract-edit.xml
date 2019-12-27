@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://editorCaption"
+        focusComponent="form"
+        messagesPack="com.company.spmu.web.contract">
+    <data>
+        <instance id="contractDc"
+                  class="com.company.spmu.entity.Contract"
+                  view="_local">
+            <loader/>
+        </instance>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="editActions" spacing="true" stylename="layoutblue">
+        <form id="form" dataContainer="contractDc">
+            <column width="250px">
+                <textField id="codeField" property="code" caption="msg://codeFieldCaption"/>
+                <textField id="nameField" property="name" caption="msg://nameFieldCaption"/>
+                <dateField id="startField" property="start" caption="msg://startFieldCaption"/>
+                <dateField id="endField" property="end" caption="msg://endFieldCaption"/>
+            </column>
+        </form>
+        <hbox id="editActions" spacing="true">
+            <button action="windowCommitAndClose"/>
+            <button action="windowClose"/>
+        </hbox>
+    </layout>
+</window>

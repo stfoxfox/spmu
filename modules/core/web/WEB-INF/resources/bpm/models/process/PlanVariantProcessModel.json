@@ -1,0 +1,879 @@
+{
+  "resourceId": "5",
+  "properties": {
+    "process_id": "planvariantprocessmodel",
+    "name": "PlanVariantProcessModel",
+    "documentation": "",
+    "process_author": "",
+    "process_version": "",
+    "process_namespace": "http://www.activiti.org/processdef",
+    "executionlisteners": "",
+    "eventlisteners": "{\"eventListeners\":\"[{\\\"className\\\": \\\"com.haulmont.bpm.core.engine.listener.BpmActivitiListener\\\", \\\"implementation\\\": \\\"com.haulmont.bpm.core.engine.listener.BpmActivitiListener\\\", \\\"event\\\": \\\"TASK_CREATED, TASK_ASSIGNED, PROCESS_COMPLETED, TIMER_FIRED, ACTIVITY_CANCELLED, ENTITY_DELETED\\\", \\\"events\\\": [{\\\"event\\\": \\\"TASK_CREATED\\\"}, {\\\"event\\\": \\\"TASK_ASSIGNED\\\"}, {\\\"event\\\": \\\"PROCESS_COMPLETED\\\"}, {\\\"event\\\": \\\"TIMER_FIRED\\\"}, {\\\"event\\\": \\\"ACTIVITY_CANCELLED\\\"}, {\\\"event\\\": \\\"ENTITY_DELETED\\\"}]}]\"}",
+    "signaldefinitions": "",
+    "messagedefinitions": "",
+    "procroles": [
+      {
+        "code": "manager",
+        "name": "Manager"
+      }
+    ],
+    "localization": ""
+  },
+  "stencil": {
+    "id": "BPMNDiagram"
+  },
+  "childShapes": [
+    {
+      "resourceId": "sid-CAF990DE-09FD-4984-B2E4-B30EB726982A",
+      "properties": {
+        "overrideid": "",
+        "name": "",
+        "documentation": "",
+        "executionlisteners": "",
+        "initiator": "",
+        "startform": {
+          "name": "standardProcForm",
+          "caption": "Standard form",
+          "params": [
+            {
+              "name": "procActorsVisible",
+              "value": "true"
+            },
+            {
+              "name": "commentRequired",
+              "value": "true"
+            }
+          ]
+        }
+      },
+      "stencil": {
+        "id": "StartNoneEvent"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "sid-6A93B964-E907-45DC-A4E7-72FEC86C6D2A"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 135,
+          "y": 210
+        },
+        "upperLeft": {
+          "x": 105,
+          "y": 180
+        }
+      },
+      "dockers": []
+    },
+    {
+      "resourceId": "sid-BE2205E6-FA71-4602-942B-67A33FC77388",
+      "properties": {
+        "overrideid": "",
+        "name": "_ЗагруженоВУмип",
+        "servicetaskresultvariable": "",
+        "planstatusdownloadinymip-entityid": "entityId",
+        "planstatusdownloadinymip-status": "DOWNLOAD_IN_YMIP",
+        "type": "http://b3mn.org/stencilset/bpmn2.0#UserTask",
+        "documentation": "",
+        "asynchronousdefinition": "false",
+        "exclusivedefinition": "false",
+        "executionlisteners": "",
+        "multiinstance_type": "None",
+        "multiinstance_cardinality": "",
+        "multiinstance_collection": "auto_evaluation",
+        "multiinstance_variable": "",
+        "multiinstance_condition": "",
+        "isforcompensation": "false",
+        "usertaskassignment": "",
+        "duedatedefinition": "",
+        "prioritydefinition": "",
+        "tasklisteners": "",
+        "taskoutcomes": "",
+        "taskprocrole": "",
+        "claimallowed": "false"
+      },
+      "stencil": {
+        "id": "planStatusDownloadInYmip"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "sid-E419C9BE-861D-4005-B2B4-AD7E255104E8"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 337,
+          "y": 220.5
+        },
+        "upperLeft": {
+          "x": 240,
+          "y": 169.5
+        }
+      },
+      "dockers": [],
+      "custom": {
+        "type": "serviceTask",
+        "beanName": "spmu_PlanStatusHelper",
+        "methodName": "updatedStatus",
+        "methodArgs": [
+          {
+            "propertyPackageName": "planstatusdownloadinymip-entityidpackage",
+            "type": "java.util.UUID"
+          },
+          {
+            "propertyPackageName": "planstatusdownloadinymip-statuspackage",
+            "type": "java.lang.String"
+          }
+        ]
+      }
+    },
+    {
+      "resourceId": "sid-6A93B964-E907-45DC-A4E7-72FEC86C6D2A",
+      "properties": {
+        "overrideid": "",
+        "name": "",
+        "documentation": "",
+        "conditionsequenceflow": "",
+        "executionlisteners": "",
+        "defaultflow": "false",
+        "flowoutcome": ""
+      },
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "sid-BE2205E6-FA71-4602-942B-67A33FC77388"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 239.451171875,
+          "y": 195
+        },
+        "upperLeft": {
+          "x": 135.48046875,
+          "y": 195
+        }
+      },
+      "dockers": [
+        {
+          "x": 15,
+          "y": 15
+        },
+        {
+          "x": 48.5,
+          "y": 25.5
+        }
+      ],
+      "target": {
+        "resourceId": "sid-BE2205E6-FA71-4602-942B-67A33FC77388"
+      }
+    },
+    {
+      "resourceId": "sid-1E4806EC-B65D-4659-9A0F-9AC335BDA3F5",
+      "properties": {
+        "overrideid": "",
+        "name": "",
+        "documentation": "",
+        "asynchronousdefinition": "false",
+        "exclusivedefinition": "false",
+        "executionlisteners": "",
+        "multiinstance_type": "None",
+        "multiinstance_cardinality": "",
+        "multiinstance_collection": "auto_evaluation",
+        "multiinstance_variable": "",
+        "multiinstance_condition": "",
+        "isforcompensation": "false",
+        "usertaskassignment": "",
+        "duedatedefinition": "",
+        "prioritydefinition": "",
+        "tasklisteners": "",
+        "taskoutcomes": [
+          {
+            "name": "_ОтклоненаРа",
+            "form": {
+              "name": "standardProcForm",
+              "caption": "Standard form",
+              "params": []
+            }
+          },
+          {
+            "name": "_СогласованоВРа",
+            "form": {
+              "name": "standardProcForm",
+              "caption": "Standard form",
+              "params": []
+            }
+          },
+          {
+            "name": "_ОтклоненаРаСЗамечаниями",
+            "form": {
+              "name": "standardProcForm",
+              "caption": "Standard form",
+              "params": []
+            }
+          }
+        ],
+        "taskprocrole": "manager",
+        "claimallowed": "false"
+      },
+      "stencil": {
+        "id": "UserTask"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "sid-9F35BC71-5DA3-4EB2-A0B4-9B64752EF578"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 475,
+          "y": 235
+        },
+        "upperLeft": {
+          "x": 375,
+          "y": 155
+        }
+      },
+      "dockers": []
+    },
+    {
+      "resourceId": "sid-E419C9BE-861D-4005-B2B4-AD7E255104E8",
+      "properties": {
+        "overrideid": "",
+        "name": "",
+        "documentation": "",
+        "conditionsequenceflow": "",
+        "executionlisteners": "",
+        "defaultflow": "false",
+        "flowoutcome": ""
+      },
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "sid-1E4806EC-B65D-4659-9A0F-9AC335BDA3F5"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 374.9453125,
+          "y": 195
+        },
+        "upperLeft": {
+          "x": 337.48828125,
+          "y": 195
+        }
+      },
+      "dockers": [
+        {
+          "x": 48.5,
+          "y": 25.5
+        },
+        {
+          "x": 50,
+          "y": 40
+        }
+      ],
+      "target": {
+        "resourceId": "sid-1E4806EC-B65D-4659-9A0F-9AC335BDA3F5"
+      }
+    },
+    {
+      "resourceId": "sid-4F79971C-DCF1-4840-92D0-58685FD68F05",
+      "properties": {
+        "overrideid": "",
+        "name": "",
+        "documentation": "",
+        "asynchronousdefinition": "false",
+        "exclusivedefinition": "false",
+        "sequencefloworder": ""
+      },
+      "stencil": {
+        "id": "ExclusiveGateway"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "sid-F754AE71-55BF-4343-A3CF-CBA0F59EE3F1"
+        },
+        {
+          "resourceId": "sid-71E94211-2C1A-4822-B310-37183EA3C442"
+        },
+        {
+          "resourceId": "sid-F907ED78-B109-49A5-AFF6-1594D4FA4868"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 565,
+          "y": 215
+        },
+        "upperLeft": {
+          "x": 525,
+          "y": 175
+        }
+      },
+      "dockers": []
+    },
+    {
+      "resourceId": "sid-9F35BC71-5DA3-4EB2-A0B4-9B64752EF578",
+      "properties": {
+        "overrideid": "",
+        "name": "",
+        "documentation": "",
+        "conditionsequenceflow": "",
+        "executionlisteners": "",
+        "defaultflow": "false",
+        "flowoutcome": ""
+      },
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "sid-4F79971C-DCF1-4840-92D0-58685FD68F05"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 524.7304773585561,
+          "y": 195.41381940812678
+        },
+        "upperLeft": {
+          "x": 475.8945226414439,
+          "y": 195.21118059187322
+        }
+      },
+      "dockers": [
+        {
+          "x": 50,
+          "y": 40
+        },
+        {
+          "x": 20.5,
+          "y": 20.5
+        }
+      ],
+      "target": {
+        "resourceId": "sid-4F79971C-DCF1-4840-92D0-58685FD68F05"
+      }
+    },
+    {
+      "resourceId": "sid-025EE7AA-F260-4F32-90F5-EC2F07207A0A",
+      "properties": {
+        "overrideid": "",
+        "name": "_ОтклоненаРа",
+        "servicetaskresultvariable": "",
+        "planstatusfinallyrejectedra-entityid": "entityId",
+        "planstatusfinallyrejectedra-status": "FINALLY_REJECTED_RA",
+        "type": "http://b3mn.org/stencilset/bpmn2.0#UserTask",
+        "documentation": "",
+        "asynchronousdefinition": "false",
+        "exclusivedefinition": "false",
+        "executionlisteners": "",
+        "multiinstance_type": "None",
+        "multiinstance_cardinality": "",
+        "multiinstance_collection": "auto_evaluation",
+        "multiinstance_variable": "",
+        "multiinstance_condition": "",
+        "isforcompensation": "false",
+        "usertaskassignment": "",
+        "duedatedefinition": "",
+        "prioritydefinition": "",
+        "tasklisteners": "",
+        "taskoutcomes": "",
+        "taskprocrole": "",
+        "claimallowed": "false"
+      },
+      "stencil": {
+        "id": "planStatusFinallyRejectedRA"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "sid-AF5034DF-0E17-4809-8A29-D6BA79C77DE2"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 582.5,
+          "y": 55
+        },
+        "upperLeft": {
+          "x": 507.5,
+          "y": 15
+        }
+      },
+      "dockers": [],
+      "custom": {
+        "type": "serviceTask",
+        "beanName": "spmu_PlanStatusHelper",
+        "methodName": "updatedStatus",
+        "methodArgs": [
+          {
+            "propertyPackageName": "planstatusfinallyrejectedra-entityidpackage",
+            "type": "java.util.UUID"
+          },
+          {
+            "propertyPackageName": "planstatusfinallyrejectedra-statuspackage",
+            "type": "java.lang.String"
+          }
+        ]
+      }
+    },
+    {
+      "resourceId": "sid-F754AE71-55BF-4343-A3CF-CBA0F59EE3F1",
+      "properties": {
+        "overrideid": "",
+        "name": "_ОтклоненаРа",
+        "documentation": "",
+        "conditionsequenceflow": "",
+        "executionlisteners": "",
+        "defaultflow": false,
+        "flowoutcome": {
+          "outcome": "_ОтклоненаРа",
+          "taskResourceId": "sid-1E4806EC-B65D-4659-9A0F-9AC335BDA3F5"
+        }
+      },
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "sid-025EE7AA-F260-4F32-90F5-EC2F07207A0A"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 545.434384750319,
+          "y": 174.43750485240207
+        },
+        "upperLeft": {
+          "x": 545.063662124681,
+          "y": 55.43554202259794
+        }
+      },
+      "dockers": [
+        {
+          "x": 20.5,
+          "y": 20.5
+        },
+        {
+          "x": 37.5,
+          "y": 20
+        }
+      ],
+      "target": {
+        "resourceId": "sid-025EE7AA-F260-4F32-90F5-EC2F07207A0A"
+      }
+    },
+    {
+      "resourceId": "sid-C7DCC117-A24D-40E2-9DBB-BD4F25632F7C",
+      "properties": {
+        "overrideid": "",
+        "name": "_ОтклоненаРаСЗамечаниями",
+        "servicetaskresultvariable": "",
+        "planstatusrejectedrawithanoteforlateradjustment-entityid": "entityId",
+        "planstatusrejectedrawithanoteforlateradjustment-status": "REJECTED_RA_WITH_A_NOTE_FOR_LATER_ADJUSTMENT",
+        "type": "http://b3mn.org/stencilset/bpmn2.0#UserTask",
+        "documentation": "",
+        "asynchronousdefinition": "false",
+        "exclusivedefinition": "false",
+        "executionlisteners": "",
+        "multiinstance_type": "None",
+        "multiinstance_cardinality": "",
+        "multiinstance_collection": "auto_evaluation",
+        "multiinstance_variable": "",
+        "multiinstance_condition": "",
+        "isforcompensation": "false",
+        "usertaskassignment": "",
+        "duedatedefinition": "",
+        "prioritydefinition": "",
+        "tasklisteners": "",
+        "taskoutcomes": "",
+        "taskprocrole": "",
+        "claimallowed": "false"
+      },
+      "stencil": {
+        "id": "planStatusRejectedRAWithANoteForLaterAdjustment"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "sid-3EA32F30-60D0-43FA-A110-EC99164EB0E5"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 592,
+          "y": 482
+        },
+        "upperLeft": {
+          "x": 498,
+          "y": 435
+        }
+      },
+      "dockers": [],
+      "custom": {
+        "type": "serviceTask",
+        "beanName": "spmu_PlanStatusHelper",
+        "methodName": "updatedStatus",
+        "methodArgs": [
+          {
+            "propertyPackageName": "planstatusrejectedrawithanoteforlateradjustment-entityidpackage",
+            "type": "java.util.UUID"
+          },
+          {
+            "propertyPackageName": "planstatusrejectedrawithanoteforlateradjustment-statuspackage",
+            "type": "java.lang.String"
+          }
+        ]
+      }
+    },
+    {
+      "resourceId": "sid-3FD0F338-064C-41CF-90E9-ABC5E3A998FD",
+      "properties": {
+        "overrideid": "",
+        "name": "_СогласованоВРа",
+        "servicetaskresultvariable": "",
+        "plsnstatusapprovedra-entityid": "entityId",
+        "plsnstatusapprovedra-status": "APPROVED_RA",
+        "type": "http://b3mn.org/stencilset/bpmn2.0#UserTask",
+        "documentation": "",
+        "asynchronousdefinition": "false",
+        "exclusivedefinition": "false",
+        "executionlisteners": "",
+        "multiinstance_type": "None",
+        "multiinstance_cardinality": "",
+        "multiinstance_collection": "auto_evaluation",
+        "multiinstance_variable": "",
+        "multiinstance_condition": "",
+        "isforcompensation": "false",
+        "usertaskassignment": "",
+        "duedatedefinition": "",
+        "prioritydefinition": "",
+        "tasklisteners": "",
+        "taskoutcomes": "",
+        "taskprocrole": "",
+        "claimallowed": "false"
+      },
+      "stencil": {
+        "id": "plsnStatusApprovedRA"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "sid-FED5B8C3-8D1C-465E-AAEC-3CB80717D7A2"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 790,
+          "y": 235
+        },
+        "upperLeft": {
+          "x": 690,
+          "y": 155
+        }
+      },
+      "dockers": [],
+      "custom": {
+        "type": "serviceTask",
+        "beanName": "spmu_PlanStatusHelper",
+        "methodName": "updatedStatus",
+        "methodArgs": [
+          {
+            "propertyPackageName": "plsnstatusapprovedra-entityidpackage",
+            "type": "java.util.UUID"
+          },
+          {
+            "propertyPackageName": "plsnstatusapprovedra-statuspackage",
+            "type": "java.lang.String"
+          }
+        ]
+      }
+    },
+    {
+      "resourceId": "sid-F907ED78-B109-49A5-AFF6-1594D4FA4868",
+      "properties": {
+        "overrideid": "",
+        "name": "_ОтклоненаРаСЗамечаниями",
+        "documentation": "",
+        "conditionsequenceflow": "",
+        "executionlisteners": "",
+        "defaultflow": false,
+        "flowoutcome": {
+          "outcome": "_ОтклоненаРаСЗамечаниями",
+          "taskResourceId": "sid-1E4806EC-B65D-4659-9A0F-9AC335BDA3F5"
+        }
+      },
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "sid-C7DCC117-A24D-40E2-9DBB-BD4F25632F7C"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 545.4629426127512,
+          "y": 434.8984393071631
+        },
+        "upperLeft": {
+          "x": 545.0448698872488,
+          "y": 214.99218569283696
+        }
+      },
+      "dockers": [
+        {
+          "x": 20.5,
+          "y": 20.5
+        },
+        {
+          "x": 47,
+          "y": 23.5
+        }
+      ],
+      "target": {
+        "resourceId": "sid-C7DCC117-A24D-40E2-9DBB-BD4F25632F7C"
+      }
+    },
+    {
+      "resourceId": "sid-71E94211-2C1A-4822-B310-37183EA3C442",
+      "properties": {
+        "overrideid": "",
+        "name": "_СогласованоВРа",
+        "documentation": "",
+        "conditionsequenceflow": "",
+        "executionlisteners": "",
+        "defaultflow": true,
+        "flowoutcome": ""
+      },
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "sid-3FD0F338-064C-41CF-90E9-ABC5E3A998FD"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 689.6152376792177,
+          "y": 195.44860118940673
+        },
+        "upperLeft": {
+          "x": 565.4941373207823,
+          "y": 195.12952381059327
+        }
+      },
+      "dockers": [
+        {
+          "x": 20.5,
+          "y": 20.5
+        },
+        {
+          "x": 50,
+          "y": 40
+        }
+      ],
+      "target": {
+        "resourceId": "sid-3FD0F338-064C-41CF-90E9-ABC5E3A998FD"
+      }
+    },
+    {
+      "resourceId": "sid-4EDAEAB6-F596-45BE-A1C8-B0FB55A51285",
+      "properties": {
+        "overrideid": "",
+        "name": "",
+        "documentation": "",
+        "executionlisteners": ""
+      },
+      "stencil": {
+        "id": "EndNoneEvent"
+      },
+      "childShapes": [],
+      "outgoing": [],
+      "bounds": {
+        "lowerRight": {
+          "x": 943,
+          "y": 208
+        },
+        "upperLeft": {
+          "x": 915,
+          "y": 180
+        }
+      },
+      "dockers": []
+    },
+    {
+      "resourceId": "sid-3EA32F30-60D0-43FA-A110-EC99164EB0E5",
+      "properties": {
+        "overrideid": "",
+        "name": "",
+        "documentation": "",
+        "conditionsequenceflow": "",
+        "executionlisteners": "",
+        "defaultflow": "false",
+        "flowoutcome": ""
+      },
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "sid-4EDAEAB6-F596-45BE-A1C8-B0FB55A51285"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 916.9264590026714,
+          "y": 434.6856729328297
+        },
+        "upperLeft": {
+          "x": 579.5735409973286,
+          "y": 202.31628019217032
+        }
+      },
+      "dockers": [
+        {
+          "x": 47,
+          "y": 23.5
+        },
+        {
+          "x": 14,
+          "y": 14
+        }
+      ],
+      "target": {
+        "resourceId": "sid-4EDAEAB6-F596-45BE-A1C8-B0FB55A51285"
+      }
+    },
+    {
+      "resourceId": "sid-AF5034DF-0E17-4809-8A29-D6BA79C77DE2",
+      "properties": {
+        "overrideid": "",
+        "name": "",
+        "documentation": "",
+        "conditionsequenceflow": "",
+        "executionlisteners": "",
+        "defaultflow": "false",
+        "flowoutcome": ""
+      },
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "sid-4EDAEAB6-F596-45BE-A1C8-B0FB55A51285"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 915.3260711294089,
+          "y": 188.33813882702088
+        },
+        "upperLeft": {
+          "x": 583.4239288705911,
+          "y": 50.90990804797912
+        }
+      },
+      "dockers": [
+        {
+          "x": 37.5,
+          "y": 20
+        },
+        {
+          "x": 14,
+          "y": 14
+        }
+      ],
+      "target": {
+        "resourceId": "sid-4EDAEAB6-F596-45BE-A1C8-B0FB55A51285"
+      }
+    },
+    {
+      "resourceId": "sid-FED5B8C3-8D1C-465E-AAEC-3CB80717D7A2",
+      "properties": {
+        "overrideid": "",
+        "name": "",
+        "documentation": "",
+        "conditionsequenceflow": "",
+        "executionlisteners": "",
+        "defaultflow": "false",
+        "flowoutcome": ""
+      },
+      "stencil": {
+        "id": "SequenceFlow"
+      },
+      "childShapes": [],
+      "outgoing": [
+        {
+          "resourceId": "sid-4EDAEAB6-F596-45BE-A1C8-B0FB55A51285"
+        }
+      ],
+      "bounds": {
+        "lowerRight": {
+          "x": 914.8515625,
+          "y": 195
+        },
+        "upperLeft": {
+          "x": 790.21875,
+          "y": 194
+        }
+      },
+      "dockers": [
+        {
+          "x": 50,
+          "y": 40
+        },
+        {
+          "x": 852.5,
+          "y": 195
+        },
+        {
+          "x": 852.5,
+          "y": 194
+        },
+        {
+          "x": 14,
+          "y": 14
+        }
+      ],
+      "target": {
+        "resourceId": "sid-4EDAEAB6-F596-45BE-A1C8-B0FB55A51285"
+      }
+    }
+  ],
+  "bounds": {
+    "lowerRight": {
+      "x": 1200,
+      "y": 1050
+    },
+    "upperLeft": {
+      "x": 0,
+      "y": 0
+    }
+  },
+  "stencilset": {
+    "url": "stencilsets/bpmn2.0/bpmn2.0.json",
+    "namespace": "http://b3mn.org/stencilset/bpmn2.0#"
+  },
+  "ssextensions": []
+}

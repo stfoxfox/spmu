@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<fragment xmlns="http://schemas.haulmont.com/cuba/screen/fragment.xsd"
+          xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+>
+    <data readOnly="true">
+        <collection id="applicationStageEventsDc"
+                    class="com.company.spmu.entity.ApplicationStageEvent"
+                    view="applicationStageEvent-view">
+            <loader id="applicationStageEventsDl">
+                <query>
+                    <![CDATA[select e from spmu_ApplicationStageEvent e
+                    LEFT JOIN spmu_ApplicationStageValue v ON v.applicationStage=e
+                    LEFT JOIN spmu_PlanAccount p ON p=v.planAccount
+                    LEFT JOIN spmu_Account a ON a=v.analytica
+                    order by e.order
+                    ]]>
+                    <condition>
+                        <and>
+                            <c:jpql>
+                                <c:where>e.application.id=:parentApp</c:where>
+                            </c:jpql>
+                            <or>
+                                <c:jpql>
+                                    <c:where>e.planArticle.name like :s1</c:where>
+                                </c:jpql>
+                                <c:jpql>
+                                    <c:where>p.name like :s2</c:where>
+                                </c:jpql>
+                                <c:jpql>
+                                    <c:where>a.name like :s3</c:where>
+                                </c:jpql>
+                                <c:jpql>
+                                    <c:where>e.name like :s4</c:where>
+                                </c:jpql>
+                                <c:jpql>
+                                    <c:where>e.description like :s5</c:where>
+                                </c:jpql>
+                                <c:jpql>
+                                    <c:where>e.order=:s6</c:where>
+                                </c:jpql>
+                            </or>
+                        </and>
+                    </condition>
+                </query>
+            </loader>
+        </collection>
+        <instance id="applicationEventDc"
+                  class="com.company.spmu.entity.ApplicationEvent"
+                  view="applicationEvent-view-full"
+                  provided="true">
+            <loader id="applicationEventDl" provided="true"/>
+        </instance>
+    </data>
+    <layout expand="applicationStageEventsTable"
+            spacing="true" width="100%" height="100%">
+        <filter id="filter"
+                applyTo="applicationStageEventsTable"
+                dataLoader="applicationStageEventsDl" manualApplyRequired="false" stylename="extfilter" visible="false">
+            <properties include=".*"/>
+        </filter>
+        <hbox width="100%" expand="csslay2">
+            <cssLayout id="csslay2" align="TOP_LEFT">
+                <buttonsPanel id="buttonsPanel" align="TOP_LEFT"
+                              alwaysVisible="true">
+                    <!--
+                    <button id="printBtn" caption="&#1055;&#1077;&#1095;&#1072;&#1090;&#1100;" icon="PRINT"
+                            stylename="buttontransparent" box.expandRatio="0" action="applicationStageEventsTable.print" />
+                    -->
+                    <popupButton id="exportButton" caption="Экспорт" stylename="buttontransparent" icon="SHARE_SQUARE_O">
+                        <actions>
+                            <action id="applicationStageEventsTable.excel" caption="в Excel"/>
+                            <action id="exportToPdf" caption="в PDF"/>
+                        </actions>
+                    </popupButton>
+                    <!--
+                    <button id="dogartBtn" caption="&#1055;&#1086;&#1082;&#1072;&#1079;&#1072;&#1090;&#1100; &#1076;&#1086;&#1075;&#1086;&#1074;&#1086;&#1088;&#1099; &#1087;&#1086; &#1089;&#1090;&#1072;&#1090;&#1100;&#1103;&#1084; &#1042;&#1055;&#1054;"
+                            icon="PLANE" stylename="buttontransparent" box.expandRatio="0" />
+                    -->
+                </buttonsPanel>
+            </cssLayout>
+            <cssLayout align="TOP_RIGHT">
+                <popupView id="columnsPopup" hideOnMouseOut="false">
+                    <checkBoxGroup id="columnsList"/>
+                </popupView>
+                <button id="refreshBtn" action="applicationStageEventsTable.refresh" caption=""
+                        stylename="buttontransparent"/>
+                <textField id="searchField"/>
+                <button id="searchBtn" action="applicationStageEventsTable.search"
+                        caption="Поиск" stylename="buttontransparent"/>
+                <popupButton stylename="buttontransparent popup-without-arrow" caption="" icon="COG"  align="MIDDLE_RIGHT" id="settingsBtn" css="background-color:#7ba3d9">
+                    <actions>
+                        <action id="filterAction" caption="Настроить фильтр"/>
+                        <action id="columnsAction" caption="Настроить колонки таблицы" />
+                    </actions>
+                </popupButton>
+            </cssLayout>
+        </hbox>
+        <groupTable id="applicationStageEventsTable"
+                    width="100%"
+                    dataContainer="applicationStageEventsDc"
+                    multiselect="true">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+                <action id="refresh" type="refresh"/>
+                <action id="excel" type="excel"/>
+                <action id="copy" caption="Copy" icon="COPY" trackSelection="true"/>
+                <action id="moveup" trackSelection="true"/>
+                <action id="movedown" trackSelection="true"/>
+                <action id="print"/>
+                <action id="search"/>
+            </actions>
+            <columns>
+                <column id="order" caption="№"/>
+                <column id="planArticle" caption="Статья ВПО" width="100"/>
+                <column id="applicationStageValue.planAccount.name" caption="КУУ" width="150"/>
+                <column id="applicationStageValue.analytica.name" caption="КВУ" width="150"/>
+                <column id="name" caption="Наименование группы доходов/наименование предприятия" width="200"/>
+                <column id="description" caption="Детализация предмета дохода/этап мероприятия" width="200"/>
+                <column id="" caption="Договор №"/>
+                <column id="value" caption="Общая стоимость"/>
+            </columns>
+            <rowsCount/>
+        </groupTable>
+        <hbox width="100%" expand="butpanel3">
+            <buttonsPanel id="butpanel2">
+                <button id="createBtn"  stylename="buttonwhite"
+                        caption="&#1044;&#1086;&#1073;&#1072;&#1074;&#1080;&#1090;&#1100;" action="applicationStageEventsTable.create"/>
+                <button id="editBtn" action="applicationStageEventsTable.edit"
+                        caption="&#1056;&#1077;&#1076;&#1072;&#1082;&#1090;&#1080;&#1088;&#1086;&#1074;&#1072;&#1090;&#1100;"
+                        stylename="buttonwhite"/>
+                <button id="copyBtn" stylename="buttonwhite"
+                        caption="&#1057;&#1082;&#1086;&#1087;&#1080;&#1088;&#1086;&#1074;&#1072;&#1090;&#1100;"
+                        action="applicationStageEventsTable.copy"/>
+                <button id="removeBtn" action="applicationStageEventsTable.remove" stylename="buttonwhite"
+                        caption="&#1059;&#1076;&#1072;&#1083;&#1080;&#1090;&#1100;"/>
+                <button id="upBtn" caption="&#1055;&#1077;&#1088;&#1077;&#1084;&#1077;&#1089;&#1090;&#1080;&#1090;&#1100; &#1074;&#1074;&#1077;&#1088;&#1093;"
+                        stylename="buttonwhite" action="applicationStageEventsTable.moveup" />
+                <button id="downBtn" caption="&#1055;&#1077;&#1088;&#1077;&#1084;&#1077;&#1089;&#1090;&#1080;&#1090;&#1100; &#1074;&#1085;&#1080;&#1079;"
+                        stylename="buttonwhite" action="applicationStageEventsTable.movedown" />
+            </buttonsPanel>
+            <buttonsPanel id="butpanel3" align="TOP_RIGHT">
+                <button id="closeBtn" stylename="buttontransparent"
+                        caption="&#1047;&#1072;&#1082;&#1088;&#1099;&#1090;&#1100;"/>
+            </buttonsPanel>
+        </hbox>
+    </layout>
+</fragment>

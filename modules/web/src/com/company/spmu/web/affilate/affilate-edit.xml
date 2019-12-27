@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://editorCaption"
+        focusComponent="form"
+        messagesPack="com.company.spmu.web.affilate">
+    <data>
+        <instance id="affilateDc"
+                  class="com.company.spmu.entity.Affilate"
+                  view="affilate-view">
+            <loader/>
+        </instance>
+        <collection id="parentsDc" class="com.company.spmu.entity.Affilate" view="_minimal">
+            <loader id="parentsLc">
+                <query>
+                    <![CDATA[select e from spmu_Affilate e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="editActions" spacing="true" stylename="layoutblue">
+        <form id="form" dataContainer="affilateDc">
+            <column width="250px">
+                <maskedField id="guidField" mask="hhhhhhhh-hhhh-hhhh-hhhh-hhhhhhhhhhhh" property="guid"/>
+                <lookupPickerField id="parentField" optionsContainer="parentsDc" property="parent">
+                    <actions>
+                        <action id="lookup" type="picker_lookup"/>
+                    </actions>
+                </lookupPickerField>
+                <textField id="codeField" property="code"/>
+                <textField id="nameField" property="name"/>
+                <textArea id="descriptionField" property="description" rows="5"/>
+                <textField id="fullnameField" property="fullname"/>
+            </column>
+        </form>
+        <hbox id="editActions" spacing="true">
+            <button action="windowCommitAndClose"/>
+            <button action="windowClose"/>
+        </hbox>
+    </layout>
+</window>

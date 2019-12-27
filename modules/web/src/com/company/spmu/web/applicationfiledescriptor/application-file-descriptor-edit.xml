@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://editorCaption"
+        focusComponent="form"
+        messagesPack="com.company.spmu.web.applicationfiledescriptor">
+    <data>
+        <instance id="applicationFileDescriptorDc"
+                  class="com.company.spmu.entity.ApplicationFileDescriptor"
+                  view="applicationFileDescriptor-edit">
+            <loader/>
+        </instance>
+    </data>
+    <dialogMode height="AUTO"
+                width="AUTO"
+                modal="true"
+                forceDialog="true"/>
+    <layout expand="editActions" spacing="true">
+        <form id="form" dataContainer="applicationFileDescriptorDc">
+            <column width="250px">
+                <textField id="descriptionField" property="description"/>
+                <textField id="nameField" property="file.name"/>
+                <textField id="typeField" property="file.extension" editable="false"/>
+                <textField id="sizeField" property="file.size" editable="false"/>
+                <textField id="updatedField" property="file.updateTs" editable="false"/>
+            </column>
+        </form>
+        <hbox id="editActions" spacing="true">
+            <button action="windowCommitAndClose"/>
+            <button action="windowClose"/>
+        </hbox>
+    </layout>
+</window>

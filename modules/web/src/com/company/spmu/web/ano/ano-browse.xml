@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://browseCaption"
+        focusComponent="anoesTable"
+        messagesPack="com.company.spmu.web.ano">
+    <data readOnly="true">
+        <collection id="anoesDc" class="com.company.spmu.entity.Ano" view="ano-view">
+            <loader id="anoesDl">
+                <query><![CDATA[select e from spmu_Ano e ]]></query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="anoesTable" spacing="true" stylename="layoutblue">
+        <filter id="filter"
+                applyTo="anoesTable"
+                dataLoader="anoesDl">
+            <properties include=".*"/>
+        </filter>
+        <table id="anoesTable"
+               width="100%"
+               dataContainer="anoesDc">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+            </actions>
+            <columns>
+                <column id="dataType"/>
+                <column id="val"/>
+                <column id="timePeriod"/>
+                <column id="isFact"/>
+                <column id="flightType" caption="Тип полёта"/>
+                <column id="affiliate" caption="Филиал"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="anoesTable.create"/>
+                <button id="editBtn" action="anoesTable.edit"/>
+                <button id="removeBtn" action="anoesTable.remove"/>
+            </buttonsPanel>
+        </table>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

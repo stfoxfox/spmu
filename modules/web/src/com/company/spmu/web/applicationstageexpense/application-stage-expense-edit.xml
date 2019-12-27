@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://editorCaption"
+        focusComponent="form"
+        messagesPack="com.company.spmu.web.applicationstageexpense"
+>
+    <data>
+        <instance id="applicationStageExpenseDc"
+                  class="com.company.spmu.entity.ApplicationStageExpense"
+                  view="applicationStageExpense-edit">
+            <loader/>
+            <instance id="applicationStageValueDc" property="applicationStageValue"/>
+            <instance id="applicationStageContractDc" property="applicationStageContract"/>
+        </instance>
+        <collection id="planAccountsDc" class="com.company.spmu.entity.PlanAccount" view="_minimal">
+            <loader id="planAccountsDl">
+                <query>
+                    <![CDATA[select e from spmu_PlanAccount e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="accountsDc" class="com.company.spmu.entity.Account" view="_minimal">
+            <loader id="accountsDl">
+                <query>
+                    <![CDATA[select e from spmu_Account e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="90%"
+                width="90%"/>
+    <layout expand="scrollBox" spacing="true" stylename="layoutblue">
+        <hbox id="editActions" spacing="true">
+            <button caption="&#1056;&#1077;&#1076;&#1072;&#1082;&#1090;&#1080;&#1088;&#1086;&#1074;&#1072;&#1090;&#1100;"
+                    icon="UNLOCK"/>
+            <button caption="Изменения и корректировки"
+                    icon="REFRESH_ACTION" id="changesBtn" />
+            <button action="windowCommitAndClose"
+                    caption="Сохранить" icon="SAVE"/>
+            <button action="windowClose" caption="&#1047;&#1072;&#1082;&#1088;&#1099;&#1090;&#1100;" icon="UNDO"/>
+        </hbox>
+        <hbox margin="true,false,true,false">
+            <label id="titleLabel" css="font-size:16pt; font-weight:bold;"/>
+        </hbox>
+        <scrollBox id="scrollBox" spacing="true">
+            <form id="form" dataContainer="applicationStageExpenseDc" width="100%">
+                <hbox spacing="true" id="topLine">
+                    <textField caption="№" width="100px" dataContainer="applicationStageExpenseDc" property="order" editable="false"/>
+                    <lookupPickerField id="applicationStageValueDcField" optionsContainer="accountsDc"
+                                       dataContainer="applicationStageValueDc" property="analytica" caption="&#1050;&#1042;&#1059;"
+                                       inputPrompt="&#1057;&#1087;&#1088;&#1072;&#1074;&#1086;&#1095;&#1085;&#1080;&#1082; &#1050;&#1042;&#1059;"
+                                       captionProperty="name">
+                    </lookupPickerField>
+                    <lookupPickerField id="accountField" optionsContainer="planAccountsDc"
+                                       dataContainer="applicationStageValueDc" property="planAccount" caption="КУУ"
+                                       inputPrompt="&#1057;&#1087;&#1088;&#1072;&#1074;&#1086;&#1095;&#1085;&#1080;&#1082; &#1076;&#1074;&#1080;&#1078;&#1077;&#1085;&#1080;&#1103; &#1076;&#1077;&#1085;&#1077;&#1078;&#1085;&#1099;&#1093; &#1089;&#1088;&#1077;&#1076;&#1089;&#1090;&#1074; (&#1076;&#1083;&#1103; &#1059;&#1059;)"
+                                       captionProperty="name">
+                    </lookupPickerField>
+                </hbox>
+
+                <flowBox width="100%" spacing="true" id="yearsBox">
+                    <hbox spacing="true" width="150px" visible="false">
+                        <textField id="totalField" datatype="double" editable="false"
+                                   dataContainer="applicationStageValueDc" property="value" caption="Общая стоимость"
+                                   width="100%"/>
+                    </hbox>
+
+                    <hbox spacing="true" width="150px">
+                        <textField id="year1" datatype="double" width="100%"/>
+                    </hbox>
+                    <hbox spacing="true" width="150px">
+                        <textField id="year2" datatype="double" width="100%"/>
+                    </hbox>
+                    <hbox spacing="true" width="150px">
+                        <textField id="year3" datatype="double" width="100%"/>
+                    </hbox>
+                    <hbox spacing="true" width="150px">
+                        <textField id="year4" datatype="double" width="100%"/>
+                    </hbox>
+                    <hbox spacing="true" width="300px" visible="false" id="totalBox">
+                        <textField id="totalForAllYearsField" datatype="double"
+                                   caption="Запланированно в предшествующие годы" width="100%"/>
+                    </hbox>
+                </flowBox>
+                <flowBox spacing="true">
+                    <button  caption="Показать месяца" id="showMonths" stylename="butlower" />
+                    <hbox id="quarters" spacing="true">
+                        <textField id="q1Field" dataContainer="applicationStageExpenseDc" datatype="double" property="q1"
+                                   caption="Кв. 1"
+                                   width="120px">
+                        </textField>
+                        <textField id="q2Field" dataContainer="applicationStageExpenseDc" datatype="double" property="q2"
+                                   caption="Кв. 2"
+                                   width="120px"/>
+                        <textField id="q3Field" dataContainer="applicationStageExpenseDc" datatype="double" property="q3"
+                                   caption="Кв. 3"
+                                   width="120px"/>
+                        <textField id="q4Field" dataContainer="applicationStageExpenseDc" datatype="double" property="q4"
+                                   caption="Кв. 4"
+                                   width="120px"/>
+                    </hbox>
+                    <hbox id="months" visible="false" spacing="true">
+                        <vbox width="100%">
+                            <textField id="m1Field" dataContainer="applicationStageExpenseDc" datatype="double" property="m1"
+                                       caption="Январь"
+                                       width="120px"/>
+                            <textField id="m2Field" dataContainer="applicationStageExpenseDc" datatype="double" property="m2"
+                                       caption="Февраль"
+                                       width="120px"/>
+                            <textField id="m3Field" dataContainer="applicationStageExpenseDc" datatype="double" property="m3"
+                                       caption="Март"
+                                       width="120px"/>
+                        </vbox>
+                        <vbox width="100%">
+                            <textField id="m4Field" dataContainer="applicationStageExpenseDc" datatype="double" property="m4"
+                                       caption="Апрель"
+                                       width="120px"/>
+                            <textField id="m5Field" dataContainer="applicationStageExpenseDc" datatype="double" property="m5"
+                                       caption="Май"
+                                       width="120px"/>
+                            <textField id="m6Field" dataContainer="applicationStageExpenseDc" datatype="double" property="m6"
+                                       caption="Июнь"
+                                       width="120px"/>
+                        </vbox>
+                        <vbox width="100%">
+                            <textField id="m7Field" dataContainer="applicationStageExpenseDc" datatype="double" property="m7"
+                                       caption="Июль"
+                                       width="120px"/>
+                            <textField id="m8Field" dataContainer="applicationStageExpenseDc" datatype="double" property="m8"
+                                       caption="Август"
+                                       width="120px"/>
+                            <textField id="m9Field" dataContainer="applicationStageExpenseDc" datatype="double" property="m9"
+                                       caption="Сентябрь"
+                                       width="120px"/>
+                        </vbox>
+                        <vbox>
+                            <textField id="m10Field" dataContainer="applicationStageExpenseDc" datatype="double" property="m10"
+                                       caption="Октябрь"
+                                       width="120px"/>
+                            <textField id="m11Field" dataContainer="applicationStageExpenseDc" datatype="double" property="m11"
+                                       caption="Ноябрь"
+                                       width="120px"/>
+                            <textField id="m12Field" dataContainer="applicationStageExpenseDc" datatype="double" property="m12"
+                                       caption="Декабрь"
+                                       width="120px"/>
+                        </vbox>
+                    </hbox>
+                </flowBox>
+
+            </form>
+
+            <buttonsPanel>
+                <button caption="Закрыть" action="windowClose"/>
+                <button caption="Сохранить" action="windowCommitAndClose"/>
+            </buttonsPanel>
+        </scrollBox>
+    </layout>
+</window>

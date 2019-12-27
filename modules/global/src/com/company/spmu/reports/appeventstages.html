@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>Example</title>
+    <style type="text/css">
+        table {
+            border: 1px solid #000;
+            border-collapse: collapse;
+        }
+        table td, table th {
+            border: 1px solid #000;
+            padding: 2px 4px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<#assign items = Root.bands.items />
+<h1>Список статей заявок на мероприятие</h1>
+<table>
+    <thead>
+    <tr>
+        <th>№</th>
+        <th>Статья ВПО</th>
+        <th>КУУ</th>
+        <th>КВУ</th>
+        <th>Наименование группы доходов/наименование предприятия</th>
+        <th>Детализация предмета дохода/этап мероприятия</th>
+        <th>Договор №</th>
+        <th>Общая стоимость</th>
+    </tr>
+    </thead>
+    <tbody>
+    <#list items as item>
+    <tr>
+        <td></td>
+        <td>${item.fields.vpo}</td>
+        <td>${item.fields.kuu}</td>
+        <td>${item.fields.kvu}</td>
+        <td>${item.fields.name}</td>
+        <td>${item.fields.descr}</td>
+        <td>${item.fields.num}</td>
+        <td>${item.fields.price}</td>
+    </tr>
+    </#list>
+    </tbody>
+</table>
+<script>
+    window.print();
+</script>
+</body>
+</html>

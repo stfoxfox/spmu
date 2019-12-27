@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://browseCaption"
+        focusComponent="pricingProceduresTable"
+        messagesPack="com.company.spmu.web.screens.pricingprocedure">
+    <data readOnly="true">
+        <collection id="pricingProceduresDc"
+                    class="com.company.spmu.entity.PricingProcedure"
+                    view="_local">
+            <loader id="pricingProceduresDl">
+                <query>
+                    <![CDATA[select e from spmu_PricingProcedure e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="pricingProceduresTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="pricingProceduresTable"
+                dataLoader="pricingProceduresDl">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="pricingProceduresTable"
+                    width="100%"
+                    dataContainer="pricingProceduresDc">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+                <action id="refresh" type="refresh"/>
+            </actions>
+            <columns>
+                <column id="code"/>
+                <column id="name"/>
+                <column id="description"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="pricingProceduresTable.create"/>
+                <button id="editBtn" action="pricingProceduresTable.edit"/>
+                <button id="removeBtn" action="pricingProceduresTable.remove"/>
+                <button id="refreshBtn" action="pricingProceduresTable.refresh"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

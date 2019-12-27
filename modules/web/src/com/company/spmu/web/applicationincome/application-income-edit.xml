@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://editorCaption"
+        focusComponent="form"
+        messagesPack="com.company.spmu.web.applicationincome">
+    <data>
+        <instance id="applicationIncomeDc"
+                  class="com.company.spmu.entity.ApplicationIncome"
+                  view="applicationIncome-view-create">
+            <loader id="applicationIncomeDl"/>
+        </instance>
+        <collection id="planArticlesDc" class="com.company.spmu.entity.PlanArticle" view="_minimal">
+            <loader id="planArticlesLc">
+                <query>
+                    <![CDATA[select e from spmu_PlanArticle e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="affiliatesDc" class="com.company.spmu.entity.Affilate" view="affilate-view_2">
+            <loader id="affiliatesLc">
+                <query>
+                    <![CDATA[select e from spmu_Affilate e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="responsiblesDc" class="com.company.spmu.entity.Employee" view="_minimal">
+            <loader id="responsiblesLc">
+                <query>
+                    <![CDATA[select e from spmu_Employee e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="targetsDc" class="com.company.spmu.entity.Target" view="_minimal">
+            <loader id="targetsLc">
+                <query>
+                    <![CDATA[select e from spmu_Target e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="articlesDc" class="com.company.spmu.entity.PlanArticle" view="_minimal">
+            <loader id="articlesLc">
+                <query>
+                    <![CDATA[select e from spmu_PlanArticle e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="employeesDc" class="com.company.spmu.entity.Employee" view="employee-view-apll">
+            <loader id="employeesDl">
+                <query><![CDATA[select e from spmu_Employee e ]]></query>
+            </loader>
+            <collection id="applicationResponsiblesDc" property="applicationResponsibles"/>
+        </collection>
+        <collection id="divisionsDc" class="com.company.spmu.entity.Division" view="_minimal">
+            <loader id="divisionsDl">
+                <query><![CDATA[select e from spmu_Division e where e.affiliate is null]]></query>
+            </loader>
+        </collection>
+
+        <collection id="procAttachmentsDc"
+                    class="com.haulmont.bpm.entity.ProcAttachment"
+                    view="procAttachment-browse">
+            <loader id="procAttachmentsDl">
+                <query><![CDATA[select e from bpm$ProcAttachment e order by e.createTs]]>
+                    <condition>
+                        <and>
+                            <c:jpql>
+                                <c:where>e.procInstance.entity.entityId  = :entityId</c:where>
+                            </c:jpql>
+                        </and>
+                    </condition>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout>
+        <tabSheet id="tabs" height="100%" width="100%">
+            <tab id="editortab" caption="Заявка на доходы" expand="scrollBox">
+
+                <scrollBox id="scrollBox" spacing="true">
+                    <form id="form" dataContainer="applicationIncomeDc" width="100%" align="TOP_LEFT">
+                        <hbox margin="true,false,true,false" width="100%" align="MIDDLE_LEFT">
+                            <label id="titleLabel" css="font-size:16pt; font-weight:bold;" align="MIDDLE_LEFT"/>
+                        </hbox>
+                        <cssLayout width="100%">
+                            <hbox spacing="true" css="vertical-align: bottom;" margin="true,false,true,false">
+                                <!--
+                                <button id="print" caption="&#1055;&#1077;&#1095;&#1072;&#1090;&#1100;" icon="PRINT"/>
+                                -->
+                                <button id="save"
+                                        caption="&#1057;&#1086;&#1093;&#1088;&#1072;&#1085;&#1080;&#1090;&#1100;"
+                                        action="windowCommitAndClose" icon="SAVE"/>
+                                <button caption="Изменения и корректировки"
+                                        icon="REFRESH_ACTION" id="changesBtn" />
+                                <button caption="&#1048;&#1089;&#1090;&#1086;&#1088;&#1080;&#1103; &#1089;&#1086;&#1075;&#1083;&#1072;&#1089;&#1086;&#1074;&#1072;&#1085;&#1080;&#1103;"
+                                        icon="PENCIL_SQUARE_O" id="accHistoryBtn"/>
+                            </hbox>
+                            <hbox css="margin-left:70%;">
+                                <textField editable="false" caption="Корректировка заявки №:"></textField>
+                                <textField caption="Статус заявки" editable="false" dataContainer="applicationIncomeDc" property="status"></textField>
+                            </hbox>
+                        </cssLayout>
+                        <hbox spacing="true" align="MIDDLE_LEFT">
+                            <textField id="codeField" property="code" align="TOP_LEFT" caption="Заявка №" dataContainer="applicationIncomeDc" width="100px" editable="false"/>
+                            <dateField id="dateField" property="date" caption="От" dataContainer="applicationIncomeDc"/>
+                            <textField id="yearField" property="year" caption="Плановый период" dataContainer="applicationIncomeDc" width="200px">
+                                <validator class="com.company.spmu.web.YearValidator"/>
+                            </textField>
+                            <textField caption="Общая стоимость" property="value" editable="false" dataContainer="applicationIncomeDc"/>
+                            <textField id="valueField" caption="Суммы" editable="false" datatype="string"/>
+                            <lookupPickerField dataContainer="applicationIncomeDc" id="affiliateField" optionsContainer="affiliatesDc" property="affiliate" caption="Подразделение">
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                </actions>
+                            </lookupPickerField>
+                            <lookupField dataContainer="applicationIncomeDc" id="divisionField"
+                                         optionsContainer="divisionsDc" property="division" caption="Отдел"
+                                         nullName="" editable="false"/>
+                        </hbox>
+                        <hbox spacing="true" align="MIDDLE_LEFT">
+                            <textField caption="План" id="planTemplateField" editable="false"/>
+                            <lookupPickerField dataContainer="applicationIncomeDc" id="planArticleField" optionsContainer="articlesDc" property="planArticle" caption="Статья ВПО">
+                                <actions>
+                                    <action id="lookup" type="picker_lookup"/>
+                                </actions>
+                            </lookupPickerField>
+                            <lookupField dataContainer="applicationIncomeDc"
+                                         id="kindField"
+                                         inputPrompt="Вид доходов"
+                                         caption="Вид доходов"
+                                         width="200px"
+                                         align="MIDDLE_LEFT" optionsEnum="com.company.spmu.enumeration.Kind" property="kind"/>
+                            <lookupField id="initiator" caption="Инициатор" optionsContainer="employeesDc" property="applicationResponsibleInitiator" editable="false"/>
+                        </hbox>
+                        <flowBox width="100%">
+                            <textArea dataContainer="applicationIncomeDc" id="nameField" property="name" width="100%" contextHelpTextHtmlEnabled="true" caption="Наименование текущих доходов"/>
+                        </flowBox>
+                        <flowBox width="100%">
+                            <textArea dataContainer="applicationIncomeDc" id="descriptionField" property="description" rows="5" caption="Комментарий" width="100%"/>
+                        </flowBox>
+                        <flowBox width="100%" spacing="true">
+                            <tokenList id="editors" dataContainer="applicationIncomeDc" property="applicationResponsibleEditors" caption="Редакторы">
+                                <lookup optionsContainer="employeesDc" multiselect="true"/>
+                            </tokenList>
+                        </flowBox>
+                    </form>
+                </scrollBox>
+                <hbox id="editActions" spacing="true" width="100%" expand="butpanel2">
+                    <buttonsPanel id="butpanel1" align="MIDDLE_LEFT">
+                        <!--
+                        <button caption="&#1057;&#1086;&#1079;&#1076;&#1072;&#1085;&#1080;&#1077; &#1079;&#1072;&#1103;&#1074;&#1082;&#1080; &#1085;&#1072; &#1082;&#1086;&#1088;&#1088;&#1077;&#1082;&#1090;&#1080;&#1088;&#1086;&#1074;&#1082;&#1091;" id="createCorBtn" stylename="buttonwhite"/>
+                        -->
+                        <fragment id="procActionsFragment" screen="spmu_ProcActionsFragment" stylename="proc-buttons-buttonwhite"/>
+                        <!--
+                        <button caption="&#1042; &#1072;&#1088;&#1093;&#1080;&#1074;" id="toArchive" stylename="buttonwhite"/>
+                        <button id="cancelAcceptBtn" caption="Отозвать" stylename="buttonwhite"/>
+                        -->
+                    </buttonsPanel>
+                    <buttonsPanel id="butpanel2" align="MIDDLE_RIGHT">
+                        <button action="windowClose" caption="&#1047;&#1072;&#1082;&#1088;&#1099;&#1090;&#1100;" stylename="buttontransparent" align="MIDDLE_RIGHT"/>
+                    </buttonsPanel>
+                </hbox>
+            </tab>
+            <tab id="articles_list" caption="Статьи заявки" expand="stagebrowser">
+                <fragment screen="spmu_ApplicationStageBrowseIncome" id="stagebrowser"></fragment>
+            </tab>
+        </tabSheet>
+    </layout>
+</window>

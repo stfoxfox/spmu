@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://browseCaption"
+        focusComponent="connectionLogsTable"
+        messagesPack="com.company.spmu.web.screens.connectionlog">
+    <data readOnly="true">
+        <collection id="connectionLogsDc"
+                    class="com.company.spmu.entity.ConnectionLog"
+                    view="connectionLog-view">
+            <loader id="connectionLogsDl">
+                <query>
+                    <![CDATA[select e from spmu_ConnectionLog e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="connectionLogsTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="connectionLogsTable"
+                dataLoader="connectionLogsDl">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="connectionLogsTable"
+                    width="100%"
+                    dataContainer="connectionLogsDc"
+                    multiselect="true">
+            <actions>
+                <action id="remove" type="remove"/>
+                <action id="refresh" type="refresh"/>
+                <action id="excel" type="excel"/>
+            </actions>
+            <columns>
+                <column id="url" maxTextLength="10"/>
+                <column id="request"  maxTextLength="10"/>
+                <column id="httpCode"/>
+                <column id="response" maxTextLength="10"/>
+                <column id="createTs"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="removeBtn" action="connectionLogsTable.remove"/>
+                <button id="refreshBtn" action="connectionLogsTable.refresh"/>
+                <button id="excelBtn" action="connectionLogsTable.excel"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

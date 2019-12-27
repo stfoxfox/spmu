@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://editorCaption"
+        focusComponent="form"
+        messagesPack="com.company.spmu.web.plantype">
+    <data>
+        <instance id="planTypeDc"
+                  class="com.company.spmu.entity.PlanType"
+                  view="planType-view">
+            <loader/>
+        </instance>
+        <collection id="fundingsDc" class="com.company.spmu.entity.Finsource" view="_minimal">
+            <loader id="fundingsLc">
+                <query>
+                    <![CDATA[select e from spmu_Finsource e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="creatorsDc" class="com.company.spmu.entity.SpmuUser" view="_minimal">
+            <loader id="creatorsLc">
+                <query><![CDATA[select e from spmu_SpmuUser e]]></query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="editActions" spacing="true" stylename="layoutblue">
+        <form id="form" dataContainer="planTypeDc">
+            <column width="250px">
+                <maskedField id="guidField" mask="hhhhhhhh-hhhh-hhhh-hhhh-hhhhhhhhhhhh" property="guid"
+                             caption="msg://guidCaption"/>
+                <textField id="codeField" property="code" caption="msg://codeCaption"/>
+                <textField id="nameField" property="name" caption="msg://nameCaption"/>
+                <textArea id="descriptionField" property="description" rows="5" caption="msg://descriptionCaption"/>
+                <lookupField id="kindField" property="kind" caption="msg://kindCaption"/>
+                <checkBox id="fixedField" property="fixed" caption="msg://fixedCaption"/>
+                <lookupPickerField id="fundingField" optionsContainer="fundingsDc" property="funding"
+                                   caption="msg://fundingCaption">
+                    <actions>
+                        <action id="lookup" type="picker_lookup"/>
+                    </actions>
+                </lookupPickerField>
+                <dateField id="createdField" property="created" editable="false" caption="msg://createdCaption"/>
+                <dateField id="expiredField" property="expired" caption="msg://expiredCaption"/>
+                <lookupPickerField id="creatorField" optionsContainer="creatorsDc" property="creator" editable="false"
+                                   caption="msg://creatorCaption">
+                    <actions>
+                        <action id="lookup" type="picker_lookup"/>
+                    </actions>
+                </lookupPickerField>
+            </column>
+        </form>
+        <hbox id="editActions" spacing="true">
+            <button action="windowCommitAndClose"/>
+            <button action="windowClose"/>
+        </hbox>
+    </layout>
+</window>

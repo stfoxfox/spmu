@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://editorCaption"
+        focusComponent="form"
+        messagesPack="com.company.spmu.web.target">
+    <data>
+        <instance id="targetDc"
+                  class="com.company.spmu.entity.Target"
+                  view="_local">
+            <loader/>
+        </instance>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="editActions" spacing="true" stylename="layoutblue">
+        <form id="form" dataContainer="targetDc">
+            <column width="250px">
+                <textField id="codeField" property="code" caption="Код Цели"/>
+                <textField id="nameField" property="name"
+                           caption="Наименование цели"/>
+            </column>
+        </form>
+        <hbox id="editActions" spacing="true">
+            <button action="windowCommitAndClose"/>
+            <button action="windowClose"/>
+        </hbox>
+    </layout>
+</window>

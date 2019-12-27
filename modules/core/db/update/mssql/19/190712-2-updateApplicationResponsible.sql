@@ -1,0 +1,1 @@
+alter table SPMU_APPLICATION_RESPONSIBLE add DTYPE varchar(100) ;

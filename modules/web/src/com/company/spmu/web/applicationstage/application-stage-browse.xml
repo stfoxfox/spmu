@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://browseCaption"
+        focusComponent="applicationStagesTable"
+        messagesPack="com.company.spmu.web.applicationstage">
+    <data readOnly="true">
+        <collection id="applicationStagesDc"
+                    class="com.company.spmu.entity.ApplicationStage"
+                    view="applicationStage-view">
+            <loader id="applicationStagesDl">
+                <query><![CDATA[select e from spmu_ApplicationStage e
+left outer join spmu_ApplicationStageContract c on c.stage=e
+where e.application.id=:parentApp
+order by e.order
+                ]]>
+                </query>
+            </loader>
+        </collection>
+        <instance id="applicationDc" class="com.company.spmu.entity.Application" view="_minimal">
+            <loader id="applicationDl"/>
+        </instance>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="applicationStagesTable"
+            spacing="true" width="100%" stylename="layoutblue">
+        <hbox width="100%" expand="csslay2">
+            <cssLayout id="csslay2" align="TOP_LEFT">
+                <buttonsPanel id="buttonsPanel" align="TOP_LEFT"
+                              alwaysVisible="true">
+                    <button id="printBtn" caption="&#1055;&#1077;&#1095;&#1072;&#1090;&#1100;" icon="PRINT"
+                            stylename="buttontransparent" box.expandRatio="0" />
+                    <popupButton id="exportButton" caption="Экспорт" stylename="buttontransparent" icon="SHARE_SQUARE_O">
+                        <actions>
+                            <action id="applicationStagesTable.excel" caption="в Excel"/>
+                            <action id="exportToPdf" caption="в PDF"/>
+                        </actions>
+                    </popupButton>
+                    <button id="dogartBtn" caption="&#1055;&#1086;&#1082;&#1072;&#1079;&#1072;&#1090;&#1100; &#1076;&#1086;&#1075;&#1086;&#1074;&#1086;&#1088;&#1099; &#1087;&#1086; &#1089;&#1090;&#1072;&#1090;&#1100;&#1103;&#1084; &#1042;&#1055;&#1054;"
+                            icon="PLANE" stylename="buttontransparent" box.expandRatio="0" />
+                </buttonsPanel>
+            </cssLayout>
+            <cssLayout align="TOP_RIGHT">
+                <button id="refreshBtn" action="applicationStagesTable.refresh" caption=""
+                        stylename="buttontransparent"/>
+                <textField/>
+                <button id="searchBtn" action="applicationStagesTable.refresh"
+                        caption="&#1055;&#1086;&#1080;&#1089;&#1082;" stylename="buttontransparent"/>
+                <button id="settingsBtn" icon="COG" stylename="buttontransparent"/>
+            </cssLayout>
+        </hbox>
+        <groupTable id="applicationStagesTable"
+                    width="100%"
+                    dataContainer="applicationStagesDc"
+                    multiselect="true">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+                <action id="refresh" type="refresh"/>
+                <action id="excel" type="excel"/>
+                <action id="copy" caption="Copy" icon="COPY" trackSelection="true"/>
+                <action id="moveup" trackSelection="true"/>
+                <action id="movedown" trackSelection="true"/>
+            </actions>
+            <columns>
+                <column id="num" caption="№"/>
+                <column id="planArticle" caption="Статья ВПО" width="100"/>
+                <column id="applicationStageValue.planAccount.name" caption="КУУ" width="150"/>
+                <column id="applicationStageValue.analytica.name" caption="КВУ" width="150"/>
+                <column id="name" caption="Наименование группы доходов/наименование предприятия" width="200"/>
+                <column id="description" caption="Детализация предмета дохода/этап мероприятия" width="200"/>
+                <column id="order" caption="Договор №"/>
+                <column id="applicationStageValue.value" caption="Общая стоимость"/>
+                <column id="editNeeded" caption="Запланированно в предшествующие периоды" width="100"/>
+                <column id="editNeeded1" caption="Итого на 2020"/>
+                <column id="editNeeded2" caption="2021"/>
+                <column id="editNeeded3" caption="2022"/>
+                <column id="editNeeded4" caption="2023"/>
+            </columns>
+            <rowsCount/>
+        </groupTable>
+        <hbox width="100%" expand="butpanel3">
+            <buttonsPanel id="butpanel2">
+                <button id="createBtn"  stylename="buttonwhite"
+                        caption="&#1044;&#1086;&#1073;&#1072;&#1074;&#1080;&#1090;&#1100;"/>
+                <button id="editBtn" action="applicationStagesTable.edit"
+                        caption="&#1056;&#1077;&#1076;&#1072;&#1082;&#1090;&#1080;&#1088;&#1086;&#1074;&#1072;&#1090;&#1100;"
+                        stylename="buttonwhite"/>
+                <button id="copyBtn" stylename="buttonwhite"
+                        caption="&#1057;&#1082;&#1086;&#1087;&#1080;&#1088;&#1086;&#1074;&#1072;&#1090;&#1100;"
+                        action="applicationStagesTable.copy"/>
+                <button id="removeBtn" action="applicationStagesTable.remove" stylename="buttonwhite"
+                        caption="&#1059;&#1076;&#1072;&#1083;&#1080;&#1090;&#1100;"/>
+                <button id="upBtn" caption="&#1055;&#1077;&#1088;&#1077;&#1084;&#1077;&#1089;&#1090;&#1080;&#1090;&#1100; &#1074;&#1074;&#1077;&#1088;&#1093;"
+                        stylename="buttonwhite" action="applicationStagesTable.moveup" />
+                <button id="downBtn" caption="&#1055;&#1077;&#1088;&#1077;&#1084;&#1077;&#1089;&#1090;&#1080;&#1090;&#1100; &#1074;&#1085;&#1080;&#1079;"
+                        stylename="buttonwhite" action="applicationStagesTable.movedown" />
+            </buttonsPanel>
+            <buttonsPanel id="butpanel3" align="TOP_RIGHT">
+                <button id="closeBtn" stylename="buttontransparent"
+                        caption="&#1047;&#1072;&#1082;&#1088;&#1099;&#1090;&#1100;"/>
+            </buttonsPanel>
+        </hbox>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

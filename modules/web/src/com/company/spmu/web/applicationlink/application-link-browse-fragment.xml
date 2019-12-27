@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<fragment xmlns="http://schemas.haulmont.com/cuba/screen/fragment.xsd">
+    <data readOnly="true">
+        <collection id="applicationLinksDc"
+                    class="com.company.spmu.entity.ApplicationLink"
+                    view="applicationLink-view">
+            <loader id="applicationLinksDl">
+                <query>
+                    <![CDATA[select e from spmu_ApplicationLink e where e.parent.id=:parentApp]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="applicationStagesDc"
+                    class="com.company.spmu.entity.ApplicationStageEvent"
+                    view="applicationStageEvent-view">
+            <loader id="applicationStagesDl">
+                <query><![CDATA[select e from spmu_ApplicationStageEvent e where e.application.id=:parentApp]]></query>
+            </loader>
+        </collection>
+    </data>
+    <layout expand="table" spacing="true">
+        <hbox width="100%">
+            <label value="Заявка на мероприятие" id="labelTitle" stylename="screentitle"/>
+        </hbox>
+        <hbox css="margin-bottom: 12px">
+            <label value="Зависимости по времени" css="font-style: italic;" stylename="screentitle" width="100%"/>
+        </hbox>
+        <table id="table" editable="true" dataContainer="applicationLinksDc" width="100%">
+            <actions>
+                <action id="create"/>
+                <action id="edit"/>
+                <action id="remove" type="remove"/>
+            </actions>
+            <columns>
+                <column id="parentStage" caption="Наименование этапа" editable="true" optionsContainer="applicationStagesDc"/>
+                <column id="linkType" caption="Тип связи" editable="true"/>
+                <column id="step" caption="Сдвиг" editable="true"/>
+                <column id="childStage" caption="Связываемый объект" editable="true"/>
+            </columns>
+            <buttonsPanel id="buttonsPanel" alwaysVisible="true" align="TOP_RIGHT">
+                <button id="saveBtn" caption="Пересчёт лимитов"/>
+                <button id="createBtn" action="table.create"/>
+                <button id="removeBtn" action="table.remove"/>
+            </buttonsPanel>
+        </table>
+    </layout>
+</fragment>

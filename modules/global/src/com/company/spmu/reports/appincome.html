@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <title>Example</title>
+    <style type="text/css">
+        table {
+            border: 1px solid #000;
+            border-collapse: collapse;
+        }
+        table td, table th {
+            border: 1px solid #000;
+            padding: 2px 4px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<#assign items = Root.bands.items />
+<h1>Заявки на доходы</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Наименование</th>
+            <th>№ Заявки</th>
+            <th>Подразделение</th>
+            <th>Статья ВПО</th>
+            <th>Начало</th>
+            <th>Окончание</th>
+            <th>Стоимость, т.р.</th>
+        </tr>
+    </thead>
+    <tbody>
+<#list items as item>
+        <tr>
+            <td>${item.fields.name}</td>
+            <td>${item.fields.code}</td>
+            <td>${item.fields.affiliate}</td>
+            <td>${item.fields.vpo}</td>
+            <td>${item.fields.datestart}</td>
+            <td>${item.fields.dateend}</td>
+            <td>${item.fields.price}</td>
+        </tr>
+</#list>
+    </tbody>
+</table>
+<script>
+    window.print();
+</script>
+</body>
+</html>

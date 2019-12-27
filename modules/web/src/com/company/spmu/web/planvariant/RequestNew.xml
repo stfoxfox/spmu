@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://caption"
+        messagesPack="com.company.spmu.web.planvariant">
+    <actions>
+        <action id="ok"/>
+        <action id="cancel"/>
+    </actions>
+    <dialogMode forceDialog="true"/>
+    <layout>
+        <lookupField caption="Тип заявки" id="requestTypeField" textInputAllowed="false"/>
+        <buttonsPanel>
+            <button caption="ОК" action="ok"/>
+            <button caption="Отмена" action="cancel"/>
+        </buttonsPanel>
+    </layout>
+</window>

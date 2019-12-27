@@ -1,0 +1,2 @@
+alter table SPMU_EMPLOYEE add constraint FK_SPMU_EMPLOYEE_ON_MANDATE foreign key (MANDATE_ID) references SPMU_MANDATE(ID);
+create index IDX_SPMU_EMPLOYEE_ON_MANDATE on SPMU_EMPLOYEE (MANDATE_ID);

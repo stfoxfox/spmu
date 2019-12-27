@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://browseCaption"
+        focusComponent="workflowsTable"
+        messagesPack="com.company.spmu.web.workflow">
+    <data readOnly="true">
+        <collection id="workflowsDc"
+                    class="com.company.spmu.entity.Workflow"
+                    view="workflow-view">
+            <loader id="workflowsDl">
+                <query>
+                    <![CDATA[select e from spmu_Workflow e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="workflowsTable"
+            spacing="true" stylename="layoutblue">
+        <filter id="filter"
+                applyTo="workflowsTable"
+                dataLoader="workflowsDl">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="workflowsTable"
+                    width="100%"
+                    dataContainer="workflowsDc">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+            </actions>
+            <columns>
+                <column id="guid"/>
+                <column id="parent"/>
+                <column id="description"/>
+                <column id="equalToProcessStageStatus"/>
+                <column id="currentStage"/>
+                <column id="newStage"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="workflowsTable.create"/>
+                <button id="editBtn" action="workflowsTable.edit"/>
+                <button id="removeBtn" action="workflowsTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

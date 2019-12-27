@@ -1,0 +1,1 @@
+alter table SPMU_PLAN_VARIANT_TEMPLATE_ELEMENT add ATTR_NAME varchar(255) ;

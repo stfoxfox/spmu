@@ -1,0 +1,2 @@
+alter table SPMU_WORKFLOW add constraint FK_SPMU_WORKFLOW_ON_PARENT foreign key (PARENT_ID) references SPMU_WORKFLOW(ID);
+create index IDX_SPMU_WORKFLOW_ON_PARENT on SPMU_WORKFLOW (PARENT_ID);

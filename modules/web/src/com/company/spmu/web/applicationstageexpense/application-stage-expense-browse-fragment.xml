@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<fragment xmlns="http://schemas.haulmont.com/cuba/screen/fragment.xsd"
+          xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+>
+    <data readOnly="true">
+        <collection id="applicationStageExpensesDc"
+                    class="com.company.spmu.entity.ApplicationStageExpense"
+                    view="applicationStageExpense-view">
+            <loader id="applicationStageExpensesDl">
+                <query><![CDATA[select e from spmu_ApplicationStageExpense e
+left outer join spmu_ApplicationStageContract c on c.stage=e
+where e.application.id=:parentApp
+order by e.order
+                ]]>
+                    <condition>
+                        <or>
+                            <c:jpql>
+                                <c:where>e.planArticle.name like :s1</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>e.applicationStageValue.planAccount.name like :s2</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>e.applicationStageValue.analytica.name like :s3</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>e.name like :s4</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>e.description like :s5</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>e.order=:s6</c:where>
+                            </c:jpql>
+                        </or>
+                    </condition>
+                </query>
+            </loader>
+        </collection>
+        <instance id="applicationExpenseDc"
+                  class="com.company.spmu.entity.ApplicationExpense"
+                  view="applicationExpense-view-create"
+                  provided="true">
+            <loader id="applicationExpenseDl" provided="true"/>
+        </instance>
+    </data>
+    <layout expand="applicationStageExpensesTable"
+            spacing="true" width="100%" height="100%">
+        <hbox width="100%" expand="csslay2">
+            <cssLayout id="csslay2" align="TOP_LEFT">
+                <buttonsPanel id="buttonsPanel" align="TOP_LEFT"
+                              alwaysVisible="true">
+<!--                    <button id="printBtn" caption="&#1055;&#1077;&#1095;&#1072;&#1090;&#1100;" icon="PRINT"-->
+<!--                            stylename="buttontransparent" box.expandRatio="0" action="applicationStageExpensesTable.print" />-->
+                    <popupButton id="exportButton" caption="Экспорт" stylename="buttontransparent" icon="SHARE_SQUARE_O">
+                        <actions>
+                            <action id="applicationStageExpensesTable.excel" caption="в Excel"/>
+                            <action id="exportToPdf" caption="в PDF"/>
+                        </actions>
+                    </popupButton>
+                </buttonsPanel>
+            </cssLayout>
+            <cssLayout align="TOP_RIGHT">
+                <button id="refreshBtn" action="applicationStageExpensesTable.refresh" caption=""
+                        stylename="buttontransparent"/>
+                <textField id="searchField"/>
+                <button id="searchBtn" action="applicationStageExpensesTable.search"
+                        caption="Поиск" stylename="buttontransparent"/>
+                <button id="settingsBtn" icon="COG" stylename="buttontransparent"/>
+            </cssLayout>
+        </hbox>
+        <dataGrid id="applicationStageExpensesTable"
+                    width="100%"
+                    dataContainer="applicationStageExpensesDc"
+                    reorderingAllowed="false">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+                <action id="refresh" type="refresh"/>
+                <action id="excel" type="excel"/>
+                <action id="copy" caption="Copy" icon="COPY" trackSelection="true"/>
+                <action id="moveup" trackSelection="true"/>
+                <action id="movedown" trackSelection="true"/>
+                <action id="print"/>
+                <action id="search"/>
+            </actions>
+            <columns>
+                <column id="order" caption="№" property="order"/>
+                <column id="planArticle" caption="Статья ВПО" width="100" property="planArticle"/>
+                <column id="planAccount" caption="КУУ" width="150" property="applicationStageValue.planAccount.name"/>
+                <column id="analytica" caption="КВУ" width="150" property="applicationStageValue.analytica.name"/>
+                <column id="name" caption="Статья" property="name"/>
+                <column id="a1" caption="Наименование канала связи"/>
+                <column id="affiliate" caption="Подразделение" property="affiliate"/>
+                <column id="a6" caption="Наименование материала, ЗИП" />
+                <column id="name2" caption="Наименование объекта"/>
+                <column id="name3" caption="Наименование расходов" property="name"/>
+                <column id="a7" caption="Цена 1 литра, руб." />
+                <column id="a5" caption="Кол-во потреб. эл. энергии в год кв.ч." />
+                <column id="a18" caption="Наименование ОПФ"/>
+                <column id="a20" caption="Земельный участок"/>
+                <column id="a27" caption="Наименование подразделения, объекта"/>
+                <column id="contract" caption="Договор №" property="applicationStageContract.contract"/>
+                <column id="contractcode" caption="Договор №" property="applicationStageContract.contract.code"/>
+                <column id="a19" caption="Остаток по договору на началого года"/>
+                <column id="a2" caption="Процент оплаты" />
+                <column id="a4" caption="Стоимость аренды каналов в сутки/месяц" />
+                <column id="contractend" caption="Дата окончания договора" property="applicationStageContract.contract.end"/>
+                <column id="a3" caption="Остаток по договору на начало года"/>
+                <column id="a8" caption="Среднегодовой объем услуг"/>
+                <column id="a9" caption="Наименование медицинского учреждения" />
+                <column id="a10" caption="Вид медицинских услуг"/>
+                <column id="a11" caption="Кол-во услуг в год"/>
+                <column id="a12" caption="Средняя стоимость 1 услуги"/>
+                <column id="a13" caption="Наименование справочника"/>
+                <column id="a14" caption="Кол-во экземпляров"/>
+                <column id="a15" caption="Стоимость 1 экземпляра"/>
+                <column id="a16" caption="Наименование службы"/>
+                <column id="a17" caption="Наименование учебного заведения / Место командировки"/>
+                <column id="a21" caption="Цель командировки"/>
+                <column id="a22" caption="Вид налога"/>
+                <column id="a23" caption="Налогооблагаемая база"/>
+                <column id="a24" caption="Ставка"/>
+                <column id="a25" caption="Место проведения"/>
+                <column id="a26" caption="Прочие расходы"/>
+                <column id="q1" caption="Кв 1" />
+                <column id="q2" caption="Кв 2" />
+                <column id="q3" caption="Кв 3" />
+                <column id="q4" caption="Кв 4" />
+                <column id="description" caption="Детализация предмета расхода/этап мероприятия" width="200" property="description"/>
+                <column id="value" caption="Общая стоимость" />
+                <column id="prevYear" caption="Запланированно в предшествующие периоды" width="100"/>
+                <column id="year1"/>
+                <column id="year2"/>
+                <column id="year3"/>
+                <column id="year4"/>
+            </columns>
+            <rowsCount/>
+        </dataGrid>
+        <hbox width="100%" expand="butpanel3">
+            <buttonsPanel id="butpanel2">
+                <button id="createBtn"  stylename="buttonwhite" action="applicationStageExpensesTable.create"
+                        caption="&#1044;&#1086;&#1073;&#1072;&#1074;&#1080;&#1090;&#1100;"/>
+                <button id="copyBtn" stylename="buttonwhite"
+                        caption="&#1057;&#1082;&#1086;&#1087;&#1080;&#1088;&#1086;&#1074;&#1072;&#1090;&#1100;"
+                        action="applicationStageExpensesTable.copy"/>
+                <button id="removeBtn" action="applicationStageExpensesTable.remove" stylename="buttonwhite"
+                        caption="&#1059;&#1076;&#1072;&#1083;&#1080;&#1090;&#1100;"/>
+                <button id="upBtn" caption="&#1055;&#1077;&#1088;&#1077;&#1084;&#1077;&#1089;&#1090;&#1080;&#1090;&#1100; &#1074;&#1074;&#1077;&#1088;&#1093;"
+                        stylename="buttonwhite" action="applicationStageExpensesTable.moveup" />
+                <button id="downBtn" caption="&#1055;&#1077;&#1088;&#1077;&#1084;&#1077;&#1089;&#1090;&#1080;&#1090;&#1100; &#1074;&#1085;&#1080;&#1079;"
+                        stylename="buttonwhite" action="applicationStageExpensesTable.movedown" />
+            </buttonsPanel>
+            <buttonsPanel id="butpanel3" align="TOP_RIGHT">
+                <button id="closeBtn" stylename="buttontransparent" action="windowClose" align="MIDDLE_RIGHT"
+                        caption="&#1047;&#1072;&#1082;&#1088;&#1099;&#1090;&#1100;"/>
+            </buttonsPanel>
+        </hbox>
+    </layout>
+</fragment>

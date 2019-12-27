@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://editorCaption"
+        focusComponent="form"
+        messagesPack="com.company.spmu.web.coefficientvalue">
+    <data>
+        <instance id="coefficientValueDc"
+                  class="com.company.spmu.entity.CoefficientValue"
+                  view="coefficientValue-view">
+            <loader/>
+        </instance>
+        <collection id="coefficientsDc" class="com.company.spmu.entity.Coefficient" view="_minimal">
+            <loader id="coefficientsLc">
+                <query>
+                    <![CDATA[select e from spmu_Coefficient e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="editActions" spacing="true" stylename="layoutblue">
+        <form id="form" dataContainer="coefficientValueDc">
+            <column width="250px">
+                <lookupField id="coefficientField" property="coefficient" optionsContainer="coefficientsDc" caption="msg://coefficientFieldCaption"/>
+                <textField id="periodField" property="period" caption="msg://periodFieldCaption"/>
+                <textField id="valueField" property="value" caption="msg://valueFieldCaption"/>
+            </column>
+        </form>
+        <hbox id="editActions" spacing="true">
+            <button action="windowCommitAndClose"/>
+            <button action="windowClose"/>
+        </hbox>
+    </layout>
+</window>

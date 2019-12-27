@@ -1,0 +1,1 @@
+drop table SPMU_APPLICATION_STAGE__U33013 ;

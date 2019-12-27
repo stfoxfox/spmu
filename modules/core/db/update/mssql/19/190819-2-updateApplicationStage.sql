@@ -1,0 +1,1 @@
+alter table SPMU_APPLICATION_STAGE add PRICING_PROCEDURE_ID uniqueidentifier ;

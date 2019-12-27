@@ -1,0 +1,2 @@
+sp_rename 'SPMU_WORKFLOW', 'SPMU_WORKFLOW__U95998' ;
+alter table SPMU_WORKFLOW drop constraint FK_SPMU_WORKFLOW_ON_PARENT ;

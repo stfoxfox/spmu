@@ -1,0 +1,1 @@
+drop table SPMU_COEFFICIENT__U52995 ;

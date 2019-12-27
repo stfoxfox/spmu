@@ -1,0 +1,3 @@
+sp_rename 'SPMU_FINSOURCE', 'SPMU_FINSOURCE__U72140' ;
+alter table SPMU_PLAN_ARTICLE drop constraint FK_SPMU_PLAN_ARTICLE_ON_FINSOURCE ;
+alter table SPMU_PLAN_TYPE drop constraint FK_SPMU_PLAN_TYPE_ON_FUNDING ;

@@ -1,0 +1,32 @@
+create table SPMU_APPLICATION_STAGE_VALUE (
+    ID uniqueidentifier,
+    --
+    STAGE_ID uniqueidentifier not null,
+    PLAN_ACCOUNT_ID uniqueidentifier,
+    ARTICLE_ID uniqueidentifier,
+    ANALYTICA_ID uniqueidentifier,
+    YEAR_ integer,
+    MEASURE_ID uniqueidentifier,
+    PRICE double precision,
+    AMOUNT double precision,
+    TOTAL double precision,
+    VALUE_ double precision,
+    Q1 double precision,
+    Q2 double precision,
+    Q3 double precision,
+    Q4 double precision,
+    M1 double precision,
+    M2 double precision,
+    M3 double precision,
+    M4 double precision,
+    M5 double precision,
+    M6 double precision,
+    M7 double precision,
+    M8 double precision,
+    M9 double precision,
+    M10 double precision,
+    M11 double precision,
+    M12 double precision,
+    --
+    primary key nonclustered (ID)
+);

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:ext="http://schemas.haulmont.com/cuba/window-ext.xsd"
+        extends="com/company/spmu/web/applicationstageexpense/application-stage-expense-edit.xml"
+        messagesPack="com.company.spmu.web.applicationstageexpense.stages">
+    <data>
+        <collection id="affiliatesDc" class="com.company.spmu.entity.Affilate" view="_local">
+            <loader id="affiliatesLc">
+                <query>
+                    <![CDATA[select e from spmu_Affilate e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="contractStagesDc" class="com.company.spmu.entity.ContractStage" view="_local">
+            <loader>
+                <query><![CDATA[select e from spmu_ContractStage e ]]></query>
+            </loader>
+        </collection>
+        <collection id="divisionsDc" class="com.company.spmu.entity.Division" view="_minimal">
+            <loader id="divisionsDl">
+                <query><![CDATA[select e from spmu_Division e ]]></query>
+            </loader>
+        </collection>
+    </data>
+    <layout>
+        <scrollBox id="scrollBox">
+            <form id="form">
+                <hbox id="topLine">
+                    <lookupPickerField id="affiliateField" optionsContainer="affiliatesDc" property="affiliate"
+                                       dataContainer="applicationStageExpenseDc"
+                                       align="TOP_LEFT" caption="Индекс ответственного подразделения" width="100%"
+                                       inputPrompt="&#1057;&#1087;&#1088;&#1072;&#1074;&#1086;&#1095;&#1085;&#1080;&#1082; &#1089;&#1090;&#1088;&#1091;&#1082;&#1090;&#1091;&#1088;&#1085;&#1099;&#1093; &#1087;&#1086;&#1076;&#1088;&#1072;&#1079;&#1076;&#1077;&#1083;&#1077;&#1085;&#1080;&#1081;">
+                    </lookupPickerField>
+                </hbox>
+                <flowBox id="yearsBox">
+                    <hbox id="totalBox" visible="true">
+                    </hbox>
+                </flowBox>
+                <hbox id="articleHbox" spacing="true">
+                    <lookupPickerField id="applicationStageContractField" dataContainer="applicationStageContractDc"
+                                       property="contract" optionsContainer="contractStagesDc" caption="Договор №"
+                                       inputPrompt="&#1044;&#1086;&#1075;&#1086;&#1074;&#1086;&#1088;&#1072;"/>
+                    <textField caption="Дата окончания срока действия договора" dataContainer="applicationStageExpenseDc" editable="false" property="applicationStageContract.contract.end"/>
+                    <textField caption="Остаток по договору на начало года"/>
+                    <lookupPickerField id="applicationStageNameField" caption="Наименование аэродрома"
+                                       inputPrompt="Наименование аэродрома"/>
+                </hbox>
+
+            </form>
+        </scrollBox>
+    </layout>
+</window>

@@ -1,0 +1,1 @@
+drop table SPMU_AFFILATE__U80086 ;

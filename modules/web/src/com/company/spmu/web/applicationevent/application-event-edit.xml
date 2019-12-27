@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://editorCaption"
+        focusComponent="form"
+        messagesPack="com.company.spmu.web.applicationevent">
+    <data>
+        <instance id="applicationEventDc"
+                  class="com.company.spmu.entity.ApplicationEvent"
+                  view="applicationEvent-view-full">
+            <loader id="applicationEventDl"/>
+        </instance>
+        <collection id="affiliatesDc" class="com.company.spmu.entity.Affilate" view="_minimal">
+            <loader id="affiliatesLc">
+                <query>
+                    <![CDATA[select e from spmu_Affilate e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="targetsDc" class="com.company.spmu.entity.Target" view="_minimal">
+            <loader id="targetsLc">
+                <query>
+                    <![CDATA[select e from spmu_Target e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="plansDc" class="com.company.spmu.entity.PlanType" view="_minimal">
+            <loader id="plansLc">
+                <query>
+                    <![CDATA[select e from spmu_PlanType e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="articlesDc" class="com.company.spmu.entity.PlanArticle" view="_minimal">
+            <loader id="articlesLc">
+                <query>
+                    <![CDATA[select e from spmu_PlanArticle e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="employeesDc" class="com.company.spmu.entity.Employee" view="employee-view-with-position">
+            <loader id="employeesDl">
+                <query><![CDATA[select e from spmu_Employee e ]]></query>
+            </loader>
+            <collection id="applicationResponsiblesDc" property="applicationResponsibles"/>
+        </collection>
+        <collection id="procAttachmentsDc"
+                    class="com.haulmont.bpm.entity.ProcAttachment"
+                    view="procAttachment-browse">
+            <loader id="procAttachmentsDl">
+                <query><![CDATA[select e from bpm$ProcAttachment e order by e.createTs]]>
+                    <condition>
+                        <and>
+                            <c:jpql>
+                                <c:where>e.procInstance.entity.entityId = :entityId</c:where>
+                            </c:jpql>
+                        </and>
+                    </condition>
+                </query>
+            </loader>
+        </collection>
+        <collection id="accountsDc" class="com.company.spmu.entity.Account" view="_minimal">
+            <loader id="accountsLc">
+                <query>
+                    <![CDATA[select a from spmu_Account a]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="detailsDc" class="com.company.spmu.entity.ApplicationDetail" view="applicationDetail-table">
+            <loader id="detailsLc">
+                <query>
+                    <![CDATA[select a from spmu_ApplicationDetail_1 a where a.application=:a]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="applicationFileDescriptorsDc" class="com.company.spmu.entity.ApplicationFileDescriptor"
+                    view="applicationFileDescriptor-browse">
+            <loader id="applicationFileDescriptorsLc">
+                <query>
+                    <![CDATA[select f from spmu_ApplicationFileDescriptor f where f.application=:app]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <actions>
+        <action id="file_open"/>
+        <action id="file_save"/>
+        <action id="file_delete"/>
+    </actions>
+    <layout expand="tabMain" spacing="true" width="100%" stylename="layoutblue" height="100%">
+        <tabSheet id="tabMain" width="100%" height="100%">
+            <tab id="subTab1" caption="Заявка на мероприятие" expand="subTabs">
+                <buttonsPanel id="panelTop">
+                    <button caption="Печать" stylename="buttontransparent" icon="PRINT" id="printBtn"/>
+                    <!--
+                                       <button caption="Редактировать" stylename="buttontransparent" icon="UNLOCK" id="editBtn"/>
+                                       <button caption="Заявки на корректировку" stylename="buttontransparent" icon="REPEAT" id="corReqBtn"/>
+                                       <button caption="Диаграмма Ганта" stylename="buttontransparent" icon="ALIGN_LEFT" id="gantBtn"/>
+                                       <button caption="Этапы мероприятия" stylename="buttontransparent" icon="LIST_UL" id="stagesBtn"/>
+                    -->
+                    <button id="SaveBtn" caption="Сохранить" stylename="buttontransparent" action="windowCommitAndClose"
+                            icon="SAVE"/>
+                    <button caption="Изменения и корректировки" stylename="buttontransparent" icon="REFRESH_ACTION"
+                            id="changesBtn"/>
+                    <button caption="История согласования" stylename="buttontransparent" icon="PENCIL_SQUARE_O"
+                            id="accHistoryBtn"/>
+                    <button caption="Этапы мероприятия" stylename="buttontransparent" icon="LIST_UL" id="stagesBtn"/>
+                </buttonsPanel>
+                <tabSheet id="subTabs" width="100%" height="100%">
+                    <tab id="subsubTab1" caption="Заявка на мероприятие" expand="scrollBox">
+                        <hbox width="100%">
+                            <label value="Заявка на мероприятие" id="labelTitle" stylename="screentitle"
+                                   align="MIDDLE_LEFT"/>
+                            <hbox align="MIDDLE_RIGHT">
+                                <textField caption="Статус заявки" editable="false"></textField>
+                                <textField caption="Корректировка заявки №" editable="false"></textField>
+                            </hbox>
+                        </hbox>
+                        <scrollBox id="scrollBox" spacing="true" width="100%">
+                            <form id="form" dataContainer="applicationEventDc" width="100%">
+                                <hbox spacing="true" align="MIDDLE_LEFT">
+                                    <textField id="codeField" property="code" align="TOP_LEFT" caption="Заявка №"
+                                               width="100px" dataContainer="applicationEventDc" editable="false"/>
+                                    <dateField id="dateField" property="date" align="TOP_LEFT" caption="От"
+                                               rangeStart="2018-06-01" rangeEnd="2030-06-01" dateFormat="dd.MM.yyyy"
+                                               dataContainer="applicationEventDc"/>
+                                    <textField id="yearField" property="year" caption="Плановый период" width="100px"
+                                               dataContainer="applicationEventDc"/>
+                                    <textField id="valueField" caption="Суммы" editable="false" datatype="string"
+                                               width="100px"/>
+                                    <textField caption="Лимиты" width="200px" editable="false" id="limitsField"
+                                               property="value" dataContainer="applicationEventDc"/>
+                                    <textField caption="Лимит с учётом мероприятий" width="100px" property="value" dataContainer="applicationEventDc"
+                                               editable="false"></textField>
+                                    <checkBox caption="Опцион" align="MIDDLE_LEFT"/>
+                                </hbox>
+                                <flowBox width="100%" caption="" spacing="true">
+                                    <dateField id="dateStartField" property="dateStart" caption="Начало"
+                                               dataContainer="applicationEventDc" editable="false"/>
+                                    <dateField id="dateEndField" property="dateEnd" caption="Окончание"
+                                               dataContainer="applicationEventDc" editable="false"/>
+                                    <lookupPickerField id="affiliateField" optionsContainer="affiliatesDc"
+                                                       property="affiliate" caption="Структурное подразделение"
+                                                       dataContainer="applicationEventDc">
+                                        <actions>
+                                            <action id="lookup" type="picker_lookup"/>
+                                        </actions>
+                                    </lookupPickerField>
+                                    <lookupField caption="Целевое мероприятие" width="200px" ></lookupField>
+                                </flowBox>
+                                <flowBox width="100%" stylename="rowwithcaption">
+                                    <textField id="nameField" property="name" caption="Наименование мероприятия"
+                                               dataContainer="applicationEventDc"/>
+                                </flowBox>
+                                <flowBox width="100%" caption="" spacing="true">
+                                    <lookupPickerField id="analyticaField" optionsContainer="accountsDc"
+                                                       property="analytica" caption="КВУ"
+                                                       dataContainer="applicationEventDc">
+                                        <actions>
+                                            <action id="lookup" type="picker_lookup"/>
+                                        </actions>
+                                    </lookupPickerField>
+                                </flowBox>
+                            </form>
+                        </scrollBox>
+                    </tab>
+                    <tab id="subsubTab2" caption="Обоснования" expand="scrollBox2">
+                        <hbox width="100%">
+                            <label value="Заявка на мероприятие" id="labelTitle2" stylename="screentitle"/>
+                        </hbox>
+                        <scrollBox id="scrollBox2" spacing="true" width="100%">
+                            <hbox width="100%">
+                                <lookupPickerField id="targetField" optionsContainer="targetsDc" property="target"
+                                                   caption="Цель мероприятия" dataContainer="applicationEventDc"
+                                                   width="100%">
+                                    <actions>
+                                        <action id="lookup" type="picker_lookup"/>
+                                    </actions>
+                                </lookupPickerField>
+                            </hbox>
+                            <hbox width="100%">
+                                <textField caption="Результаты мероприятия" width="100%"
+                                           dataContainer="applicationEventDc" property="result"/>
+                            </hbox>
+                            <hbox width="100%">
+                                <textField caption="Обоснование мероприятия" width="100%"
+                                           dataContainer="applicationEventDc" property="justification"/>
+                            </hbox>
+                            <hbox width="100%">
+                                <textField caption="Обоснование стоимости" width="100%"
+                                           dataContainer="applicationEventDc" property="costing"/>
+                            </hbox>
+                            <cssLayout width="100%" css="border: 1px solid black">
+                                <flowBox width="100%" spacing="true">
+                                    <checkBox caption="Наличие ГГЭ" dataContainer="applicationEventDc" property="isGge"
+                                              id="isGge" width="10%"/>
+                                    <cssLayout id="divGge" visible="false" width="88%">
+                                        <textField caption="Реквизиты ГГЭ" dataContainer="applicationEventDc"
+                                                   property="gge" width="100%"/>
+                                    </cssLayout>
+                                </flowBox>
+                            </cssLayout>
+                            <cssLayout width="100%" css="border: 1px solid black">
+                                <flowBox width="100%" spacing="true">
+                                    <checkBox caption="Наличие ПСД" dataContainer="applicationEventDc" property="isPsd"
+                                              id="isPsd" width="10%"/>
+                                    <cssLayout id="divPsd" visible="false" width="88%">
+                                        <textField caption="Реквизиты ПСД" dataContainer="applicationEventDc"
+                                                   property="psd" width="100%"/>
+                                    </cssLayout>
+                                </flowBox>
+                                <table width="100%" height="300px" dataContainer="detailsDc" id="tablePsd"
+                                       editable="true" multiselect="false" showSelection="false">
+                                    <actions>
+                                        <action id="RefreshAction" type="refresh"/>
+                                    </actions>
+                                    <columns>
+                                        <column id="num" caption="№" generator="generateDetailNum"></column>
+                                        <column id="type.name" caption="Наименование работ"></column>
+                                        <column id="value1" caption="Сметная стоимость по ПСД в ценах 2000г"
+                                                editable="true"></column>
+                                        <column id="value2" caption="Сметная стоимость ПСД в ценах года утверждения ПСД"
+                                                editable="true"></column>
+                                        <column id="value3"
+                                                caption="Сметная стоимость ПСД в ценах года планирования и заключения контракта"
+                                                editable="true"></column>
+                                    </columns>
+                                    <rows/>
+                                </table>
+                            </cssLayout>
+                        </scrollBox>
+                    </tab>
+                    <tab id="subsubTab3" caption="Ответственные" expand="scrollBox3">
+                        <hbox width="100%">
+                            <label value="Заявка на мероприятие" id="labelTitle3" stylename="screentitle"/>
+                        </hbox>
+                        <scrollBox id="scrollBox3" spacing="true" width="100%">
+                            <hbox spacing="true">
+                                <lookupPickerField id="curatorField" optionsContainer="employeesDc"
+                                                   property="applicationResponsibleCurator"
+                                                   caption="Ответственный за мероприятие в ГД">
+                                </lookupPickerField>
+                                <textField caption="Должность ответственного за мероприятие в ГД" editable="false"
+                                           id="curatorPost"/>
+                            </hbox>
+                            <hbox spacing="true">
+                                <lookupPickerField id="managerField" optionsContainer="employeesDc"
+                                                   property="applicationResponsibleManager"
+                                                   caption="Ответственный за мероприятие в филиале">
+                                </lookupPickerField>
+                                <textField caption="Должность ответственного за мероприятие в филиале" editable="false"
+                                           id="managerPost"/>
+                            </hbox>
+                            <hbox>
+                                <lookupField id="initiator" caption="Инициатор" optionsContainer="employeesDc"
+                                             property="applicationResponsibleInitiator"/>
+                            </hbox>
+                            <tokenList id="editors" dataContainer="applicationEventDc"
+                                       property="applicationResponsibleEditors" caption="Редакторы">
+                                <lookup optionsContainer="employeesDc" multiselect="true"/>
+                            </tokenList>
+                        </scrollBox>
+                    </tab>
+                    <tab id="subsubTab4" caption="Зависимости" expand="applicationLink">
+                        <fragment screen="spmu_ApplicationLinkBrowseFragment" id="applicationLink"/>
+                    </tab>
+                    <tab id="subsubTab5" caption="Приложения" expand="hbox5">
+                        <hbox width="100%" expand="filesLayout" spacing="true" id="hbox5">
+                            <cssLayout id="filesLayout">
+                                <table dataContainer="applicationFileDescriptorsDc" id="filesTable" width="100%">
+                                    <columns>
+                                        <column caption="№" id="num2" generator="fileNumGenerate"/>
+                                        <column id="file.name" caption="Наименование файла"/>
+                                        <column id="description" caption="Описание"/>
+                                        <column id="file.updateTs" caption="Дата обновления"/>
+                                    </columns>
+                                </table>
+                            </cssLayout>
+                            <vbox stylename="w200" width="250px" spacing="true">
+                                <upload fileSizeLimit="1000000" id="uploadField" width="250px"
+                                        uploadButtonCaption="Добавить"/>
+                                <button caption="Открыть файл" width="250px" action="file_open"/>
+                                <button caption="Сохранить на диск" width="250px" action="file_save"/>
+                                <button caption="Удалить" width="250px" action="file_delete"/>
+                            </vbox>
+                        </hbox>
+                    </tab>
+                </tabSheet>
+                <hbox width="100%">
+                    <buttonsPanel id="panelBottomLeft">
+                        <!--
+                        <button caption="Создать заявку на корректировку" stylename="buttonwhite" id="createCorBtn"/>
+                         <button caption="Создать заявку на этап мероприятия" stylename="buttonwhite" id="createStageBtn"/>
+                         -->
+                        <fragment id="procActionsFragment" screen="spmu_ProcActionsFragment"
+                                  stylename="proc-buttons-buttonwhite"/>
+                        <!--
+                         <button caption="В архив" stylename="buttonwhite" id="toArchiveBtn"/>
+                     -->
+                    </buttonsPanel>
+                    <buttonsPanel id="panelBottomRight" box.expandRatio="1" align="MIDDLE_RIGHT">
+                        <!--
+                        <button caption="Отменить согласование" stylename="buttonwhite" id="cancelAcceptBtn"/>
+                        -->
+                        <button caption="Закрыть" action="windowClose"/>
+                    </buttonsPanel>
+                </hbox>
+            </tab>
+            <tab id="subTab2" caption="Этапы мероприятия">
+                <fragment screen="spmu_ApplicationStageEventBrowseFragment" id="stagebrowser"/>
+            </tab>
+        </tabSheet>
+    </layout>
+</window>

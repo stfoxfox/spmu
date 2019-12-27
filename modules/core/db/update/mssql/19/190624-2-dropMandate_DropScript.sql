@@ -1,0 +1,1 @@
+drop table SPMU_MANDATE__U91255 ;

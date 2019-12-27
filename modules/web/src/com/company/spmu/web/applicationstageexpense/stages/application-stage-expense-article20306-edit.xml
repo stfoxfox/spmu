@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:ext="http://schemas.haulmont.com/cuba/window-ext.xsd"
+        extends="com/company/spmu/web/applicationstageexpense/application-stage-expense-edit.xml"
+        messagesPack="com.company.spmu.web.applicationstageexpense.stages">
+    <data>
+        <collection id="affiliatesDc" class="com.company.spmu.entity.Affilate" view="_local">
+            <loader id="affiliatesLc">
+                <query>
+                    <![CDATA[select e from spmu_Affilate e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="divisionsDc" class="com.company.spmu.entity.Division" view="_minimal">
+            <loader id="divisionsDl">
+                <query><![CDATA[select e from spmu_Division e ]]></query>
+            </loader>
+        </collection>
+    </data>
+    <layout>
+        <scrollBox id="scrollBox">
+            <form id="form">
+                <hbox id="topLine">
+                    <lookupPickerField id="affiliateField" optionsContainer="affiliatesDc" property="affiliate"
+                                       dataContainer="applicationStageExpenseDc"
+                                       align="TOP_LEFT" caption="Индекс ответственного подразделения" width="100%"
+                                       inputPrompt="&#1057;&#1087;&#1088;&#1072;&#1074;&#1086;&#1095;&#1085;&#1080;&#1082; &#1089;&#1090;&#1088;&#1091;&#1082;&#1090;&#1091;&#1088;&#1085;&#1099;&#1093; &#1087;&#1086;&#1076;&#1088;&#1072;&#1079;&#1076;&#1077;&#1083;&#1077;&#1085;&#1080;&#1081;">
+                    </lookupPickerField>
+                </hbox>
+                <flowBox id="yearsBox">
+                    <hbox visible="true" id="totalBox">
+                    </hbox>
+                </flowBox>
+                <hbox width="100%" id="fullBox">
+                    <vbox>
+                        <checkBox caption="Расчет расходов на ГСМ для автотранспорта" id="autoCh"/>
+                        <hbox spacing="true">
+                            <lookupField caption="Тип ГСМ" id="typeId" editable="false"></lookupField>
+                            <lookupField caption="Вид ГСМ" id="viewId" editable="false"></lookupField>
+                        </hbox>
+                        <lookupField caption="Транспортное средство" id="transportId" editable="false"></lookupField>
+                        <textField caption="Пробег км в год" id="probegId" editable="false"/>
+                        <textField caption="Расход топлива на 100 км" id="fuel100Id" editable="false"/>
+                        <textField caption="Среднегодовой расход литров на 1 км" id="fuelYearId" editable="false"/>
+                        <textField caption="Цена за 1 литр (руб.)" id="fuelPriceId" editable="false"/>
+                    </vbox>
+                    <vbox>
+                        <checkBox caption="Расчет расходов на ГСМ на технологические цели" id="techCh"/>
+                        <textField caption="Цена за 1 литр (руб.)" id="priceId" editable="false"/>
+                        <textField caption="Часовая норма расхода" id="hourId" editable="false"/>
+                        <textField caption="Среднегодовая наработка оборудования (час.)" id="outfitId" editable="false"/>
+                        <textField caption="Среднегодовой расход литров в год" id="yearConsumptionId" editable="false"/>
+                    </vbox>
+                </hbox>
+            </form>
+        </scrollBox>
+    </layout>
+</window>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://browseCaption"
+        focusComponent="applicationStageTypesTable"
+        messagesPack="com.company.spmu.web.screens.applicationstagetype">
+    <data readOnly="true">
+        <collection id="applicationStageTypesDc"
+                    class="com.company.spmu.entity.ApplicationStageType"
+                    view="applicationStageType-view">
+            <loader id="applicationStageTypesDl">
+                <query>
+                    <![CDATA[select e from spmu_ApplicationStageType e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="applicationStageTypesTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="applicationStageTypesTable"
+                dataLoader="applicationStageTypesDl">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="applicationStageTypesTable"
+                    width="100%"
+                    dataContainer="applicationStageTypesDc">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+                <action id="refresh" type="refresh"/>
+            </actions>
+            <columns>
+                <column id="created"/>
+                <column id="expired"/>
+                <column id="creator"/>
+                <column id="name"/>
+                <column id="fraction"/>
+                <column id="duration"/>
+                <column id="calendar"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="applicationStageTypesTable.create"/>
+                <button id="editBtn" action="applicationStageTypesTable.edit"/>
+                <button id="removeBtn" action="applicationStageTypesTable.remove"/>
+                <button id="refreshBtn" action="applicationStageTypesTable.refresh"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

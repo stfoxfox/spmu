@@ -1,0 +1,1 @@
+drop table SPMU_CURRENCY_RATE__U65327 ;

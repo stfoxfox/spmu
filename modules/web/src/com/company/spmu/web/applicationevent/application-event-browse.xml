@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://browseCaption"
+        focusComponent="applicationEventsTable"
+        messagesPack="com.company.spmu.web.applicationevent">
+    <data>
+        <collection id="applicationEventsDc"
+                    class="com.company.spmu.entity.ApplicationEvent"
+                    view="applicationEvent-browse-view">
+            <loader id="applicationEventsDl">
+                <query>
+                    <![CDATA[select a
+                        from spmu_ApplicationEvent a
+                        WHERE a.type = @enum(com.company.spmu.enumeration.ApplicationType.EVENT)]]>
+                    <condition>
+                        <and>
+                            <c:jpql>
+                                <c:where>a.applicationResponsibleEditors = (select r from spmu_ApplicationResponsible r where r.employee=:currentEmployee)</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>a.affiliate = :affiliate</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>@dateEquals(a.dateStart, :dateStart)</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>@dateEquals(a.dateEnd, :dateEnd)</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>a.applicationResponsibleInitiator =(select r from spmu_ApplicationResponsible r where r.employee=:initiatorApplications)</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>a IN :editorApplications</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>a.year = :year</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>a.change = :isCorrected</c:where>
+                            </c:jpql>
+                            <or>
+                                <c:jpql>
+                                    <c:where>a.name like :s1</c:where>
+                                </c:jpql>
+                                <c:jpql>
+                                    <c:where>a.code like :s2</c:where>
+                                </c:jpql>
+                                <c:jpql>
+                                    <c:where>a.affiliate.name like :s3</c:where>
+                                </c:jpql>
+                            </or>
+                        </and>
+                    </condition>
+                </query>
+            </loader>
+        </collection>
+        <collection id="allApplicationEventsDc" class="com.company.spmu.entity.ApplicationEvent"
+                    view="applicationEvent-filter-fields-view">
+            <loader id="allApplicationEventsDl">
+                <query>
+                    <![CDATA[select a
+                        from spmu_ApplicationEvent a
+                        WHERE a.type = @enum(com.company.spmu.enumeration.ApplicationType.EVENT)]]>
+                    <condition>
+                    <and>
+                    <c:jpql>
+                        <c:where>a.affiliate = :affiliate</c:where>
+                    </c:jpql>
+
+                    <c:jpql>
+                        <c:where>a.affiliate = :currentAffiliate</c:where>
+                    </c:jpql>
+                    </and>
+                    </condition>
+                </query>
+            </loader>
+        </collection>
+        <collection id="affiliateDc" class="com.company.spmu.entity.Affilate" view="_minimal">
+            <loader id="affiliateDl">
+                <query>
+                    <![CDATA[select e from spmu_Affilate e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="responsibleDc" class="com.company.spmu.entity.Employee" view="_minimal">
+            <loader id="responsibleDl">
+                <query>
+                    <![CDATA[select distinct e from spmu_ApplicationEditor a JOIN a.employee e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="initiatorDc" class="com.company.spmu.entity.Employee" view="_minimal">
+            <loader id="initiatorDl">
+                <query>
+                    <![CDATA[select distinct e from spmu_ApplicationInitiator a JOIN a.employee e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="hierarchyApplicationsDc" class="com.company.spmu.entity.HierarchyApplicationEvent" view="hierarchyApplicationEvent-browse">
+        </collection>
+        <collection id="stagesDc" class="com.company.spmu.entity.ApplicationStageEvent" view="applicationStageEvent-view">
+            <loader id="stagesDl">
+                <query>
+                    <![CDATA[select e from spmu_ApplicationStageEvent e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout spacing="true" stylename="layoutblue" expand="tablecontainer">
+        <filter id="filter"
+                applyTo="treedatagrid"
+                dataLoader="applicationEventsDl" manualApplyRequired="false" stylename="extfilter" visible="false">
+            <properties include=".*"/>
+        </filter>
+        <flowBox id="hbox1" width="100%" align="MIDDLE_LEFT">
+            <hbox>
+            <buttonsPanel id="butpanel1" align="MIDDLE_LEFT">
+                <button id="filterBtn" icon="FILTER" invoke="onFilterBtnClick" caption="msg://filterBtnCaption"
+                        stylename="buttontransparent"/>
+                <button id="printBtn" icon="PRINT" caption="msg://printBtnCaption"
+                        stylename="buttontransparent"/>
+                <popupButton id="exportButton" caption="msg://exportBtnCaption" stylename="buttontransparent" icon="SHARE_SQUARE_O">
+                    <actions>
+                        <action id="applicationEventsTable.excel" caption="msg://exportExcelCaption"/>
+                        <action id="toPdf" caption="msg://exportPdfCaption"/>
+                    </actions>
+                </popupButton>
+                <button caption="msg://selectGroupBtnCaption" stylename="buttontransparent"/>
+                <button id="selectAllBtn" invoke="onSelectAllBtnClick" caption="msg://selectAllBtnCaption"
+                        stylename="buttontransparent"/>
+                <button caption="Импортировать заявки на мероприятия"
+                        invoke="importApplicationEvent"
+                        stylename="buttontransparent"
+                        id="importApplicationEvent"/>
+
+            </buttonsPanel>
+            </hbox>
+            <hbox>
+            <buttonsPanel id="csslay1" align="MIDDLE_RIGHT">
+                <popupView id="columnsPopup" hideOnMouseOut="false" >
+                    <checkBoxGroup id="columnsList"/>
+                </popupView>
+
+                <button id="refreshBtn" action="applicationEventsTable.refresh" stylename="buttontransparent" />
+                <button caption="Создать реестр в 1С"
+                        invoke="createRegistry"
+                        stylename="buttontransparent"
+                        id="createRegistryButton"/>
+                <textField align="MIDDLE_RIGHT" id="searchField"/>
+                <button id="searchBtn" stylename="buttontransparent" caption="msg://searchBtnCaption" align="MIDDLE_RIGHT" action="applicationEventsTable.search"/>
+                <popupButton id="settingsBtn" stylename="buttontransparent popup-without-arrow" icon="COG"  align="MIDDLE_RIGHT" >
+                    <actions>
+                        <action id="filterAction" caption="msg://settingFilterActionCaption"/>
+                        <action id="columnsAction" caption="msg://settingColumnsActionCaption" />
+                    </actions>
+                </popupButton>
+            </buttonsPanel>
+            </hbox>
+        </flowBox>
+        <flowBox width="100%" stylename="v-component-group" css="font-size:12pt; font-weight:bold;">
+            <lookupField id="viewTypeField" nullOptionVisible="false"
+                         width="200px" textInputAllowed="false"
+                         optionsEnum="com.company.spmu.enumeration.ViewType">
+            </lookupField>
+            <lookupField id="affiliateLookupField" optionsContainer="affiliateDc" property="affiliate"
+                         inputPrompt="msg://affiliatePrompt" css="border-radius:5px; margin:3px;"/>
+            <lookupField id="responsibleLookupField" inputPrompt="msg://responsiblePrompt"
+                         optionsContainer="responsibleDc" css="border-radius:5px; margin:3px;"/>
+            <dateField id="dateStartField" property="dateStart" dateFormat="dd.MM.yyyy"
+                       css="border-radius:5px; margin:3px;" caption="msg://startDatePrompt"/>
+            <dateField id="dateEndField" property="dateEnd" dateFormat="dd.MM.yyyy" caption="msg://endDatePrompt"
+                       css="border-radius:5px; margin:3px;"/>
+            <lookupField id="initiatorLookupField" inputPrompt="msg://initiatorPrompt"
+                         optionsContainer="initiatorDc" css="border-radius:5px; margin:3px;"/>
+            <lookupField id="yearLookupField" inputPrompt="msg://yearPrompt" optionsContainer="allApplicationEventsDc"
+                         property="year" captionProperty="year" css="border-radius:5px; margin:3px;"/>
+            <checkBox id="correctionCheckBox" caption="msg://correctionPrompt"/>
+        </flowBox>
+
+        <cssLayout id="tablecontainer" width="100%">
+            <treeDataGrid id="treedatagrid" width="100%" dataContainer="hierarchyApplicationsDc" hierarchyProperty="parent" stylename="transparent" height="100%" reorderingAllowed="true">
+                <actions>
+                    <action id="edit" type="edit"/>
+                    <action id="remove" type="remove"/>
+                    <action id="refresh" type="refresh"/>
+                    <action id="excel" type="excel"/>
+                    <action id="print"/>
+                    <action id="search"/>
+                </actions>
+                <columns>
+                    <column id="code" caption="№ Заявки" property="app.code"/>
+                    <column id="affiliate" caption="Подразделение" property="affiliate"/>
+                    <column id="name" caption="Наименование" property="name"/>
+                    <column id="dateStart" caption="Начало" property="dateStart"/>
+                    <column id="dateEnd" caption="Окончание" property="dateEnd"/>
+                    <column id="value" caption="Стоимость т.р." property="value"/>
+                </columns>
+                <rowsCount/>
+            </treeDataGrid>
+
+            <groupTable id="applicationEventsTable"
+                        width="100%" height="100%"
+                        dataContainer="applicationEventsDc"
+                        multiselect="true">
+                <actions>
+                    <action id="create" type="create"/>
+                    <action id="edit" type="edit"/>
+                    <action id="remove" type="remove"/>
+                    <action id="excel" type="excel"/>
+                    <action id="refresh" type="refresh"/>
+                    <action id="search"/>
+                </actions>
+                <columns>
+                    <column id="code" caption="msg://codeCaption"/>
+                    <column id="affiliate" caption="msg://affiliateCaption"/>
+                    <column id="name" caption="msg://nameCaption"/>
+                    <column id="dateStart" caption="msg://dateStartCaption"/>
+                    <column id="dateEnd" caption="msg://dateEndCaption"/>
+                    <column id="value" caption="msg://valueCaption"/>
+                </columns>
+                <rowsCount/>
+            </groupTable>
+        </cssLayout>
+
+        <hbox width="100%">
+            <buttonsPanel>
+                <button id="createBtn" action="applicationEventsTable.create" caption="Создать проект заявки" stylename="buttonblue"/>
+                <fragment id="procActionsFragment" screen="spmu_ProcActionsFragment" visible="false" stylename="proc-buttons-buttonblue"/>
+                <button id="archiveBtn" caption="msg://archiveBtnCaption" stylename="buttonblue"/>
+
+            </buttonsPanel>
+            <buttonsPanel width="100%">
+                <button id="closeBtn" caption="msg://closeBtnCaption" align="BOTTOM_RIGHT" stylename="button_close" invoke="onCloseBtnClick"/>
+            </buttonsPanel>
+        </hbox>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

@@ -1,0 +1,1 @@
+drop table SPMU_PLAN_ACCOUNT__U04286 ;

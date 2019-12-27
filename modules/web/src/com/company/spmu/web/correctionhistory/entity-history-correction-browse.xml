@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://browseCaption"
+        messagesPack="com.company.spmu.web.correctionhistory">
+    <data readOnly="true">
+        <collection id="applicationHistoriesDc"
+                    class="com.company.spmu.entity.bpm.ApplicationHistory"
+                    view="applicationHistory-view">
+            <loader id="applicationHistoriesDl">
+                <query>
+                    <![CDATA[select e from spmu_ApplicationHistory e where e.procTask.procInstance.entity.entityId = :entityId]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="80%" width="80%"/>
+    <layout spacing="true" expand="diffFrame">
+        <label id="titleLabel" css="font-size:16pt; font-weight:bold;" align="TOP_LEFT"/>
+        <frame id="diffFrame"
+               src="/com/haulmont/cuba/gui/app/core/entitydiff/diff-view.xml"
+               width="100%"
+               height="100%" align="TOP_LEFT"/>
+    </layout>
+</window>

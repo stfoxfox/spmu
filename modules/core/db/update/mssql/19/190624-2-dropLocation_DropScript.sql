@@ -1,0 +1,1 @@
+drop table SPMU_LOCATION__U42200 ;

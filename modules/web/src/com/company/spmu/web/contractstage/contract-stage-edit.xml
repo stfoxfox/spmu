@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://editorCaption"
+        focusComponent="form"
+        messagesPack="com.company.spmu.web.contractstage">
+    <data>
+        <instance id="contractStageDc"
+                  class="com.company.spmu.entity.ContractStage"
+                  view="contractStage-view">
+            <loader/>
+        </instance>
+        <collection id="contractsDc" class="com.company.spmu.entity.Contract" view="_minimal">
+            <loader id="contractsLc">
+                <query>
+                    <![CDATA[select e from spmu_Contract e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="editActions" spacing="true" stylename="layoutblue">
+        <form id="form" dataContainer="contractStageDc">
+            <column width="250px">
+                <lookupPickerField id="contractField" optionsContainer="contractsDc" property="contract" caption="msg://contractFieldCaption">
+                    <actions>
+                        <action id="lookup" type="picker_lookup"/>
+                    </actions>
+                </lookupPickerField>
+                <textField id="numField" property="num" caption="msg://numFieldCaption"/>
+                <textField id="codeField" property="code" caption="msg://codeFieldCaption"/>
+                <textField id="nameField" property="name" caption="msg://nameFieldCaption"/>
+                <dateField id="startField" property="start" caption="msg://startFieldCaption"/>
+                <dateField id="endField" property="end" caption="msg://endFieldCaption"/>
+            </column>
+        </form>
+        <hbox id="editActions" spacing="true">
+            <button action="windowCommitAndClose"/>
+            <button action="windowClose"/>
+        </hbox>
+    </layout>
+</window>

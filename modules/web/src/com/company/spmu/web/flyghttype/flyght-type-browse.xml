@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://browseCaption"
+        focusComponent="flyghtTypesTable"
+        messagesPack="com.company.spmu.web.flyghttype">
+    <data readOnly="true">
+        <collection id="flyghtTypesDc"
+                    class="com.company.spmu.entity.FlyghtType"
+                    view="_local">
+            <loader id="flyghtTypesDl">
+                <query>
+                    <![CDATA[select e from spmu_FlyghtType e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="flyghtTypesTable" spacing="true" stylename="layoutblue">
+        <filter id="filter"
+                applyTo="flyghtTypesTable"
+                dataLoader="flyghtTypesDl">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="flyghtTypesTable"
+                    width="100%"
+                    dataContainer="flyghtTypesDc">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+            </actions>
+            <columns>
+                <column id="code"/>
+                <column id="name"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="flyghtTypesTable.create"/>
+                <button id="editBtn" action="flyghtTypesTable.edit"/>
+                <button id="removeBtn" action="flyghtTypesTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

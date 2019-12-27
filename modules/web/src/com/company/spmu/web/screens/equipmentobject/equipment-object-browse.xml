@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://browseCaption"
+        focusComponent="equipmentObjectsTable"
+        messagesPack="com.company.spmu.web.screens.equipmentobject">
+    <data readOnly="true">
+        <collection id="equipmentObjectsDc"
+                    class="com.company.spmu.entity.EquipmentObject"
+                    view="equipmentObject-view">
+            <loader id="equipmentObjectsDl">
+                <query>
+                    <![CDATA[select e from spmu_EquipmentObject e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="equipmentObjectsTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="equipmentObjectsTable"
+                dataLoader="equipmentObjectsDl">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="equipmentObjectsTable"
+                    width="100%"
+                    dataContainer="equipmentObjectsDc">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+                <action id="refresh" type="refresh"/>
+            </actions>
+            <columns>
+                <column id="parent"/>
+                <column id="name"/>
+                <column id="code"/>
+                <column id="isEquipment"/>
+                <column id="geoCoordinate"/>
+                <column id="affilate"/>
+                <column id="division"/>
+                <column id="location"/>
+                <column id="isSubobject"/>
+                <column id="inventoryNumber"/>
+                <column id="factoryNumber"/>
+                <column id="releasedYear"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="equipmentObjectsTable.create"/>
+                <button id="editBtn" action="equipmentObjectsTable.edit"/>
+                <button id="removeBtn" action="equipmentObjectsTable.remove"/>
+                <button id="refreshBtn" action="equipmentObjectsTable.refresh"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

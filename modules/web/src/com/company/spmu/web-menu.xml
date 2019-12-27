@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<menu-config xmlns="http://schemas.haulmont.com/cuba/menu.xsd">
+    <menu id="application-spmu" insertBefore="administration">
+        <item screen="spmu_Affilate.browse"/>
+        <item screen="spmu_Mandate.browse"/>
+        <item screen="spmu_Account.browse"/>
+        <item screen="spmu_FlyghtType.browse"/>
+        <item screen="spmu_EventType.browse"/>
+        <item screen="spmu_Location.browse"/>
+        <item screen="spmu_Measure.browse"/>
+        <item screen="spmu_Finsource.browse"/>
+        <item screen="spmu_Organization.browse"/>
+        <item screen="spmu_Currency.browse"/>
+        <item screen="spmu_Target.browse"/>
+        <item screen="spmu_Employee.browse"/>
+        <item screen="spmu_Coefficient.browse"/>
+        <item screen="spmu_CoefficientValue.browse"/>
+        <item screen="spmu_PlanArticle.browse"/>
+        <item screen="spmu_Division.browse"/>
+        <item screen="spmu_Ano.browse"/>
+        <item screen="spmu_Workflow.browse"/>
+        <item screen="spmu_PlanType.browse"/>
+        <item screen="spmu_PlanSection.browse"/>
+        <item screen="spmu_PlanAccount.browse"/>
+        <item screen="spmu_Contract.browse"/>
+        <item screen="spmu_ContractStage.browse"/>
+        <item screen="spmu_ApplicationDetail.browse"/>
+        <item screen="spmu_ApplicationObjectType.browse"/>
+        <item screen="spmu_ApplicationObject.browse"/>
+        <item screen="spmu_Position.browse"/>
+        <item screen="spmu_StatusLink.browse"/>
+        <item screen="spmu_FixedAsset.browse"/>
+        <item screen="spmu_ApplicationStageType.browse"/>
+        <item screen="spmu_EquipmentObject.browse"/>
+        <item screen="spmu_Priority.browse"/>
+        <item screen="spmu_PricingProcedure.browse"/>
+        <item screen="spmu_PlanArticleStage.browse"/>
+    </menu>
+    <menu id="archive-menu" insertAfter="administration">
+        <item screen="spmu_ConnectionLog.browse"/>
+    </menu>
+</menu-config>

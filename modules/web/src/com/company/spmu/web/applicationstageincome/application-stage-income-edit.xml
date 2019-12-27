@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://editorCaption"
+        focusComponent="form"
+        messagesPack="com.company.spmu.web.applicationstageincome"
+        >
+    <data>
+        <instance id="applicationStageIncomeDc"
+                  class="com.company.spmu.entity.ApplicationStageIncome"
+                  view="applicationStageIncome-edit">
+            <loader/>
+            <instance id="applicationStageValueDc" property="applicationStageValue"/>
+            <instance id="applicationStageContractDc" property="applicationStageContract"/>
+        </instance>
+        <collection id="affiliatesDc" class="com.company.spmu.entity.Affilate" view="_local">
+            <loader id="affiliatesLc">
+                <query>
+                    <![CDATA[select e from spmu_Affilate e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="planAccountsDc" class="com.company.spmu.entity.PlanAccount" view="_minimal">
+            <loader id="planAccountsDl">
+                <query>
+                    <![CDATA[select e from spmu_PlanAccount e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="planArticleDc" class="com.company.spmu.entity.PlanArticle" view="_minimal">
+            <loader id="planArticleDl">
+                <query>
+                    <![CDATA[select e from spmu_PlanArticle e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="accountsDc" class="com.company.spmu.entity.Account" view="_minimal">
+            <loader id="accountsDl">
+                <query>
+                    <![CDATA[select e from spmu_Account e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="contractStagesDc" class="com.company.spmu.entity.ContractStage" view="_local">
+            <loader>
+                <query><![CDATA[select e from spmu_ContractStage e ]]></query>
+            </loader>
+        </collection>
+        <collection id="measuresDc" class="com.company.spmu.entity.Measure" view="_local">
+            <loader>
+                <query><![CDATA[select e from spmu_Measure e ]]></query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="90%"
+                width="90%"/>
+    <layout expand="scrollBox" spacing="true" stylename="layoutblue">
+        <hbox id="actionButtons" spacing="true">
+            <button caption="Изменения и корректировки"
+                    icon="REFRESH_ACTION" id="changesBtn" />
+        </hbox>
+        <hbox margin="true,false,true,false">
+            <label id="titleLabel" css="font-size:16pt; font-weight:bold;"/>
+        </hbox>
+        <scrollBox id="scrollBox" spacing="true">
+            <form id="form" dataContainer="applicationStageIncomeDc" width="100%">
+                <flowBox spacing="true">
+                    <hbox spacing="true" width="5%">
+                        <textField caption="№" width="100%" dataContainer="applicationStageIncomeDc" property="order" editable="false" id="orderField"/>
+                    </hbox>
+                    <hbox spacing="true" width="12%">
+                        <lookupPickerField id="applicationStageValueDcField" optionsContainer="accountsDc"
+                                           dataContainer="applicationStageValueDc" property="analytica" caption="&#1050;&#1042;&#1059;"
+                                           width="100%" inputPrompt="&#1057;&#1087;&#1088;&#1072;&#1074;&#1086;&#1095;&#1085;&#1080;&#1082; &#1050;&#1042;&#1059;"
+                                           captionProperty="name">
+                        </lookupPickerField>
+                    </hbox>
+                    <hbox spacing="true" width="15%">
+                        <lookupPickerField dataContainer="applicationStageIncomeDc" id="planArticleField"
+                                           optionsContainer="planArticleDc" property="planArticle" caption="Статья ВПО"
+                                           width="100%"
+                                           inputPrompt="&#1057;&#1087;&#1088;&#1072;&#1074;&#1086;&#1095;&#1085;&#1080;&#1082; &#1089;&#1090;&#1072;&#1090;&#1077;&#1081; &#1042;&#1055;&#1054;">
+                        </lookupPickerField>
+                    </hbox>
+                    <hbox spacing="true" width="20%">
+                        <lookupPickerField id="accountField" optionsContainer="planAccountsDc"
+                                           dataContainer="applicationStageValueDc" property="planAccount" caption="КУУ"
+                                           width="100%" inputPrompt="&#1057;&#1087;&#1088;&#1072;&#1074;&#1086;&#1095;&#1085;&#1080;&#1082; &#1076;&#1074;&#1080;&#1078;&#1077;&#1085;&#1080;&#1103; &#1076;&#1077;&#1085;&#1077;&#1078;&#1085;&#1099;&#1093; &#1089;&#1088;&#1077;&#1076;&#1089;&#1090;&#1074; (&#1076;&#1083;&#1103; &#1059;&#1059;)"
+                                           captionProperty="name">
+                        </lookupPickerField>
+                    </hbox>
+                    <hbox spacing="true" width="25%">
+                        <lookupPickerField id="affiliateField" optionsContainer="affiliatesDc" property="affiliate"
+                                           dataContainer="applicationStageIncomeDc"
+                                           align="TOP_LEFT" caption="Индекс ответственного подразделения" width="100%"
+                                           inputPrompt="&#1057;&#1087;&#1088;&#1072;&#1074;&#1086;&#1095;&#1085;&#1080;&#1082; &#1089;&#1090;&#1088;&#1091;&#1082;&#1090;&#1091;&#1088;&#1085;&#1099;&#1093; &#1087;&#1086;&#1076;&#1088;&#1072;&#1079;&#1076;&#1077;&#1083;&#1077;&#1085;&#1080;&#1081;">
+                        </lookupPickerField>
+                    </hbox>
+                </flowBox>
+
+                <flowBox width="100%" spacing="true">
+                    <hbox spacing="true" width="13%">
+                        <textField id="totalField" datatype="double" editable="false"
+                                   dataContainer="applicationStageValueDc" property="value" caption="Общая стоимость"
+                                   width="100%"/>
+                    </hbox>
+
+                    <hbox spacing="true" width="13%">
+                        <textField id="year1" datatype="double" width="100%"/>
+                    </hbox>
+                    <hbox spacing="true" width="13%">
+                        <textField id="year2" datatype="double" width="100%"/>
+                    </hbox>
+                    <hbox spacing="true" width="13%">
+                        <textField id="year3" datatype="double" width="100%"/>
+                    </hbox>
+                    <hbox spacing="true" width="13%">
+                        <textField id="year4" datatype="double" width="100%"/>
+                    </hbox>
+                    <hbox spacing="true" width="26%">
+                        <textField id="totalForAllYearsField" datatype="double"
+                                   caption="Запланированно в предшествующие годы" width="100%"/>
+                    </hbox>
+                </flowBox>
+                <flowBox spacing="true">
+                    <cssLayout width="60%">
+                        <hbox css="margin-top: 21px; margin-right: 5px;">
+                            <button  caption="Показать месяца" id="showMonths" />
+                        </hbox>
+                        <hbox id="quarters" width="80%" >
+                            <textField id="q1Field" dataContainer="applicationStageIncomeDc" datatype="double" property="q1"
+                                       caption="Кв. 1"
+                                       width="100%">
+                            </textField>
+                            <textField id="q2Field" dataContainer="applicationStageIncomeDc" datatype="double" property="q2"
+                                       caption="Кв. 2"
+                                       width="100%"/>
+                            <textField id="q3Field" dataContainer="applicationStageIncomeDc" datatype="double" property="q3"
+                                       caption="Кв. 3"
+                                       width="100%"/>
+                            <textField id="q4Field" dataContainer="applicationStageIncomeDc" datatype="double" property="q4"
+                                       caption="Кв. 4"
+                                       width="100%"/>
+                        </hbox>
+                        <hbox id="months" visible="false" width="80%">
+                            <vbox width="100%">
+                            <textField id="m1Field" dataContainer="applicationStageIncomeDc" datatype="double" property="m1"
+                                       caption="Январь"
+                                       width="100%"/>
+                            <textField id="m2Field" dataContainer="applicationStageIncomeDc" datatype="double" property="m2"
+                                       caption="Февраль"
+                                       width="100%"/>
+                            <textField id="m3Field" dataContainer="applicationStageIncomeDc" datatype="double" property="m3"
+                                       caption="Март"
+                                       width="100%"/>
+                            </vbox>
+                            <vbox width="100%">
+                            <textField id="m4Field" dataContainer="applicationStageIncomeDc" datatype="double" property="m4"
+                                       caption="Апрель"
+                                       width="100%"/>
+                            <textField id="m5Field" dataContainer="applicationStageIncomeDc" datatype="double" property="m5"
+                                       caption="Май"
+                                       width="100%"/>
+                            <textField id="m6Field" dataContainer="applicationStageIncomeDc" datatype="double" property="m6"
+                                       caption="Июнь"
+                                       width="100%"/>
+                            </vbox>
+                            <vbox width="100%">
+                            <textField id="m7Field" dataContainer="applicationStageIncomeDc" datatype="double" property="m7"
+                                       caption="Июль"
+                                       width="100%"/>
+                            <textField id="m8Field" dataContainer="applicationStageIncomeDc" datatype="double" property="m8"
+                                       caption="Август"
+                                       width="100%"/>
+                            <textField id="m9Field" dataContainer="applicationStageIncomeDc" datatype="double" property="m9"
+                                       caption="Сентябрь"
+                                       width="100%"/>
+                            </vbox>
+                            <vbox>
+                            <textField id="m10Field" dataContainer="applicationStageIncomeDc" datatype="double" property="m10"
+                                       caption="Октябрь"
+                                       width="100%"/>
+                            <textField id="m11Field" dataContainer="applicationStageIncomeDc" datatype="double" property="m11"
+                                       caption="Ноябрь"
+                                       width="100%"/>
+                            <textField id="m12Field" dataContainer="applicationStageIncomeDc" datatype="double" property="m12"
+                                       caption="Декабрь"
+                                       width="100%"/>
+                            </vbox>
+                        </hbox>
+                    </cssLayout>
+                    <hbox spacing="true" width="10%">
+                        <lookupPickerField id="applicationStageContractField" dataContainer="applicationStageContractDc"
+                                           property="contract" optionsContainer="contractStagesDc" caption="Договор №"
+                                           align="TOP_LEFT" width="100%"
+                                           inputPrompt="&#1044;&#1086;&#1075;&#1086;&#1074;&#1086;&#1088;&#1072;"/>
+                    </hbox>
+                    <hbox spacing="true" width="25%">
+                        <textField id="applicationStageContractDcField" caption="Дата окончания срока действия договора" width="100%"
+                                   dataContainer="applicationStageContractDc" editable="false" property="contract.end"/>
+                    </hbox>
+                </flowBox>
+                <vbox width="60%" css="border: 1px solid black">
+                    <hbox spacing="true" width="100%" >
+                        <label width="100%" css="font-size:16pt; text-align-last: center;" value="Для условно-постоянных доходов"/>
+                    </hbox>
+                    <flowBox spacing="true" width="100%">
+                        <hbox spacing="true"  width="30%"  margin="false,false,true,false">
+                            <lookupPickerField id="applicationStageValueDcField_1"
+                                               dataContainer="applicationStageValueDc"
+                                               optionsContainer="measuresDc" property="measure"
+                                               caption="Еденица измерения"
+                                               width="100%"
+                                               inputPrompt="&#1057;&#1087;&#1088;&#1072;&#1074;&#1086;&#1095;&#1085;&#1080;&#1082; &#1077;&#1076;&#1080;&#1085;&#1080;&#1094; &#1080;&#1079;&#1084;&#1077;&#1088;&#1077;&#1085;&#1080;&#1081;"/>
+                        </hbox>
+                        <hbox spacing="true" width="50%" margin="false,false,true,false">
+                            <textField id="applicationStageValueDcField_2"
+                                       dataContainer="applicationStageValueDc"
+                                       datatype="double"
+                                       property="price"
+                                       caption="Стоимость единицы в ценах года планирования ПДП/ПДФ, руб.​"
+                                       contextHelpTextHtmlEnabled="true" responsive="true"
+                                       width="100%"
+                            />
+                        </hbox>
+                    </flowBox>
+                    <flowBox spacing="true" width="100%">
+                        <hbox spacing="true" width="40%" margin="false,false,true,false">
+                            <textField id="applicationStageValueDcField_3"
+                                       dataContainer="applicationStageValueDc"
+                                       property="amount"
+                                       datatype="double"
+                                       caption="Кол-во единиц в год/ годовая норма потребления​"
+                                       responsive="true" contextHelpTextHtmlEnabled="true"
+                                       width="100%"/>
+                        </hbox>
+                        <hbox spacing="true" width="50%" margin="false,false,true,false">
+                            <textField id="applicationStageValueDcField_4"
+                                       dataContainer="applicationStageValueDc"
+                                       property="total"
+                                       datatype="double"
+                                       caption="Стоимость в год в ценах года планирования ПДП/ПДФ, руб.​"
+                                       width="100%"/>
+                        </hbox>
+                    </flowBox>
+                </vbox>
+                <label align="TOP_CENTER" css="font-size:14pt;" value="Наименование группы доходов"/>
+                <flowBox width="100%">
+                    <textField id="nameField" width="90%" property="name" dataContainer="applicationStageIncomeDc"/>
+                </flowBox>
+                <label align="TOP_CENTER" css="font-size:14pt;" value="Детализация предмета дохода"/>
+                <flowBox width="100%">
+                    <textField id="descriptionField" width="90%" dataContainer="applicationStageIncomeDc"
+                               property="description"/>
+                </flowBox>
+            </form>
+        </scrollBox>
+        <hbox id="editActions" spacing="true">
+            <button action="windowCommitAndClose"
+                    caption="Сохранить" icon="SAVE"/>
+            <button action="windowClose" caption="&#1047;&#1072;&#1082;&#1088;&#1099;&#1090;&#1100;" icon="UNDO"/>
+        </hbox>
+    </layout>
+</window>

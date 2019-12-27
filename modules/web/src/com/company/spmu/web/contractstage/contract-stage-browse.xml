@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://browseCaption"
+        focusComponent="contractStagesTable"
+        messagesPack="com.company.spmu.web.contractstage">
+    <data readOnly="true">
+        <collection id="contractStagesDc"
+                    class="com.company.spmu.entity.ContractStage"
+                    view="contractStage-view">
+            <loader id="contractStagesDl">
+                <query>
+                    <![CDATA[select e from spmu_ContractStage e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="contractStagesTable" spacing="true" stylename="layoutblue">
+        <filter id="filter"
+                applyTo="contractStagesTable"
+                dataLoader="contractStagesDl">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="contractStagesTable"
+                    width="100%"
+                    dataContainer="contractStagesDc">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+            </actions>
+            <columns>
+                <column id="contract"/>
+                <column id="num"/>
+                <column id="code"/>
+                <column id="name"/>
+                <column id="start"/>
+                <column id="end"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="contractStagesTable.create"/>
+                <button id="editBtn" action="contractStagesTable.edit"/>
+                <button id="removeBtn" action="contractStagesTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

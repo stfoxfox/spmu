@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://browseCaption"
+        focusComponent="applicationExpensesTable"
+        messagesPack="com.company.spmu.web.applicationexpense">
+    <data readOnly="true">
+        <collection id="applicationExpensesDc"
+                    class="com.company.spmu.entity.ApplicationExpense"
+                    view="applicationExpense-view">
+            <loader id="applicationExpensesDl">
+                <query>
+                    <![CDATA[
+                        select e from spmu_ApplicationExpense e
+                        LEFT JOIN e.affiliate a
+                        LEFT JOIN e.planArticle ar
+                    ]]>
+                    <condition>
+                        <and>
+                            <c:jpql>
+                                <c:where>e.type = @enum(com.company.spmu.enumeration.ApplicationType.EXPENSE)</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>e.status = :status</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>e.division = :division</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>e.planArticle = :planArticle</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>e.change = :change</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>e.affiliate = :affiliate</c:where>
+                            </c:jpql>
+                            <c:jpql>
+                                <c:where>e.applicationResponsibleInitiator = (select r from spmu_ApplicationResponsible r where r.employee=:applicationResponsibleInitiator)</c:where>
+                            </c:jpql>
+                            <or>
+                                <c:jpql>
+                                    <c:where>e.name like :s1</c:where>
+                                </c:jpql>
+                                <c:jpql>
+                                    <c:where>e.code like :s2</c:where>
+                                </c:jpql>
+                                <c:jpql>
+                                    <c:where>a.name like :s3</c:where>
+                                </c:jpql>
+                                <c:jpql>
+                                    <c:where>ar.name like :s4</c:where>
+                                </c:jpql>
+                            </or>
+                        </and>
+                    </condition>
+                </query>
+            </loader>
+        </collection>
+        <collection id="allApplicationExpensesDc"
+                    class="com.company.spmu.entity.ApplicationExpense"
+                    view="applicationExpense-view">
+            <loader id="allApplicationExpensesDl">
+                <query><![CDATA[select e from spmu_ApplicationExpense e
+                        WHERE e.type = @enum(com.company.spmu.enumeration.ApplicationType.EXPENSE)]]></query>
+            </loader>
+        </collection>
+        <collection id="affiliateDc" class="com.company.spmu.entity.Affilate" view="_minimal">
+            <loader id="affiliateDl">
+                <query>
+                    <![CDATA[select e from spmu_Affilate e]]>
+                    <condition>
+                        <and>
+                            <c:jpql>
+                                <c:where>e=:affiliate</c:where>
+                            </c:jpql>
+                        </and>
+                    </condition>
+                </query>
+            </loader>
+        </collection>
+        <collection id="planArticleDc" class="com.company.spmu.entity.PlanArticle" view="_minimal">
+            <loader id="planArticleDl">
+                <query><![CDATA[select e from spmu_PlanArticle e ]]></query>
+            </loader>
+        </collection>
+        <collection id="applicationInitiatorsDc" class="com.company.spmu.entity.ApplicationResponsible" view="_minimal">
+            <loader id="applicationInitiatorsDl">
+                <query><![CDATA[select e from spmu_ApplicationResponsible e ]]></query>
+            </loader>
+        </collection>
+        <collection id="employeeDc" class="com.company.spmu.entity.Employee" view="_minimal">
+            <loader id="employeeDl">
+                <query>
+                    <![CDATA[select e from spmu_Employee e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="divisionsDc" class="com.company.spmu.entity.Division" view="_minimal">
+            <loader id="divisionsDl">
+                <query><![CDATA[select e from spmu_Division e ]]>
+                    <condition>
+                        <and>
+                            <c:jpql>
+                                <c:where>e.affiliate=:affiliate</c:where>
+                            </c:jpql>
+                        </and>
+                    </condition>
+                </query>
+            </loader>
+        </collection>
+        <collection id="hierarchyApplicationsDc" class="com.company.spmu.entity.HierarchyApplicationExpense" view="hierarchyExpenseApplication-browse">
+        </collection>
+        <collection id="stagesDc" class="com.company.spmu.entity.ApplicationStageExpense" view="applicationStageExpense-view">
+            <loader id="stagesDl">
+                <query>
+                    <![CDATA[select e from spmu_ApplicationStageExpense e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="tablecontainer"
+            spacing="true" stylename="layoutblue">
+        <filter id="filter"
+                applyTo="applicationExpensesTable"
+                dataLoader="applicationExpensesDl" manualApplyRequired="false" stylename="extfilter" visible="false">
+            <properties include=".*"/>
+        </filter>
+
+        <flowBox id="hbox1" width="100%">
+            <buttonsPanel id="butpanel1" align="TOP_RIGHT">
+
+                <button id="filterBtn"
+                        stylename="buttontransparent" invoke="onFilterBtnClick" icon="FILTER" css="background-color:#7ba3d9"/>
+<!--                <button id="printBtn" caption="&#1055;&#1077;&#1095;&#1072;&#1090;&#1100;" stylename="buttontransparent"-->
+<!--                        icon="PRINT" css="background-color:#7ba3d9" action="applicationExpensesTable.print"/>-->
+                <popupButton id="exportButton" caption="Экспорт" stylename="buttontransparent" icon="SHARE_SQUARE_O" css="background-color:#7ba3d9">
+                    <actions>
+                        <action id="applicationExpensesTable.excel" caption="в Excel"/>
+                        <action id="exportToPdf" caption="в PDF" invoke="onExportToPdf"/>
+                    </actions>
+                </popupButton>
+                <button id="selectBtn" caption="Выбрать" stylename="buttontransparent" invoke="onSelectBtnClick" css="background-color:#7ba3d9"/>
+                <button id="refreshBtn" action="applicationExpensesTable.refresh" stylename="buttontransparent" caption="" css="background-color:#7ba3d9"/>
+
+            </buttonsPanel>
+            <buttonsPanel id="csslay1" align="MIDDLE_RIGHT">
+                <popupView id="columnsPopup" hideOnMouseOut="false">
+                    <checkBoxGroup id="columnsList"/>
+                </popupView>
+                <textField align="MIDDLE_RIGHT" id="searchField"/>
+                <button id="searchBtn" stylename="buttontransparent" caption="Поиск" align="MIDDLE_RIGHT" css="background-color:#7ba3d9" action="applicationExpensesTable.search"/>
+                <popupButton stylename="buttontransparent popup-without-arrow" caption="" icon="COG"  align="MIDDLE_RIGHT" id="settingsBtn" css="background-color:#7ba3d9">
+                    <actions>
+                        <action id="filterAction" caption="Настроить фильтр"/>
+                        <action id="columnsAction" caption="Настроить колонки таблицы" />
+                    </actions>
+                </popupButton>
+            </buttonsPanel>
+            <hbox>
+                <lookupField id="viewTypeField" nullOptionVisible="false" textInputAllowed="false"
+                             css="border-radius:5px; margin:3px;" width="20%"
+                             optionsEnum="com.company.spmu.enumeration.ViewType">
+                </lookupField>
+                <lookupField id="statusTypeField" property="status"
+                             inputPrompt="msg://statusTypePrompt" css="border-radius:5px; margin:3px;" width="20%"
+                             optionsEnum="com.company.spmu.enumeration.ApplicationStatus">
+                </lookupField>
+            </hbox>
+        </flowBox>
+        <cssLayout width="100%" stylename="v-component-group" css="font-size:12pt; font-weight:bold;">
+            <lookupField id="affiliateLookupField" optionsContainer="affiliateDc" property="affiliate"
+                         inputPrompt="msg://affiliatePrompt" css="border-radius:5px; margin:3px;" width="20%"/>
+            <lookupField id="divisionLookupField" optionsContainer="divisionsDc" property="division"
+                         inputPrompt="msg://divisionPrompt" css="border-radius:5px; margin:3px;" width="10%"/>
+            <lookupField id="articleLookupField" optionsContainer="planArticleDc" property="planArticle"
+                         inputPrompt="msg://articlePrompt" css="border-radius:5px; margin:3px" width="15%"/>
+            <lookupField inputPrompt="План" css="border-radius:5px; margin:3px;" width="10%"/>
+            <lookupField id="initiatorLookupField" inputPrompt="msg://initiatorPrompt" optionsContainer="employeeDc"
+                         dataContainer="applicationInitiatorsDc" property="employee" css="border-radius:5px; margin:3px;" width="15%"/>
+            <checkBox id="correctionLookup" caption="msg://correctionPrompt"
+                      dataContainer="allApplicationExpensesDc" property="change" />
+        </cssLayout>
+        <cssLayout id="tablecontainer" width="100%">
+            <treeDataGrid id="treedatagrid" width="100%" dataContainer="hierarchyApplicationsDc" hierarchyProperty="parent" stylename="transparent" height="100%" columnsCollapsingAllowed="false">
+                <actions>
+                    <action id="edit" type="edit"/>
+                    <action id="remove" type="remove"/>
+                    <action id="refresh" type="refresh"/>
+                    <action id="excel" type="excel"/>
+                    <action id="print"/>
+                    <action id="search"/>
+                </actions>
+                <columns>
+                    <column id="name" caption="Наименование" property="name"/>
+                    <column id="code" caption="№ Заявки" property="app.code"/>
+                    <column id="affiliate" caption="Подразделение" property="affiliate"/>
+                    <column id="planArticle" caption="Статья ВПО" property="planArticle"/>
+                    <column id="dateStart" caption="Начало" property="dateStart"/>
+                    <column id="dateEnd" caption="Окончание" property="dateEnd"/>
+                    <column id="value" caption="Стоимость т.р." property="value"/>
+                </columns>
+                <rowsCount/>
+            </treeDataGrid>
+
+            <treeDataGrid id="applicationExpensesTable"
+                          width="100%" height="100%"
+                          dataContainer="applicationExpensesDc"
+                          stylename="transparent" hierarchyProperty="application" selectionMode="SINGLE">
+                <actions>
+                    <action id="create" type="create"/>
+                    <action id="edit" type="edit"/>
+                    <action id="remove" type="remove"/>
+                    <action id="refresh" type="refresh"/>
+                    <action id="excel" type="excel"/>
+                    <action id="print"/>
+                    <action id="search"/>
+                </actions>
+                <columns>
+                    <column id="name" property="name" caption="Наименование"/>
+                    <column id="code" property="code" caption="№ Заявки"/>
+                    <column id="affiliate" property="affiliate" caption="Подразделение"/>
+                    <column id="planArticle" property="planArticle" caption="Статья ВПО"/>
+                    <column id="dateStart" property="dateStart" caption="Начало"/>
+                    <column id="dateEnd" property="dateEnd" caption="Окончание"/>
+                    <column id="value" property="value" caption="Стоимость т.р."/>
+                </columns>
+                <rowsCount/>
+            </treeDataGrid>
+        </cssLayout>
+        <hbox width="100%">
+            <buttonsPanel>
+                <button action="applicationExpensesTable.create"
+                        caption="Создать проект заявки"
+                        stylename="buttonblue" id="createBtn"/>
+                <fragment id="procActionsFragment" screen="spmu_ProcActionsFragment" visible="false" stylename="proc-buttons-buttonblue"/>
+<!--                <button id="archiveBtn" caption="&#1042; &#1040;&#1088;&#1093;&#1080;&#1074;" stylename="buttonblue"/>-->
+            </buttonsPanel>
+            <buttonsPanel width="100%">
+                <button id="closeBtn" caption="Закрыть" align="BOTTOM_RIGHT"
+                        stylename="button_close" invoke="onCloseBtnClick"/>
+            </buttonsPanel>
+        </hbox>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

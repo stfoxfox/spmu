@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://editorCaption"
+        focusComponent="form"
+        messagesPack="com.company.spmu.web.planarticle">
+    <data>
+        <instance id="planArticleDc"
+                  class="com.company.spmu.entity.PlanArticle"
+                  view="planArticle-view">
+            <loader/>
+        </instance>
+        <collection id="parentsDc" class="com.company.spmu.entity.PlanArticle" view="_minimal">
+            <loader id="parentsLc">
+                <query>
+                    <![CDATA[select e from spmu_PlanArticle e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="finsourcesDc" class="com.company.spmu.entity.Finsource" view="_minimal">
+            <loader id="finsourcesLc">
+                <query>
+                    <![CDATA[select e from spmu_Finsource e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="editActions" spacing="true" stylename="layoutblue">
+        <form id="form" dataContainer="planArticleDc">
+            <column width="250px">
+                <maskedField id="guidField" mask="hhhhhhhh-hhhh-hhhh-hhhh-hhhhhhhhhhhh" property="guid"/>
+                <lookupPickerField id="parentField" optionsContainer="parentsDc" property="parent">
+                    <actions>
+                        <action id="lookup" type="picker_lookup"/>
+                    </actions>
+                </lookupPickerField>
+                <lookupPickerField id="finsourceField" optionsContainer="finsourcesDc" property="finsource">
+                    <actions>
+                        <action id="lookup" type="picker_lookup"/>
+                    </actions>
+                </lookupPickerField>
+                <textField id="nameField" property="name"/>
+                <textField id="codeField" property="code"/>
+                <textArea id="descriptionField" property="description" rows="5"/>
+                <textField id="fullnameField" property="fullname"/>
+            </column>
+        </form>
+        <hbox id="editActions" spacing="true">
+            <button action="windowCommitAndClose"/>
+            <button action="windowClose"/>
+        </hbox>
+    </layout>
+</window>

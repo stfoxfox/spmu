@@ -1,0 +1,2 @@
+alter table SPMU_APPLICATION add constraint FK_SPMU_APPLICATION_ON_PLAN foreign key (PLAN_ID) references SPMU_PLAN_TYPE(ID) on delete CASCADE;
+create index IDX_SPMU_APPLICATION_ON_PLAN on SPMU_APPLICATION (PLAN_ID);

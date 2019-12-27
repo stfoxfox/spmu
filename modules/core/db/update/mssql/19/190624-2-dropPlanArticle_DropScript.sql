@@ -1,0 +1,1 @@
+drop table SPMU_PLAN_ARTICLE__U38436 ;

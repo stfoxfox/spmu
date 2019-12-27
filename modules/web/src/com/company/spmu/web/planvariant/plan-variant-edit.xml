@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://editorCaption"
+        messagesPack="com.company.spmu.web.planvariant">
+    <data>
+        <instance id="planVariantDc"
+                  class="com.company.spmu.entity.PlanVariant"
+                  view="planVariant.edit">
+            <loader/>
+        </instance>
+        <collection id="responsiblesDc" class="com.company.spmu.entity.Employee" view="_minimal">
+            <loader id="responsiblesLc">
+                <query>
+                    <![CDATA[select e from spmu_Employee e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="planVariantTemplatesDc" class="com.company.spmu.entity.PlanVariantTemplate"
+                    view="planVariantTemplate-view">
+            <loader id="planVariantTemplatesDl">
+                <query>
+                    <![CDATA[select e from spmu_PlanVariantTemplate e ]]>
+                    <condition>
+                        <and>
+                            <c:jpql>
+                                <c:where>e.planVariant=:p</c:where>
+                            </c:jpql>
+                        </and>
+                    </condition>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <actions>
+        <action id="remove"/>
+        <action id="save"/>
+        <action id="addview"/>
+        <action id="planconstr"/>
+    </actions>
+    <dialogMode height="600"
+                width="800"/>
+    <layout spacing="true" expand="tabs">
+        <tabSheet id="tabs">
+            <tab id="variantTab" caption="Вариант плана">
+            </tab>
+            <tab id="mainTab" caption="Основные данные" expand="scrollBox1">
+                <flowBox width="100%" spacing="true">
+                    <buttonsPanel id="topleftBox">
+                        <hbox spacing="true">
+                        <lookupField inputPrompt="Форма представления" optionsContainer="planVariantTemplatesDc" id="templateField"/>
+                        <button id="plusBtn" icon="PLUS" action="addview"/>
+                        <button id="minusBtn" icon="MINUS"/>
+                        <button id="saveBtn" icon="SAVE" action="save"/>
+                        <button id="undoBtn" icon="UNDO"/>
+                        <button id="saveasBtn" caption="Сохранить как"/>
+                        <button id="versionsBtn" caption="Версии плана"/><button id="historyBtn" caption="История согласования"/>
+                        </hbox>
+                        <hbox spacing="true">
+                        <popupButton id="exportButton" caption="" stylename="buttontransparent" icon="SHARE_SQUARE_O" css="background-color:#7ba3d9">
+                            <actions>
+                                <action id="exportToExcel" caption="в Excel"/>
+                                <action id="exportToPdf" caption="в PDF"/>
+                            </actions>
+                        </popupButton>
+                        <button id="printBtn" icon="PRINT"/>
+                        </hbox>
+                    </buttonsPanel>
+                    <buttonsPanel id="toprightBox" align="MIDDLE_RIGHT">
+                        <textField />
+                        <button caption="Поиск" />
+                        <button caption="" icon="COGS" action="planconstr"/>
+
+                    </buttonsPanel>
+                </flowBox>
+                <scrollBox id="scrollBox1">
+                    <flowBox width="100%">
+                        <hbox spacing="true" align="MIDDLE_LEFT">
+                            <textField dataContainer="planVariantDc" property="code" caption="Код Плана"/>
+                            <textField dataContainer="planVariantDc" property="year" caption="Год планирования" datatype="int" id="yearField"/>
+                            <textField caption="Номер версии" editable="false"/>
+                            <textField caption="Дата актуальности данных" dataContainer="planVariantDc" property="date" editable="false"/>
+                        </hbox>
+                        <hbox>
+                        <textField caption="Статус" dataContainer="planVariantDc" property="status" editable="false" align="MIDDLE_RIGHT"/>
+                        </hbox>
+                    </flowBox>
+                    <hbox width="100%" expand="nameField">
+                        <textField caption="Наименование варианта" dataContainer="planVariantDc" property="name" id="nameField"/>
+                    </hbox>
+                    <hbox width="100%" expand="commentField">
+                        <textField caption="Комментарий" dataContainer="planVariantDc" property="description" id="commentField"/>
+                    </hbox>
+                    <hbox width="100%" spacing="true">
+                        <textField caption="Лимит финансирования на плановый год" id="limit1" datatype="double"/>
+                        <textField caption="Лимит финансирования на плановый год+1" id="limit2" datatype="double"/>
+                        <textField caption="Лимит финансирования на плановый год+2" id="limit3" datatype="double"/>
+                    </hbox>
+                        <textField caption="Лимит финансирования на плановый год+3" id="limit4" datatype="double"/>
+
+                </scrollBox>
+            </tab>
+            <tab id="requestsTab" caption="Заявки и мероприятия">
+                <fragment screen="spmu_RequestsAndEventsFragment"/>
+            </tab>
+            <tab id="warningsTab" caption="Предупреждения">
+            </tab>
+        </tabSheet>
+        <hbox width="100%" id="buttons1" expand="buttons1right">
+            <buttonsPanel id="buttons1left">
+                <fragment id="procActionsFragment" screen="spmu_ProcActionsFragment" visible="false" stylename="proc-buttons-buttonblue"/>
+                <button caption="В Архив" id="archiveBtn" stylename="buttonblue"/>
+                <button caption="Удалить вариант плана" stylename="buttonblue" id="deleteBtn" action="remove"/>
+                <button caption="Опубликовать" stylename="buttonblue" id="publicBtn"/>
+                <button caption="Отозвать" stylename="buttonblue" id="recallBtn"/>
+            </buttonsPanel>
+            <buttonsPanel id="buttons1right">
+                <button id="closeBtn" caption="Закрыть" align="BOTTOM_RIGHT" stylename="button_close"/>
+            </buttonsPanel>
+        </hbox>
+    </layout>
+</window>

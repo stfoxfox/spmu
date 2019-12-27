@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="Лог изменений сущности"
+        focusComponent="entityLogItemsTable"
+        messagesPack="com.company.spmu.web.entitylogitem">
+    <data readOnly="true">
+        <collection id="entityLogItemsDc"
+                    class="com.haulmont.cuba.security.entity.EntityLogItem"
+                    view="logViewManual">
+            <loader id="entityLogItemsDl">
+                <query>
+                    <![CDATA[select e from sec$EntityLog e where e.entityRef.entityId=:id]]>
+                </query>
+            </loader>
+            <collection id="logAttrDc"
+                        property="attributes"/>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout spacing="true">
+        <table id="entityLogItemsTable"
+               width="100%"
+               dataContainer="entityLogItemsDc">
+            <actions>
+            </actions>
+            <columns>
+                <column id="eventTs"/>
+                <column id="user"/>
+                <column id="type"/>
+                <column id="entity"/>
+                <column id="changes"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+            </buttonsPanel>
+        </table>
+        <table id="attrTable"
+               height="100%"
+               width="100%"
+               dataContainer="logAttrDc">
+            <columns>
+                <column id="name"/>
+                <column id="oldValue"/>
+                <column id="value"/>
+            </columns>
+        </table>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

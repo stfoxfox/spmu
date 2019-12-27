@@ -1,0 +1,1 @@
+sp_rename 'SPMU_LOCATION', 'SPMU_LOCATION__U42200' ;

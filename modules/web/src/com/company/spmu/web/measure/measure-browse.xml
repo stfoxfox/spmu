@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://browseCaption"
+        focusComponent="measuresTable"
+        messagesPack="com.company.spmu.web.measure">
+    <data readOnly="true">
+        <collection id="measuresDc"
+                    class="com.company.spmu.entity.Measure"
+                    view="_local">
+            <loader id="measuresDl">
+                <query>
+                    <![CDATA[select e from spmu_Measure e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="measuresTable"
+            spacing="true" stylename="layoutblue">
+        <filter id="filter"
+                applyTo="measuresTable"
+                dataLoader="measuresDl">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="measuresTable"
+                    width="100%"
+                    dataContainer="measuresDc">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+            </actions>
+            <columns>
+                <column id="code"/>
+                <column id="name"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="measuresTable.create"/>
+                <button id="editBtn" action="measuresTable.edit"/>
+                <button id="removeBtn" action="measuresTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

@@ -1,0 +1,1 @@
+drop table SPMU_EMPLOYEE__U96495 ;

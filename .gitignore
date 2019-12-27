@@ -1,0 +1,14 @@
+.gradle
+.studio
+*.ipr
+*.iml
+*.iws
+build/*
+deploy/*
+modules/*/build/*
+.idea/*
+out
+test-run
+build.gradle
+modules/core/web/META-INF/context.xml
+.directory

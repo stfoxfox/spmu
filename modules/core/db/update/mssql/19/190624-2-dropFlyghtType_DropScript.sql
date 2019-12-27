@@ -1,0 +1,1 @@
+drop table SPMU_FLYGHT_TYPE__U35546 ;

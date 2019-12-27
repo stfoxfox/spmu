@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://editorCaption"
+        focusComponent="form"
+        messagesPack="com.company.spmu.web.applicationstage">
+    <data>
+        <instance id="applicationStageDc"
+                  class="com.company.spmu.entity.ApplicationStage"
+                  view="applicationStage-edit">
+            <loader/>
+            <instance id="applicationStageValueDc" property="applicationStageValue"/>
+            <instance id="applicationStageContractDc" property="applicationStageContract"/>
+        </instance>
+        <collection id="affiliatesDc" class="com.company.spmu.entity.Affilate" view="_local">
+            <loader id="affiliatesLc">
+                <query>
+                    <![CDATA[select e from spmu_Affilate e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="planAccountsDc" class="com.company.spmu.entity.PlanAccount" view="_minimal">
+            <loader id="planAccountsDl">
+                <query>
+                    <![CDATA[select e from spmu_PlanAccount e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="planArticleDc" class="com.company.spmu.entity.PlanArticle" view="_minimal">
+            <loader id="planArticleDl">
+                <query>
+                    <![CDATA[select e from spmu_PlanArticle e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="accountsDc" class="com.company.spmu.entity.Account" view="_minimal">
+            <loader id="accountsDl">
+                <query>
+                    <![CDATA[select e from spmu_Account e]]>
+                </query>
+            </loader>
+        </collection>
+        <collection id="contractStagesDc" class="com.company.spmu.entity.ContractStage" view="_local">
+            <loader>
+                <query><![CDATA[select e from spmu_ContractStage e ]]></query>
+            </loader>
+        </collection>
+        <collection id="measuresDc" class="com.company.spmu.entity.Measure" view="_local">
+            <loader>
+                <query><![CDATA[select e from spmu_Measure e ]]></query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="scrollBox" spacing="true" stylename="layoutblue">
+        <hbox id="editActions" spacing="true">
+            <button caption="&#1056;&#1077;&#1076;&#1072;&#1082;&#1090;&#1080;&#1088;&#1086;&#1074;&#1072;&#1090;&#1100;"
+                    icon="UNLOCK" css="color: #fff"/>
+            <button caption="Изменения и корректировки"
+                    icon="REFRESH_ACTION" id="changesBtn" />
+            <button action="windowCommitAndClose"
+                    caption="&#1057;&#1086;&#1093;&#1088;&#1072;&#1085;&#1080;&#1090;&#1100;" icon="SAVE"/>
+            <button action="windowClose" caption="&#1047;&#1072;&#1082;&#1088;&#1099;&#1090;&#1100;" icon="UNDO" css="color: #fff"/>
+        </hbox>
+        <hbox margin="true,false,true,false">
+            <label id="titleLabel" css="font-size:16pt; color: #fff; font-weight:bold;"/>
+        </hbox>
+        <scrollBox id="scrollBox" spacing="true">
+            <form id="form" dataContainer="applicationStageDc" width="100%">
+                <flowBox spacing="true">
+                    <hbox spacing="true" width="5%">
+                        <textField caption="№" width="100%" dataContainer="applicationStageDc" />
+                    </hbox>
+                    <hbox spacing="true" width="12%">
+                        <lookupPickerField id="applicationStageValueDcField" optionsContainer="accountsDc"
+                                           dataContainer="applicationStageValueDc" property="analytica" caption="&#1050;&#1042;&#1059;"
+                                           width="100%" inputPrompt="&#1057;&#1087;&#1088;&#1072;&#1074;&#1086;&#1095;&#1085;&#1080;&#1082; &#1050;&#1042;&#1059;"
+                                           captionProperty="name">
+                        </lookupPickerField>
+                    </hbox>
+                    <hbox spacing="true" width="15%">
+                        <lookupPickerField dataContainer="applicationStageDc" id="planArticleField"
+                                           optionsContainer="planArticleDc" property="planArticle" caption="Статья ВПО"
+                                           width="100%"
+                                           inputPrompt="&#1057;&#1087;&#1088;&#1072;&#1074;&#1086;&#1095;&#1085;&#1080;&#1082; &#1089;&#1090;&#1072;&#1090;&#1077;&#1081; &#1042;&#1055;&#1054;">
+                            </lookupPickerField>
+                    </hbox>
+                    <hbox spacing="true" width="20%">
+                        <lookupPickerField id="accountField" optionsContainer="planAccountsDc"
+                                           dataContainer="applicationStageValueDc" property="planAccount" caption="КУУ"
+                                           width="100%" inputPrompt="&#1057;&#1087;&#1088;&#1072;&#1074;&#1086;&#1095;&#1085;&#1080;&#1082; &#1076;&#1074;&#1080;&#1078;&#1077;&#1085;&#1080;&#1103; &#1076;&#1077;&#1085;&#1077;&#1078;&#1085;&#1099;&#1093; &#1089;&#1088;&#1077;&#1076;&#1089;&#1090;&#1074; (&#1076;&#1083;&#1103; &#1059;&#1059;)"
+                                           captionProperty="name">
+                         </lookupPickerField>
+                    </hbox>
+                    <hbox spacing="true" width="25%">
+                        <lookupPickerField id="affiliateField" optionsContainer="affiliatesDc" property="affiliate"
+                                           dataContainer="applicationStageDc"
+                                           align="TOP_LEFT" caption="Индекс ответственного подразделения" width="100%"
+                                           inputPrompt="&#1057;&#1087;&#1088;&#1072;&#1074;&#1086;&#1095;&#1085;&#1080;&#1082; &#1089;&#1090;&#1088;&#1091;&#1082;&#1090;&#1091;&#1088;&#1085;&#1099;&#1093; &#1087;&#1086;&#1076;&#1088;&#1072;&#1079;&#1076;&#1077;&#1083;&#1077;&#1085;&#1080;&#1081;">
+                          </lookupPickerField>
+                    </hbox>
+                </flowBox>
+
+                <flowBox width="100%" spacing="true">
+                    <hbox spacing="true" width="13%">
+                        <textField id="totalField" datatype="double"
+                                   dataContainer="applicationStageValueDc" property="value" caption="Общая стоимость"
+                                   width="100%"/>
+                    </hbox>
+
+                    <hbox spacing="true" width="13%">
+                        <textField caption="2021" width="100%"/>
+                    </hbox>
+                    <hbox spacing="true" width="13%">
+                        <textField caption="2021" width="100%"/>
+                    </hbox>
+                    <hbox spacing="true" width="13%">
+                        <textField caption="2022" width="100%"/>
+                    </hbox>
+                    <hbox spacing="true" width="13%">
+                        <textField caption="2023" width="100%"/>
+                    </hbox>
+                    <hbox spacing="true" width="26%">
+                        <textField id="totalForAllYearsField"
+                                   caption="Запланированно в предшествующие годы" width="100%"/>
+                    </hbox>
+                </flowBox>
+                <flowBox spacing="true">
+                    <cssLayout css="background-color: #3368af; " >
+                        <hbox css="vertical-align: bottom;" margin="true,false,true,false">
+                            <button caption="&#1055;&#1086;&#1082;&#1072;&#1079;&#1072;&#1090;&#1100; &#1082;&#1074;&#1072;&#1088;&#1090;&#1072;&#1083;&#1099;" css="color: #fff"/>
+                        </hbox>
+                        <hbox spacing="true" width="20%" margin="true,false,true,false">
+                            <textField id="q1Field" dataContainer="applicationStageDc" datatype="double" property="q1"
+                                       caption="Кв. 1"
+                                       width="100%"/>
+                        </hbox>
+                        <hbox spacing="true" width="20%" margin="true,false,true,false">
+                            <textField id="q2Field" dataContainer="applicationStageDc" datatype="double" property="q2"
+                                       caption="Кв. 2"
+                                       width="100%"/>
+                        </hbox>
+                        <hbox spacing="true" width="20%" margin="true,false,true,false">
+                            <textField id="q3Field" dataContainer="applicationStageDc" datatype="double" property="q3"
+                                       caption="Кв. 3"
+                                       width="100%"/>
+                        </hbox>
+                        <hbox spacing="true" width="20%" margin="true,false,true,false">
+                            <textField id="q4Field" dataContainer="applicationStageDc" datatype="double" property="q4"
+                                       caption="Кв. 4"
+                                       width="100%"/>
+                        </hbox>
+                    </cssLayout>
+                    <hbox spacing="true" width="10%">
+                        <lookupPickerField id="applicationStageContractField" dataContainer="applicationStageContractDc"
+                                           property="contract" optionsContainer="contractStagesDc" caption="Договор №"
+                                           align="TOP_LEFT" width="100%"
+                                           inputPrompt="&#1044;&#1086;&#1075;&#1086;&#1074;&#1086;&#1088;&#1072;"/>
+                    </hbox>
+                    <hbox spacing="true" width="25%">
+                        <textField caption="Дата окончания срока действия договора" width="100%"
+                                   dataContainer="applicationStageContractDc" editable="false" property="contract.end"/>
+                    </hbox>
+                </flowBox>
+                <vbox css="background-color: #3368af; " width="50%" >
+                    <hbox spacing="true" width="100%" >
+                        <label width="100%" css="font-size:16pt; text-align-last: center;" value="Для условно-постоянных доходов"/>
+                    </hbox>
+                    <flowBox spacing="true">
+                        <hbox spacing="true" width="30%">
+                            <lookupPickerField id="applicationStageValueDcField_1"
+                                               dataContainer="applicationStageValueDc"
+                                               optionsContainer="measuresDc" property="measure"
+                                               caption="Еденица измерения"
+                                               width="100%"
+                                               inputPrompt="&#1057;&#1087;&#1088;&#1072;&#1074;&#1086;&#1095;&#1085;&#1080;&#1082; &#1077;&#1076;&#1080;&#1085;&#1080;&#1094; &#1080;&#1079;&#1084;&#1077;&#1088;&#1077;&#1085;&#1080;&#1081;"/>
+                        </hbox>
+                        <hbox spacing="true" width="45%">
+                            <textField id="applicationStageValueDcField_2"
+                                       dataContainer="applicationStageValueDc"
+                                       datatype="double"
+                                       property="price"
+                                       caption="Стоимость единицы в ценах года планирования ПДП/ПДФ, руб.​"
+                                       contextHelpTextHtmlEnabled="true" responsive="true"
+                                       width="100%"
+                            />
+                        </hbox>
+                    </flowBox>
+                    <flowBox spacing="true">
+                        <hbox spacing="true" width="45%">
+                            <textField id="applicationStageValueDcField_3"
+                                       dataContainer="applicationStageValueDc"
+                                       property="amount"
+                                       datatype="double"
+                                       caption="Кол-во единиц в год/ годовая норма потребления​"
+                                       responsive="true" contextHelpTextHtmlEnabled="true"
+                                        width="100%"/>
+                        </hbox>
+                        <hbox spacing="true" width="45%">
+                            <textField id="applicationStageValueDcField_4"
+                                       dataContainer="applicationStageValueDc"
+                                       property="total"
+                                       datatype="double"
+                                       caption="Стоимость в год в ценах года планирования ПДП/ПДФ, руб.​"
+                                       width="100%"/>
+                        </hbox>
+                    </flowBox>
+                </vbox>
+                <label align="TOP_CENTER" css="font-size:14pt;" value="Наименование группы доходов"/>
+                <flowBox width="100%">
+                    <textField id="nameField" width="90%" property="name" dataContainer="applicationStageDc"/>
+                </flowBox>
+                <label align="TOP_CENTER" css="font-size:14pt;" value="Детализация предмета дохода"/>
+                <flowBox width="100%">
+                    <textField id="descriptionField" width="90%" dataContainer="applicationStageDc"
+                               property="description"/>
+                </flowBox>
+            </form>
+        </scrollBox>
+    </layout>
+</window>

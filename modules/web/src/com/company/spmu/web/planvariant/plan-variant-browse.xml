@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://browseCaption"
+        focusComponent="planVariantsTable"
+        messagesPack="com.company.spmu.web.planvariant">
+    <data readOnly="true">
+        <collection id="planVariantsDc"
+                    class="com.company.spmu.entity.PlanVariant"
+                    view="planVariant.browse">
+            <loader id="planVariantsDl">
+                <query>
+                    <![CDATA[select e from spmu_PlanVariant e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="planVariantsTable"
+            spacing="true">
+        <hbox spacing="true">
+            <lookupField inputPrompt="Проект"/>
+            <lookupField inputPrompt="Год"/>
+            <button id="refreshBtn" stylename="buttontransparent" caption="" css="background-color:#7ba3d9" action="planVariantsTable.refresh"/>
+            <button id="filterBtn" stylename="buttontransparent" icon="FILTER" css="background-color:#7ba3d9" caption=""/>
+        </hbox>
+        <dataGrid id="planVariantsTable"
+                  width="100%"
+                  dataContainer="planVariantsDc">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+                <action id="refresh" type="refresh"/>
+            </actions>
+            <columns>
+                <column id="num" caption="Номер варианта"/>
+                <column property="status" id="status" caption="Статус"/>
+                <column property="name" id="name" caption="Наименование варианта плана"/>
+                <column caption="Ответственный" property="responsible"/>
+                <column property="date" caption="Дата актуальности данных"/>
+                <column caption="Лимит финансирования на год (тыс. руб.)" id="limityear"/>
+                <column caption="Лимит финансирования на последующие годы (тыс. руб.)" id="limitnext"/>
+            </columns>
+        </dataGrid>
+        <hbox width="100%">
+            <buttonsPanel>
+                <button action="planVariantsTable.create"
+                        caption="Создать новый"
+                        stylename="buttonblue" id="createBtn"/>
+                <fragment id="procActionsFragment" screen="spmu_ProcActionsFragment" visible="false" stylename="proc-buttons-buttonblue"/>
+                <button caption="Создать по образцу" stylename="buttonblue" id="create2Btn"/>
+                <button caption="В Архив" stylename="buttonblue" id="archiveBtn"/>
+                <button caption="Удалить вариант плана" stylename="buttonblue" id="deleteBtn" action="planVariantsTable.remove"/>
+            </buttonsPanel>
+            <buttonsPanel width="100%">
+                <button id="closeBtn" caption="Закрыть" align="BOTTOM_RIGHT" stylename="button_close"/>
+            </buttonsPanel>
+        </hbox>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

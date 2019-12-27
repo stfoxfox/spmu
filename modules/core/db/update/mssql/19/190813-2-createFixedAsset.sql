@@ -1,0 +1,2 @@
+alter table SPMU_FIXED_ASSET add constraint FK_SPMU_FIXED_ASSET_ON_PARENT foreign key (PARENT_ID) references SPMU_FIXED_ASSET(ID);
+create index IDX_SPMU_FIXED_ASSET_ON_PARENT on SPMU_FIXED_ASSET (PARENT_ID);

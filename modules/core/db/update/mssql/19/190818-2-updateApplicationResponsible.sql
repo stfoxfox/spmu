@@ -1,0 +1,9 @@
+alter table SPMU_APPLICATION_RESPONSIBLE add DELETED_BY varchar(50) ;
+alter table SPMU_APPLICATION_RESPONSIBLE add UPDATE_TS datetime2 ;
+alter table SPMU_APPLICATION_RESPONSIBLE add DELETE_TS datetime2 ;
+alter table SPMU_APPLICATION_RESPONSIBLE add UPDATED_BY varchar(50) ;
+alter table SPMU_APPLICATION_RESPONSIBLE add CREATED_BY varchar(50) ;
+alter table SPMU_APPLICATION_RESPONSIBLE add CREATE_TS datetime2 ;
+alter table SPMU_APPLICATION_RESPONSIBLE add VERSION integer ^
+update SPMU_APPLICATION_RESPONSIBLE set VERSION = 0 where VERSION is null ;
+alter table SPMU_APPLICATION_RESPONSIBLE alter column VERSION integer not null ;

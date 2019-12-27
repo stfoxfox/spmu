@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://editorCaption"
+        focusComponent="form"
+        messagesPack="com.company.spmu.web.workflow">
+    <data>
+        <instance id="workflowDc"
+                  class="com.company.spmu.entity.Workflow"
+                  view="workflow-view">
+            <loader/>
+        </instance>
+        <collection id="parentsDc" class="com.company.spmu.entity.Workflow" view="_minimal">
+            <loader id="parentsLc">
+                <query>
+                    <![CDATA[select e from spmu_Workflow e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="editActions" spacing="true" stylename="layoutblue">
+        <form id="form" dataContainer="workflowDc">
+            <column width="250px">
+                <maskedField id="guidField" mask="hhhhhhhh-hhhh-hhhh-hhhh-hhhhhhhhhhhh" property="guid"/>
+                <lookupPickerField id="parentField" optionsContainer="parentsDc" property="parent">
+                    <actions>
+                        <action id="lookup" type="picker_lookup"/>
+                    </actions>
+                </lookupPickerField>
+                <textField id="descriptionField" property="description"/>
+                <textField id="equalToProcessStageStatusField" property="equalToProcessStageStatus"/>
+                <textField id="currentStageField" property="currentStage"/>
+                <textField id="newStageField" property="newStage"/>
+            </column>
+        </form>
+        <hbox id="editActions" spacing="true">
+            <button action="windowCommitAndClose"/>
+            <button action="windowClose"/>
+        </hbox>
+    </layout>
+</window>

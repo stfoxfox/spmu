@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://browseCaption"
+        focusComponent="affilatesTable"
+        messagesPack="com.company.spmu.web.affilate">
+    <data readOnly="true">
+        <collection id="affilatesDc"
+                    class="com.company.spmu.entity.Affilate"
+                    view="affilate-view">
+            <loader id="affilatesDl">
+                <query>
+                    <![CDATA[select e from spmu_Affilate e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="affilatesTable"
+            spacing="true" stylename="layoutblue">
+        <filter id="filter"
+                applyTo="affilatesTable"
+                dataLoader="affilatesDl">
+            <properties include=".*"/>
+        </filter>
+        <buttonsPanel>
+            <button id="parseAffiliates" invoke="parseAffiliates" caption="Обновить справочники"/>
+        </buttonsPanel>
+        <groupTable id="affilatesTable"
+                    width="100%"
+                    dataContainer="affilatesDc" multiselect="true">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+            </actions>
+            <columns>
+                <column id="guid"/>
+                <column id="parent"/>
+                <column id="code"/>
+                <column id="name"/>
+                <column id="description"/>
+                <column id="fullname"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="affilatesTable.create"/>
+                <button id="editBtn" action="affilatesTable.edit"/>
+                <button id="removeBtn" action="affilatesTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

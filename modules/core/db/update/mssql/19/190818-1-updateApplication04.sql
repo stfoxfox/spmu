@@ -1,0 +1,1 @@
+alter table SPMU_APPLICATION drop constraint FK_SPMU_APPLICATION_ON_ARTICLE ;

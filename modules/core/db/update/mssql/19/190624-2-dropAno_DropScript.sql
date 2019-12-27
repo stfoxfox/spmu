@@ -1,0 +1,1 @@
+drop table SPMU_ANO__U63050 ;

@@ -1,0 +1,1 @@
+sp_rename 'SPMU_EVENT_TYPE', 'SPMU_EVENT_TYPE__U65959' ;

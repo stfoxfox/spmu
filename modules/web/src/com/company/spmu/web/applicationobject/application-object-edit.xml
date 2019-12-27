@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://editorCaption"
+        focusComponent="form"
+        messagesPack="com.company.spmu.web.applicationobject">
+    <data>
+        <instance id="applicationObjectDc"
+                  class="com.company.spmu.entity.ApplicationObject"
+                  view="_local">
+            <loader/>
+        </instance>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="editActions" spacing="true">
+        <form id="form" dataContainer="applicationObjectDc">
+            <column width="250px">
+                <maskedField id="guidField" mask="hhhhhhhh-hhhh-hhhh-hhhh-hhhhhhhhhhhh" property="guid"/>
+                <maskedField id="rtopuidField" mask="hhhhhhhh-hhhh-hhhh-hhhh-hhhhhhhhhhhh" property="rtopuid"/>
+                <textField id="locationField" property="location"/>
+                <textField id="locationIdField" property="locationId"/>
+                <textField id="coordinateField" property="coordinate"/>
+                <textField id="nameField" property="name"/>
+                <textArea id="descriptionField" property="description" rows="5"/>
+                <textField id="linenumField" property="linenum"/>
+                <textField id="quantityField" property="quantity"/>
+            </column>
+        </form>
+        <hbox id="editActions" spacing="true">
+            <button action="windowCommitAndClose"/>
+            <button action="windowClose"/>
+        </hbox>
+    </layout>
+</window>

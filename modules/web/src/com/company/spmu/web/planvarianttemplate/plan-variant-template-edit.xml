@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://editorCaption"
+        focusComponent="formTab"
+        messagesPack="com.company.spmu.web.planvarianttemplate">
+    <data>
+        <instance id="planVariantTemplateDc"
+                  class="com.company.spmu.entity.PlanVariantTemplate"
+                  view="planVariantTemplate-edit">
+            <loader/>
+        </instance>
+        <collection id="planVariantTemplatesDc" class="com.company.spmu.entity.PlanVariantTemplate"
+                    view="planVariantTemplate-view">
+            <loader id="planVariantTemplatesDl">
+                <query>
+                    <![CDATA[select e from spmu_PlanVariantTemplate e ]]>
+                    <condition>
+                        <and>
+                            <c:jpql>
+                                <c:where>e.planVariant=:p</c:where>
+                            </c:jpql>
+                        </and>
+                    </condition>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <actions>
+        <action id="save"/>
+        <action id="cancel"/>
+        <action id="titleAdd"/>
+        <action id="reportEndAdd"/>
+        <action id="pageHeaderAdd"/>
+        <action id="pageFooterAdd"/>
+    </actions>
+    <dialogMode height="600"
+                width="800"/>
+    <layout spacing="true">
+        <tabSheet id="tabs">
+            <tab id="formTab" caption="Форма представления" spacing="true">
+                <hbox>
+                    <textField id="nameField" caption="Наименование формы представления" dataContainer="planVariantTemplateDc" property="name"/>
+                </hbox>
+                <cssLayout width="100%" stylename="withborder">
+                    <hbox spacing="true">
+                        <label value="Заголовок"/>
+                        <button caption="Добавить атрибут плана или переменную" action="titleAdd"/>
+                    </hbox>
+                    <hbox width="100%">
+                        <textField width="100%" caption="" id="titleField" editable="false"/>
+                    </hbox>
+                </cssLayout>
+                <cssLayout width="100%" stylename="withborder">
+                    <hbox spacing="true">
+                        <label value="Окончание отчета"/>
+                        <button caption="Добавить атрибут плана или переменную" action="reportEndAdd"/>
+                    </hbox>
+                    <hbox width="100%">
+                        <textField width="100%" caption="" id="reportEndField" editable="false"/>
+                    </hbox>
+                </cssLayout>
+                <cssLayout width="100%" stylename="withborder">
+                    <hbox spacing="true">
+                        <label value="Верхний колонтитул"/>
+                        <button caption="Добавить атрибут плана или переменную" action="pageHeaderAdd"/>
+                    </hbox>
+                    <hbox width="100%">
+                        <textField width="100%" caption="" id="pageHeaderField" editable="false"/>
+                    </hbox>
+                </cssLayout>
+                <cssLayout width="100%" stylename="withborder">
+                    <hbox spacing="true">
+                        <label value="Нижний колонтитул"/>
+                        <button caption="Добавить атрибут плана или переменную" action="pageFooterAdd"/>
+                    </hbox>
+                    <hbox width="100%">
+                        <textField width="100%" caption="" id="pageFooterField" editable="false"/>
+                    </hbox>
+                </cssLayout>
+                <hbox width="100%">
+                    <button align="MIDDLE_LEFT" caption="Сохранить" action="save" icon="SAVE"/>
+                    <button align="MIDDLE_RIGHT" caption="Закрыть" action="cancel"/>
+                </hbox>
+            </tab>
+            <tab id="attrTab" caption="Атрибуты и переменные">
+            </tab>
+            <tab id="columnsTab" caption="Колонки">
+            </tab>
+            <tab id="rowsTab" caption="Строки">
+            </tab>
+            <tab id="condTab" caption="Условия отбора">
+            </tab>
+        </tabSheet>
+    </layout>
+</window>

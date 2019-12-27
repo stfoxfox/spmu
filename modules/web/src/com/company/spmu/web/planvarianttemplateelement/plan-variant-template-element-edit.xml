@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://editorCaption"
+        messagesPack="com.company.spmu.web.planvarianttemplateelement">
+    <data>
+        <instance id="planVariantTemplateElementDc"
+                  class="com.company.spmu.entity.PlanVariantTemplateElement"
+                  view="planVariantTemplateElement-view">
+            <loader/>
+        </instance>
+        <collection id="planVariantTemplatesDc" class="com.company.spmu.entity.PlanVariantTemplate" view="_minimal">
+            <loader id="planVariantTemplatesLc">
+                <query>
+                    <![CDATA[select e from spmu_PlanVariantTemplate e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <actions>
+        <action id="save"/>
+        <action id="cancel"/>
+    </actions>
+    <dialogMode height="AUTO"
+                width="AUTO"
+                modal="true"/>
+    <layout spacing="true">
+        <hbox>
+            <checkBox id="attributeCh" caption="Атрибут"/>
+        </hbox>
+        <hbox>
+            <lookupField id="attributeField" enable="false" newOptionAllowed="false"/>
+        </hbox>
+        <hbox>
+            <checkBox id="variableCh" caption="Переменная"/>
+        </hbox>
+        <hbox>
+            <textField id="varValueField" caption="Значение переменной" enable="false"/>
+        </hbox>
+        <hbox spacing="true">
+            <button caption="Выбрать" action="save"/>
+            <button caption="Отмена" action="cancel"/>
+        </hbox>
+    </layout>
+</window>

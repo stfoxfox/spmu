@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:ext="http://schemas.haulmont.com/cuba/window-ext.xsd"
+        extends="com/company/spmu/web/applicationstageexpense/application-stage-expense-edit.xml"
+        messagesPack="com.company.spmu.web.applicationstageexpense.stages">
+    <layout>
+        <scrollBox id="scrollBox">
+            <form id="form">
+                <hbox id="articleHbox" width="100%">
+                    <textField id="articleField" caption="Статья" property="name" width="100%" dataContainer="applicationStageExpenseDc"/>
+                </hbox>
+            </form>
+        </scrollBox>
+    </layout>
+</window>

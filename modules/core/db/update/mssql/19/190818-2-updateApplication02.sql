@@ -1,0 +1,1 @@
+alter table SPMU_APPLICATION add constraint FK_SPMU_APPLICATION_ON_RESPONSIBLE foreign key (RESPONSIBLE_ID) references SPMU_EMPLOYEE(ID);

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://lookupCaption"
+        focusComponent="table"
+        messagesPack="com.company.spmu.web.applicationstage">
+    <data readOnly="true">
+        <collection id="applicationStagesDc"
+                    class="com.company.spmu.entity.ApplicationStage"
+                    view="applicationStage-view">
+            <loader id="applicationStagesDl">
+                <query><![CDATA[select e from spmu_ApplicationStageEvent e]]></query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="80%"
+                width="80%"/>
+    <layout expand="table" width="100%" spacing="true"  stylename="layoutblue">
+        <table id="table" width="100%" dataContainer="applicationStagesDc"  stylename="transparent" showSelection="true" multiselect="false" reorderingAllowed="true">
+            <actions>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+                <action id="refresh" type="refresh"/>
+                <action id="excel" type="excel"/>
+                <action id="print"/>
+                <action id="search"/>
+            </actions>
+            <columns>
+                <column id="name" caption="Наименование" />
+                <column id="affiliate" caption="Подразделение"/>
+                <column id="start" caption="Начало"/>
+                <column id="end" caption="Окончание"/>
+                <column id="value" caption="Стоимость т.р."/>
+            </columns>
+        </table>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

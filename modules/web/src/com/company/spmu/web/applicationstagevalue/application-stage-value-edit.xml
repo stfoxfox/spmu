@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://editorCaption"
+        focusComponent="form"
+        messagesPack="com.company.spmu.web.applicationstagevalue">
+    <data>
+        <instance id="applicationStageValueDc"
+                  class="com.company.spmu.entity.ApplicationStageValue"
+                  view="applicationStageValue-edit">
+            <loader/>
+        </instance>
+        <collection id="planAccountsDc" class="com.company.spmu.entity.PlanAccount" view="_minimal">
+            <loader id="planAccountsLc">
+                <query>
+                    <![CDATA[select e from spmu_PlanAccount e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="scrollBox" spacing="true">
+        <scrollBox id="scrollBox" spacing="true">
+            <label value="Лимит финансирования Этапа заявки на мероприятие" stylename="screentitle"/>
+            <form id="form" dataContainer="applicationStageValueDc">
+                <hbox spacing="true">
+                    <textField caption="№" id="idField" editable="false"/>
+                    <textField caption="Год" dataContainer="applicationStageValueDc" property="year" editable="false"/>
+                    <lookupPickerField id="planAccountField" optionsContainer="planAccountsDc" property="planAccount" caption="КУУ" dataContainer="applicationStageValueDc">
+                        <actions>
+                            <action id="lookup" type="picker_lookup"/>
+                        </actions>
+                    </lookupPickerField>
+                </hbox>
+                <hbox id="modeM1" spacing="true">
+                    <textField caption="Итого" dataContainer="applicationStageValueDc" property="value" editable="false" id="sumMField"/>
+                    <textField caption="Январь" dataContainer="applicationStageValueDc" property="m1" id="m1Field"/>
+                    <textField caption="Февраль" dataContainer="applicationStageValueDc" property="m2" id="m2Field"/>
+                    <textField caption="Март" dataContainer="applicationStageValueDc" property="m3" id="m3Field"/>
+                    <textField caption="Апрель" dataContainer="applicationStageValueDc" property="m4" id="m4Field"/>
+                </hbox>
+                <hbox id="modeM2" spacing="true">
+                    <textField caption="Май" dataContainer="applicationStageValueDc" property="m5" id="m5Field"/>
+                    <textField caption="Июнь" dataContainer="applicationStageValueDc" property="m6" id="m6Field"/>
+                    <textField caption="Июль" dataContainer="applicationStageValueDc" property="m7" id="m7Field"/>
+                    <textField caption="Август" dataContainer="applicationStageValueDc" property="m8" id="m8Field"/>
+                </hbox>
+                <hbox id="modeM3" spacing="true">
+                    <textField caption="Сентябрь" dataContainer="applicationStageValueDc" property="m9" id="m9Field"/>
+                    <textField caption="Октябрь" dataContainer="applicationStageValueDc" property="m10" id="m10Field"/>
+                    <textField caption="Ноябрь" dataContainer="applicationStageValueDc" property="m11" id="m11Field"/>
+                    <textField caption="Декабрь" dataContainer="applicationStageValueDc" property="m12" id="m12Field"/>
+                </hbox>
+                <hbox id="modeQ" spacing="true">
+                    <textField caption="Итого" dataContainer="applicationStageValueDc" property="value" id="sumQField" editable="false"/>
+                    <textField caption="Кв 1" dataContainer="applicationStageValueDc" property="q1" id="q1Field"/>
+                    <textField caption="Кв 2" dataContainer="applicationStageValueDc" property="q2" id="q2Field"/>
+                    <textField caption="Кв 3" dataContainer="applicationStageValueDc" property="q3" id="q3Field"/>
+                    <textField caption="Кв 4" dataContainer="applicationStageValueDc" property="q4" id="q4Field"/>
+                </hbox>
+                <buttonsPanel>
+                    <button caption="Закрыть" action="windowClose"/>
+                    <button caption="Сохранить" action="windowCommitAndClose"/>
+                </buttonsPanel>
+            </form>
+        </scrollBox>
+    </layout>
+</window>

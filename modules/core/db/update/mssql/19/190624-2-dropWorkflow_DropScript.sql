@@ -1,0 +1,1 @@
+drop table SPMU_WORKFLOW__U95998 ;

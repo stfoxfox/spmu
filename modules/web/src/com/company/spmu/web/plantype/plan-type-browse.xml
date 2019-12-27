@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://browseCaption"
+        focusComponent="planTypesTable"
+        messagesPack="com.company.spmu.web.plantype">
+    <data readOnly="true">
+        <collection id="planTypesDc"
+                    class="com.company.spmu.entity.PlanType"
+                    view="planType-view">
+            <loader id="planTypesDl">
+                <query>
+                    <![CDATA[select e from spmu_PlanType e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="planTypesTable"
+            spacing="true" stylename="layoutblue">
+        <filter id="filter"
+                applyTo="planTypesTable"
+                dataLoader="planTypesDl">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="planTypesTable"
+                    width="100%"
+                    dataContainer="planTypesDc">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+            </actions>
+            <columns>
+                <column id="guid"/>
+                <column id="code"/>
+                <column id="name"/>
+                <column id="description"/>
+                <column id="kind"/>
+                <column id="fixed"/>
+                <column id="funding"/>
+                <column id="created"/>
+                <column id="expired"/>
+                <column id="creator"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="planTypesTable.create"/>
+                <button id="editBtn" action="planTypesTable.edit"/>
+                <button id="removeBtn" action="planTypesTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

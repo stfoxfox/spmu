@@ -1,0 +1,2 @@
+alter table SPMU_PLAN_SECTION add constraint FK_SPMU_PLAN_SECTION_ON_TYPE foreign key (TYPE_ID) references SPMU_PLAN_TYPE(ID);
+create index IDX_SPMU_PLAN_SECTION_ON_TYPE on SPMU_PLAN_SECTION (TYPE_ID);

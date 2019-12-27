@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://editorCaption"
+        focusComponent="form"
+        messagesPack="com.company.spmu.web.screens.planarticlestage">
+    <data>
+        <instance id="planArticleStageDc"
+                  class="com.company.spmu.entity.PlanArticleStage"
+                  view="planArticleStage-view">
+            <loader/>
+        </instance>
+        <collection id="planArticlesDc" class="com.company.spmu.entity.PlanArticle" view="_minimal">
+            <loader id="planArticlesLc">
+                <query>
+                    <![CDATA[select e from spmu_PlanArticle e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="editActions" spacing="true">
+        <form id="form" dataContainer="planArticleStageDc">
+            <column width="250px">
+                <lookupPickerField id="planArticleField" optionsContainer="planArticlesDc" property="planArticle">
+                    <actions>
+                        <action id="lookup" type="picker_lookup"/>
+                    </actions>
+                </lookupPickerField>
+                <textField id="nameField" property="name"/>
+                <checkBox id="isChangeField" property="isChange"/>
+            </column>
+        </form>
+        <hbox id="editActions" spacing="true">
+            <button action="windowCommitAndClose"/>
+            <button action="windowClose"/>
+        </hbox>
+    </layout>
+</window>

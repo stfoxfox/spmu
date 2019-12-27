@@ -1,0 +1,1 @@
+drop table SPMU_APPLICATION_OBJECT__U35822 ;

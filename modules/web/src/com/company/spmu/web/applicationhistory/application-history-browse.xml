@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://browseCaption"
+        focusComponent="applicationHistoriesTable"
+        messagesPack="com.company.spmu.web.applicationhistory">
+    <data readOnly="true">
+        <collection id="applicationHistoriesDc"
+                    class="com.company.spmu.entity.bpm.ApplicationHistory"
+                    view="applicationHistory-view">
+            <loader id="applicationHistoriesDl">
+                <query>
+                    <![CDATA[select e from spmu_ApplicationHistory e where e.procTask.procInstance.entity.entityId = :entityId]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="applicationHistoriesTable"
+            spacing="true">
+        <hbox margin="true,false,true,false" width="100%" align="MIDDLE_LEFT">
+            <label id="titleLabel" css="font-size:16pt; font-weight:bold;" align="MIDDLE_LEFT"/>
+        </hbox>
+        <groupTable id="applicationHistoriesTable"
+                    width="100%"
+                    dataContainer="applicationHistoriesDc"
+                    multiselect="true">
+            <columns>
+                <column id="procTask.startDate" caption="msg://date"/>
+                <column id="user.affiliate" caption="msg://stage"/>
+                <column id="user.employee" caption="msg://user"/>
+                <column id="entitySnapshot" caption="msg://status" />
+                <column id="procTask.comment" caption="msg://comment"/>
+            </columns>
+            <rowsCount/>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

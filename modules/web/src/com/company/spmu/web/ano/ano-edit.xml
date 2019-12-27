@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://editorCaption"
+        focusComponent="form"
+        messagesPack="com.company.spmu.web.ano">
+    <data>
+        <instance id="anoDc"
+                  class="com.company.spmu.entity.Ano"
+                  view="ano-view">
+            <loader id="anoDl"/>
+        </instance>
+        <collection id="flyghtTypesDc" class="com.company.spmu.entity.FlyghtType" view="_minimal">
+            <loader>
+                <query><![CDATA[select e from spmu_FlyghtType e ]]></query>
+            </loader>
+        </collection>
+        <collection id="affilatesDc" class="com.company.spmu.entity.Affilate" view="_minimal">
+            <loader>
+                <query><![CDATA[select e from spmu_Affilate e ]]></query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="editActions" spacing="true" stylename="layoutblue">
+        <form id="form" dataContainer="anoDc">
+            <column width="250px">
+                <textField id="dataTypeField" property="dataType"/>
+                <textField id="valField" property="val"/>
+                <maskedField id="timePeriodField" mask="hhhhhhhh-hhhh-hhhh-hhhh-hhhhhhhhhhhh" property="timePeriod"/>
+                <lookupField id="flightTypeField"
+                             caption="&#1058;&#1080;&#1087; &#1087;&#1086;&#1083;&#1105;&#1090;&#1072;"
+                             optionsContainer="flyghtTypesDc" property="flightType" required="true"/>
+                <lookupField id="affiliateField" property="affiliate" optionsContainer="affilatesDc"/>
+                <checkBox id="isFactField" property="isFact"/>
+            </column>
+        </form>
+        <hbox id="editActions" spacing="true">
+            <button action="windowCommitAndClose"/>
+            <button action="windowClose"/>
+        </hbox>
+    </layout>
+</window>

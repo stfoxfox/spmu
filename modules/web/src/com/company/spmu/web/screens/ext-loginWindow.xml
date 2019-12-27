@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/window.xsd"
+        class="com.company.spmu.web.screens.ExtAppLoginWindow"
+        messagesPack="com.company.spmu.web.screens">
+    <actions>
+        <action id="submit" shortcut="ENTER"
+                caption="mainMsg://loginWindow.okButton"
+                icon="app/images/login-button.png"/>
+    </actions>
+
+    <layout stylename="c-login-main-layout" expand="loginWrapper">
+        <vbox id="loginWrapper">
+            <vbox id="loginMainBox"
+                  align="MIDDLE_CENTER"
+                  margin="true"
+                  stylename="c-login-panel"
+                  width="AUTO">
+                <hbox id="loginTitleBox"
+                      align="MIDDLE_CENTER"
+                      spacing="true"
+                      stylename="c-login-title" margin="false,false,true,false">
+
+                    <label id="welcomeLabel"
+                           align="MIDDLE_LEFT"
+                           stylename="c-login-caption"
+                           value="mainMsg://loginWindow.welcomeLabel"/>
+                </hbox>
+
+                <hbox id="centerBox" align="MIDDLE_CENTER">
+                    <vbox>
+                        <image id="logoImage"
+                               align="MIDDLE_LEFT"
+                               height="122px"
+                               scaleMode="SCALE_DOWN"
+                               stylename="c-login-icon"
+                               width="122px"/>
+                    </vbox>
+                    <vbox id="loginForm"
+                          spacing="true"
+                          stylename="c-login-form" align="MIDDLE_RIGHT" width="50%">
+                        <cssLayout id="loginCredentials"
+                                   stylename="c-login-credentials">
+                            <label id="labelLogin" value="&#1051;&#1086;&#1075;&#1080;&#1085;"/>
+                            <textField id="loginField"
+                                       htmlName="loginField"
+                                       inputPrompt="mainMsg://loginWindow.loginPlaceholder"
+                                       stylename="c-login-username" width="70%"/>
+                            <label id="labelPassword" value="&#1055;&#1072;&#1088;&#1086;&#1083;&#1100;"/>
+                            <passwordField id="passwordField"
+                                           autocomplete="true"
+                                           htmlName="passwordField"
+                                           inputPrompt="mainMsg://loginWindow.passwordPlaceholder"
+                                           capsLockIndicator="capsLockIndicator"
+                                           stylename="c-login-password" width="70%"/>
+                        </cssLayout>
+
+                    </vbox>
+                </hbox>
+
+                <hbox align="MIDDLE_CENTER" margin="true,false,false,false" responsive="true" spacing="true">
+                    <vbox id="rememberLocalesBox"
+                          stylename="c-login-remember-locales">
+                        <checkBox id="rememberMeCheckBox"
+                                  stylename="c-login-remember-me"
+                                  caption="&#1047;&#1072;&#1087;&#1086;&#1084;&#1085;&#1080;&#1090;&#1100; &#1084;&#1077;&#1085;&#1103;"/>
+                        <lookupField id="localesSelect"
+                                     nullOptionVisible="false"
+                                     stylename="c-login-locale"
+                                     textInputAllowed="false"/>
+                    </vbox>
+                    <vbox align="MIDDLE_RIGHT">
+                        <button id="loginButton"
+                                align="MIDDLE_CENTER"
+                                action="submit"
+                                stylename="c-login-submit-button" caption="&#1042;&#1086;&#1081;&#1090;&#1080;"
+                        />
+                    </vbox>
+                </hbox>
+
+                <capsLockIndicator id="capsLockIndicator"
+                                   align="MIDDLE_CENTER"
+                                   stylename="c-login-capslockindicator"/>
+
+
+            </vbox>
+        </vbox>
+        <label id="poweredByLink"
+               align="MIDDLE_CENTER"
+               htmlEnabled="true"
+               stylename="c-powered-by"
+               value="mainMsg://cuba.poweredBy"/>
+    </layout>
+</window>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://editorCaption"
+        focusComponent="form"
+        messagesPack="com.company.spmu.web.planaccount">
+    <data>
+        <instance id="planAccountDc"
+                  class="com.company.spmu.entity.PlanAccount"
+                  view="planAccount-view">
+            <loader/>
+        </instance>
+        <collection id="articlesDc" class="com.company.spmu.entity.PlanArticle" view="_minimal">
+            <loader id="articlesLc">
+                <query>
+                    <![CDATA[select e from spmu_PlanArticle e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="editActions" spacing="true" stylename="layoutblue">
+        <form id="form" dataContainer="planAccountDc">
+            <column width="250px">
+                <maskedField id="guidField" mask="hhhhhhhh-hhhh-hhhh-hhhh-hhhhhhhhhhhh" property="guid" caption="msg://guidFieldCaption"/>
+                <textField id="codeField" property="code" caption="msg://codeFieldCaption"/>
+                <textField id="nameField" property="name" caption="msg://nameFieldCaption"/>
+                <lookupPickerField id="articleField" optionsContainer="articlesDc" property="stage" caption="msg://articleFieldCaption">
+                    <actions>
+                        <action id="lookup" type="picker_lookup"/>
+                    </actions>
+                </lookupPickerField>
+            </column>
+        </form>
+        <hbox id="editActions" spacing="true">
+            <button action="windowCommitAndClose"/>
+            <button action="windowClose"/>
+        </hbox>
+    </layout>
+</window>

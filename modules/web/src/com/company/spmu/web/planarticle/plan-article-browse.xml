@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://browseCaption"
+        focusComponent="planArticlesTable"
+        messagesPack="com.company.spmu.web.planarticle">
+    <data readOnly="true">
+        <collection id="planArticlesDc"
+                    class="com.company.spmu.entity.PlanArticle"
+                    view="planArticle-view">
+            <loader id="planArticlesDl">
+                <query>
+                    <![CDATA[select e from spmu_PlanArticle e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="planArticlesTable"
+            spacing="true" stylename="layoutblue">
+        <filter id="filter"
+                applyTo="planArticlesTable"
+                dataLoader="planArticlesDl">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="planArticlesTable"
+                    width="100%"
+                    dataContainer="planArticlesDc">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+            </actions>
+            <columns>
+                <column id="guid"/>
+                <column id="parent"/>
+                <column id="finsource"/>
+                <column id="name"/>
+                <column id="code"/>
+                <column id="description"/>
+                <column id="fullname"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="planArticlesTable.create"/>
+                <button id="editBtn" action="planArticlesTable.edit"/>
+                <button id="removeBtn" action="planArticlesTable.remove"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

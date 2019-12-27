@@ -1,0 +1,1 @@
+drop table SPMU_CURRENCY__U87818 ;

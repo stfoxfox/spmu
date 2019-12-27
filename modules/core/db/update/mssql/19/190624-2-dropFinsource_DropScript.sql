@@ -1,0 +1,1 @@
+drop table SPMU_FINSOURCE__U72140 ;

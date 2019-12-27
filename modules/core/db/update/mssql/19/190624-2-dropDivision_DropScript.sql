@@ -1,0 +1,1 @@
+drop table SPMU_DIVISION__U93601 ;

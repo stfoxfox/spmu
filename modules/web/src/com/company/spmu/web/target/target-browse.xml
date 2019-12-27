@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://browseCaption"
+        focusComponent="targetsTable"
+        messagesPack="com.company.spmu.web.target">
+    <data readOnly="true">
+        <collection id="targetsDc"
+                    class="com.company.spmu.entity.Target"
+                    view="_local">
+            <loader id="targetsDl">
+                <query>
+                    <![CDATA[select e from spmu_Target e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="targetsTable"
+            spacing="true" stylename="layoutblue">
+        <filter id="filter"
+                applyTo="targetsTable"
+                dataLoader="targetsDl">
+            <properties include=".*"/>
+        </filter>
+        <table id="targetsTable"
+               width="100%"
+               dataContainer="targetsDc">
+            <actions>
+                <action id="create" type="create"/>
+                <action id="edit" type="edit"/>
+                <action id="remove" type="remove"/>
+            </actions>
+            <columns>
+                <column id="code" caption="Код цели"/>
+                <column id="name" caption="Наименование цели"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="createBtn" action="targetsTable.create"/>
+                <button id="editBtn" action="targetsTable.edit"/>
+                <button id="removeBtn" action="targetsTable.remove"/>
+            </buttonsPanel>
+        </table>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>

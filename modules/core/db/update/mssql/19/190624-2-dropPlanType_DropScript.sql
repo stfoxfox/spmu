@@ -1,0 +1,1 @@
+drop table SPMU_PLAN_TYPE__U21050 ;
